@@ -39,6 +39,6 @@ If you have any questions, please don’t hesitate to contact us at training.bio
 
 ### Register
 
-https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_UCSF/
+https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_remote/
 https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_Davis/
 
