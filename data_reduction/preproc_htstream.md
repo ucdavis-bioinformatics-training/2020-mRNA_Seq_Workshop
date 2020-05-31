@@ -257,6 +257,7 @@ Paired end reads are 6 columns:
 
     Note the pipe between the two applications!
 
+    **Questions**
     * *What new parameters did we use here?*
 
     * *What parameter is SeqScreener using that specifies how reads are input?*
@@ -375,6 +376,7 @@ Note the patterns:
 * For the log, we specify -L in the first app to write out to a new log, and then use -A for the second routine onward to append log output, generating a single log file at the end.
 * All other parameters are algorithm specific, can review using --help
 
+**Questions**
 * *Review the final json output, how many reads do we have left?*
 
 * *Confirm that number by counting the number of reads in the final output files.*
@@ -535,7 +537,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     zcat  01-HTS_Preproc/SampleAC1/SampleAC1_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
-    1. *What is the reduction in adapters found?*
+    * *What is the reduction in adapters found?*
 
 1. QA/QC Summary of the json files.
 
@@ -565,7 +567,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     Open in excel (or excel like application), you may have to move the header column 1 cell to the right, and lets review.
 
 -->
-
+**Questions**
 * *Any problematic samples?*
 
 * *Anything else worth discussing?*
