@@ -47,8 +47,10 @@ navigation:
     url: https://ucdavis-bioinformatics-training.github.io/2019-Winter-Bioinformatics_Command_Line_and_R_Prerequisites_Workshop/
 
   - heading: Data Reduction
-  - title: Coming
-    url: /
+  - title: Prepare dataset
+    url: data_reduction/project_setup
+  - title: Preprocessing raw data
+    url: data_reduction/preproc_htstream
 
   - heading: Data analysis
   - title: Coming

@@ -40,6 +40,6 @@ If you have any questions, please don’t hesitate to contact us at [training.bi
 
 ### Register
 
-For the remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/advanced_scRNASeq_remote/) in May.
+For the remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_remote/) in June.
 
-For the onsite UC Davis [course](https://registration.genomecenter.ucdavis.edu/events/advanced_scRNASeq_2020_Davis/) in August.
+For the onsite UC Davis [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_Davis/) in July.

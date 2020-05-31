@@ -13,8 +13,8 @@ The basic architecture of a compute cluster consists of a "head node", which is 
 
 The main commands we will be using are srun, sbatch, squeue, scancel, and sacct. First, log into the head node (tadpole.genomecenter.ucdavis.edu) and make a directory for yourself where you will be doing all your work.
 
-    mkdir /share/workshop/$USER
-    cd /share/workshop/$USER
+    mkdir /share/workshop/mrnaseq_workshop/$USER
+    cd /share/workshop/mrnaseq_workshop/$USER
 
 **2a\.** ['srun'](https://slurm.schedmd.com/srun.html) is used to run a job interactively. We most often use it to start an interactive session on a compute node. Take a look at the options to srun:
 
@@ -44,7 +44,7 @@ use Exit on the command line to exit the session
 
     sbatch --help
 
-Generally, we do not use any options for sbatch ... we typically give it a script (i.e. a text file with commands inside) to run. Let's take a look at a template script [template.slurm](templates/template.slurm):
+Generally, we do not use any options for sbatch ... we typically give it a script (i.e. a text file with commands inside) to run. Let's take a look at a template script [template.slurm](../software_scripts/scripts/template.slurm):
 
 <div class="script">#!/bin/bash
 
@@ -55,8 +55,8 @@ Generally, we do not use any options for sbatch ... we typically give it a scrip
 #SBATCH --time=60 # Acceptable time formats include "minutes", "minutes:seconds", "hours:minutes:seconds", "days-hours", "days-hours:minutes" and "days-hours:minutes:seconds".
 #SBATCH --mem=2000 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --partition=production # cluster partition
-#SBATCH --reservation=workshop # cluster reservation
-#SBATCH --account=workshop # cluster account to use for the job
+#SBATCH --reservation=mrnaseq_workshop # cluster reservation
+#SBATCH --account=mrnaseq_workshop # cluster account to use for the job
 ##SBATCH --array=1-16 # Task array indexing, see https://slurm.schedmd.com/job_array.html, the double # means this line is commented out
 #SBATCH --output=stdout.out # File to which STDOUT will be written
 #SBATCH --error=stderr.err # File to which STDERR will be written
@@ -79,12 +79,12 @@ echo Time taken: $elapsed
 The first line tells sbatch what scripting language (bash here) the rest of the file is in. Any line that begins with a "#" symbol is ignored by the bash interpreter, those lines that begin with "#SBATCH" are used by the slurm controller. Those lines are for specifying sbatch options without having to type them on the command-line every time. In this script, on the next set of lines, we've put some code for calculating the time elapsed for the job and then we simply wait for 5 minutes (300 seconds) and exit. Lets try running it
 
 
-    cd /share/workshop/$USER
-    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/templates/template.slurm
+    cd /share/workshop/mrnaseq_workshop/$USER
+    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/template.slurm
     cat template.slurm
     sbatch template.slurm
 
-The non slurm version is the [template.sh](templates/template.sh) script. You'll notice it looks the same only missing the #SBATCH commands.
+The non slurm version is the [template.sh](../software_scripts/scripts/template.sh) script. You'll notice it looks the same only missing the #SBATCH commands.
 
 After finishing you will see two new files in the directory stdout.out and stderr.err where stdout and stderr (respectively) were redirected to.
 

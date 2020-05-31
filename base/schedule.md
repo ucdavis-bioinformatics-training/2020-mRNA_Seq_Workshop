@@ -1,4 +1,4 @@
-## Tentative Schedule
+## Tentative Schedule June Workshop
 
 ### Day 1
 
@@ -19,14 +19,14 @@
 **2:00 pm**    [Running jobs on a cluster](../prerequisites/cli/cluster)    
 **2:15 pm**     _Hands on_  
 **2:30 pm**    [Running jobs on a cluster](../prerequisites/cli/cluster)    
-**2:45 pm**     _Hands on_  
-**3:00 pm**     15 minute Break   
-**3:15 pm**   Dataset description and setup
-**3:30 pm**     _Hands on_
-**4:00 pm**   Files and file types (fastq)
-**4:15 pm**   _Hands on_       
-**4:45 pm**  Recap and Homework     
-**5:00 pm**  Zoom session ends      
+**2:45 pm**     _Hands on_   
+**3:00 pm**     15 minute Break    
+**3:15 pm**   Dataset description and setup   
+**3:30 pm**     _Hands on_    
+**4:00 pm**   Files and file types (fastq)    
+**4:15 pm**   _Hands on_          
+**4:45 pm**  Recap and Homework       
+**5:00 pm**  Zoom session ends        
 
 ### Day 3
 
