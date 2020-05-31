@@ -325,7 +325,7 @@ hts_Overlapper product: extended, single
 
 **Insert size < length of the read length**
 
-<img src="preproc_figures/overlap_adapter.png" alt="overlap_adapter" width="800px"/>
+<img src="preproc_figures/overlap_adapter.png" alt="overlap_adapter" width="80%"/>
 
 hts_AdapterTrimmer product: adapter trimmed, pairs
 
@@ -545,7 +545,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
     ```/bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example  # We'll run this from the main directory
-    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2019_August_UCD_mRNAseq_Workshop/master/scripts/summarize_stats.R
+    wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/summarize_stats.R
 
     module load R
     R CMD BATCH summarize_stats.R
