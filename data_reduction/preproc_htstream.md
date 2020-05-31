@@ -109,7 +109,7 @@ Let's run the first step of our HTStream preprocessing pipeline, which is always
 
     So we zcat (uncompress and send to screen), pipe to head (param -400000) then pipe to gzip to recompress and name our files subset.
 
-    1. *How many reads are we going to analyze in our subset?*
+    * *How many reads are we going to analyze in our subset?*
 
 1. Now we'll run our first preprocessing step ... hts_Stats, first loading the module and then looking at help.
 
@@ -127,7 +127,7 @@ Let's run the first step of our HTStream preprocessing pipeline, which is always
               -L SampleAC1.stats.log -f SampleAC1.stats
     ```
 
-    1. *What parameters did we use, what do they do?*
+    * *What parameters did we use, what do they do?*
 
     Lets take a look at the output of stats
 
@@ -146,7 +146,7 @@ Let's run the first step of our HTStream preprocessing pipeline, which is always
     -rw-rw-r-- 1 msettles mrnaseq_workshop 7.5M May 31 12:48 SampleAC1.subset_R2.fastq.gz
     </div>
 
-    1. *Which files were generated from hts\_Stats?*
+    * *Which files were generated from hts\_Stats?*
 
 1. Lets look at the file SampleAC1.stats\.log*
 
@@ -211,7 +211,7 @@ paste contents of human_rrna.fa and save
     hts_SeqScreener -h
     ```
 
-    1. *What parameters are needed to:
+    * *What parameters are needed to:
         1.  provide a reference to hts_SeqScreener and
         2. count, and not screen occurrences?*
 
@@ -223,13 +223,13 @@ paste contents of human_rrna.fa and save
                     -s ../References/human_rrna.fasta -r -L SampleAC1.rrna.log -f SampleAC1.rrna
     ```
 
-    1. *Which files were generated from hts\_SeqScreener?*
+    * *Which files were generated from hts\_SeqScreener?*
 
-    1. *Lets look at the file SampleAC1.rrna.log?*
+    * *Lets look at the file SampleAC1.rrna.log?*
 
-    1. *What do you notice about the SampleAC1.rrna.log?*
+    * *What do you notice about the SampleAC1.rrna.log?*
 
-    1. *How many reads were identified as rrna?*
+    * *How many reads were identified as rrna?*
 
 ### Stream multiple applications together.
 
@@ -257,11 +257,11 @@ Paired end reads are 6 columns:
 
     Note the pipe between the two applications!
 
-    1. *What new parameters did we use here?*
+    * *What new parameters did we use here?*
 
-    1. *What parameter is SeqScreener using that specifies how reads are input?*
+    * *What parameter is SeqScreener using that specifies how reads are input?*
 
-    1. *Lets look at the file SampleAC1.streamed.log?*
+    * *Lets look at the file SampleAC1.streamed.log?*
 
 
 ## A RNAseq preprocessing pipeline
@@ -375,15 +375,15 @@ Note the patterns:
 * For the log, we specify -L in the first app to write out to a new log, and then use -A for the second routine onward to append log output, generating a single log file at the end.
 * All other parameters are algorithm specific, can review using --help
 
-1. *Review the final json output, how many reads do we have left?*
+* *Review the final json output, how many reads do we have left?*
 
-1. *Confirm that number by counting the number of reads in the final output files.*
+* *Confirm that number by counting the number of reads in the final output files.*
 
-1. *How many adapters did we detect, cut off?*
+* *How many adapters did we detect, cut off?*
 
-1. *How many PCR duplicates were there?*
+* *How many PCR duplicates were there?*
 
-1. *Anything else interesting?*
+* *Anything else interesting?*
 
 ## Run HTStream on the Project.
 
@@ -566,9 +566,9 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
 -->
 
-    *Any problematic samples?*
+* *Any problematic samples?*
 
-    *Anything else worth discussing?*
+* *Anything else worth discussing?*
 
 ## Scripts
 
