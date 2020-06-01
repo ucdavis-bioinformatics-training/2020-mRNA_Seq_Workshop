@@ -337,6 +337,10 @@ Obviously, be careful with 'rm -rf', there is no going back, if you delete somet
 
 ## BASH Wildcard Characters
 
+Since we just deleted that folder we extracted, we now how to re-extract the folder.
+
+    tar -xzvf PhiX_Illumina_RTA.tar.gz
+
 When we want to specify or operate on sets of files all at once.
 
     ls ?hiX/Illumina
