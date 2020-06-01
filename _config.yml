@@ -49,6 +49,8 @@ navigation:
   - heading: Data Reduction
   - title: Prepare dataset
     url: data_reduction/project_setup
+  - title: Files and Filetypes
+    url: data_reduction/filetypes
   - title: Preprocessing raw data
     url: data_reduction/preproc_htstream
 

@@ -21,9 +21,9 @@
 **2:30 pm**    [Running jobs on a cluster](../prerequisites/cli/cluster)    
 **2:45 pm**     _Hands on_   
 **3:00 pm**     15 minute Break    
-**3:15 pm**   Dataset description and setup   
+**3:15 pm**   [Dataset description and setup](../data_reduction/project_setup)   
 **3:30 pm**     _Hands on_    
-**4:00 pm**   Files and file types (fastq)    
+**4:00 pm**   [Files and file types (fastq)](../data_reduction/filetypes)    
 **4:15 pm**   _Hands on_          
 **4:45 pm**  Recap and Homework       
 **5:00 pm**  Zoom session ends        
@@ -31,10 +31,31 @@
 ### Day 3
 
 **8:50 am**  Zoom session starts  
-**9:00 am** Recap and check everyones session   
-**10:15 am**   15 minute break    
+**9:00 am** Recap and check everyones session
+**9:15 am** [Data checkin, preprocessing](../data_reduction/preproc_htstream)     
+**9:30 am**   _Hands on_          
+**9:45 am**     [preprocessing](../data_reduction/preproc_htstream)    
+**10:00 am**    _Hands_on_    
+**10:15 am**   15 minute break
+**10:30 am**    [preprocessing](../data_reduction/preproc_htstream)      
+**10:45 am**    _Hands_on_     
+**11:00 am**     [Technology Seminar by Lutz Froenicke]()  
 **12:00 pm** Lunch hour      
-**3:00 pm**  15 minute break    
+**1:00 pm**    [preprocessing](../data_reduction/preproc_htstream)      
+**1:15 pm**    _Hands_on_     
+**1:30 pm**    [preprocessing](../data_reduction/preproc_htstream)      
+**1:45 pm**    _Hands_on_     
+**2:00 pm**    [preprocessing QA/QC](../data_reduction/preproc_htstream)      
+**2:15 pm**    _Hands_on_     
+**2:30 pm**     [preprocessing Recap](../data_reduction/preproc_htstream)      
+**2:45 pm**  15 minute break   
+**3:00 pm**   [Files and file types (fasta/gtf)](../data_reduction/filetypes)     
+**3:15 pm**  [Aligments References]()
+**3:30 pm**    _Hands_on_     
+**3:45 pm**  [Aligments]()
+**4:00 pm**    _Hands_on_     
+**4:15 pm**  [Aligments]()
+**4:30 pm**    _Hands_on_     
 **4:45 pm**  Recap and Homework    
 **5:00 pm**  Zoom session ends   
 
