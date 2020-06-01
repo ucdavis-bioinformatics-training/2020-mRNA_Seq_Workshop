@@ -102,11 +102,11 @@ Navigate like in 'less' (up,down,pgup,pgdn,g,G,/pattern,n,N,q), look up and try 
     ls -l -a
     ls -la  # option 'smushing' ... when no values need specifying
     ls -ltrha
-    
-And finally adding color: 
+
+And finally adding color:
 
     ls -ltrha --color  # single letter (smushed) vs word options (Linux)
-    
+
 **OR**
 
     ls -ltrhaG  # (MacOS)
@@ -187,7 +187,7 @@ Why are these very different-looking commands equivalent??
 
 ## Create and Destroy
 
-We already learned one command that will create a file, touch. Lets create a folder in /share/workshop for you to work in and then another directory cli. We will use the environment variable $USER, that is your username.
+We already learned one command that will create a file, touch. Lets create a folder in your home directory for you to work in and then another directory cli. We will use the environment variable $USER, that is your username.
 
     cd  # home again
     echo $USER # echo to screen the contents of the variable $USER
@@ -409,7 +409,7 @@ Combine successive identical sequences, but count them ('-c' option)
 
 Finally sort using reverse numeric order ('-rn')
 
-    grep --color  -o "ATG......" phix.fa | cut -c4-6 | sort | uniq -c | sort -rn 
+    grep --color  -o "ATG......" phix.fa | cut -c4-6 | sort | uniq -c | sort -rn
 
 ... which gives us the most common codons first
 
