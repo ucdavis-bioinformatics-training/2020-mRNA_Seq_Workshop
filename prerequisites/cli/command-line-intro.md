@@ -208,10 +208,10 @@ why 'concatenate'? try this:
 OK, let's destroy what we just created:
 
     cd ../
-    rmdir tmp  # 'rmdir' meands 'remove directory', but this shouldn't work!
-    rm tmp/first.txt
-    rm tmp/second.txt  # clear directory first
-    rmdir tmp  # should succeed now
+    rmdir cli  # 'rmdir' meands 'remove directory', but this shouldn't work!
+    rm cli/first.txt
+    rm cli/second.txt  # clear directory first
+    rmdir cli  # should succeed now
 
 So, 'mkdir' and 'rmdir' are used to create and destroy (empty) directories. 'rm' to remove files. To create a file can be as simple as using 'echo' and the '>' (redirection) character to put text into a file. Even simpler is the 'touch' command.
 
