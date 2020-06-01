@@ -15,7 +15,7 @@ A greater than sign (>) instead of a prompt means the shell is expecting more in
 
 Absolute path: always starts with ”/”
 
-/share/workshop/msettles/cli
+/share/workshop/mrnaseq_workshop//msettles/cli
 
 the folder (or file) cli in the folder msettles in the folder workship in the folder share from root.
 
@@ -148,12 +148,12 @@ You can think of paths like addresses. You can tell your friend how to go to a p
 
 **relative** (start here, take two steps up, then down through share and workshop)
 
-    cd ../../share/workshop/
+    cd ../../share/workshop/mrnaseq_workshop//
     pwd
 
 **absolute** (start at root, take steps)
 
-    cd /share/workshop/
+    cd /share/workshop/mrnaseq_workshop//
     pwd
 
 
@@ -578,7 +578,7 @@ OK! So let's run this script, feeding it the phiX genome. When we put the genome
 
     ./test.sh genome.fa
 
-<div class="output">msettles@tadpole:/share/workshop/msettles/cli$ ./test.sh genome.fa
+<div class="output">msettles@tadpole:/share/workshop/mrnaseq_workshop//mrnaseq_workshop//msettles/cli$ ./test.sh genome.fa
     1686 T
     1292 A
     1253 G
