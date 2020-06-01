@@ -89,7 +89,7 @@ The non slurm version is the [template.sh](../software_scripts/scripts/template.
 After finishing you will see two new files in the directory stdout.out and stderr.err where stdout and stderr (respectively) were redirected to.
 
 ---
-**2c\.** ['squeue'](https://slurm.schedmd.com/squeue.html) is to list your currently queued/running jobs. T
+**2c\.** ['squeue'](https://slurm.schedmd.com/squeue.html) is to list your currently queued/running jobs.
 
     squeue --help
 
