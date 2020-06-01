@@ -5,17 +5,17 @@
 **8:50 am**  Zoom session starts    
 **9:00 am**  [Welcome, format and expectations and introductions](welcome)    
 **9:30 am**  [Connections, logging in, environment](../prerequisites/cli/logging-in)  
-**9:45 pm**  [Intro CLI](../prerequisites/cli/command-line-intro)/[Adv CLI](../prerequisites/cli/advanced-command-line) to Command Line
-**10:00 pm**   _Hands on_  
+**9:45 am**  [Intro CLI](../prerequisites/cli/command-line-intro)/[Adv CLI](../prerequisites/cli/advanced-command-line) to Command Line
+**10:00 am**   _Hands on_  
 **10:15 am**  15 minute break  
-**10:30 pm**  [Intro CLI](../prerequisites/cli/command-line-intro)/[Adv CLI](../prerequisites/cli/advanced-command-line) to Command Line
-**10:45 pm**   _Hands on_  
-**11:00 am**  [Genomics/Bioinformatics Talk](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/genomics/Genomics_a_perspective_May_2020.pdf)  
+**10:30 am**  [Intro CLI](../prerequisites/cli/command-line-intro)/[Adv CLI](../prerequisites/cli/advanced-command-line) to Command Line
+**10:45 am**   _Hands on_  
+**11:00 am**  [Intro CLI](../prerequisites/cli/command-line-intro)/[Adv CLI](../prerequisites/cli/advanced-command-line) to Command Line
+**11:15 am**   _Hands on_  
+**11:30 am**  [Intro CLI](../prerequisites/cli/command-line-intro)/[Adv CLI](../prerequisites/cli/advanced-command-line) to Command Line
+**11:45 am**   _Hands on_  
 **12:00 pm** Lunch hour      
-**1:00 pm**  [Intro CLI](../prerequisites/cli/command-line-intro)/[Adv CLI](../prerequisites/cli/advanced-command-line) to Command Line
-**1:15 pm**   _Hands on_  
-**1:30 pm**  [Intro CLI](../prerequisites/cli/command-line-intro)/[Adv CLI](../prerequisites/cli/advanced-command-line) to Command Line
-**1:45 pm**   _Hands on_  
+**1:00 pm**  [Genomics/Bioinformatics Talk](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/genomics/Genomics_a_perspective_May_2020.pdf)  
 **2:00 pm**    [Running jobs on a cluster](../prerequisites/cli/cluster)    
 **2:15 pm**     _Hands on_  
 **2:30 pm**    [Running jobs on a cluster](../prerequisites/cli/cluster)    
