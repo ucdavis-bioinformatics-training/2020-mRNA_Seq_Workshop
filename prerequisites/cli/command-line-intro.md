@@ -24,7 +24,7 @@ Relative path: always relative to our current location.
 _a single dot (.) refers to the current directory_  
 _two dots (..) refers to the directory one level up_  
 
-<img src="figures/cli_figure2.png" alt="cli_figure2" width="500px"/>
+<img src="figures/cli_figure2.png" alt="cli_figure2" width="60%"/>
 
 Usually, /home is where the user accounts reside, ie. user’s 'home' directory.
 For example, for a user that has a username of “msettles”: their home directory is /home/msettles
@@ -37,7 +37,7 @@ The tilde (~) is a short form of a user’s home directory.
 * A command plus the required parameters/arguments
 * The separator used in issuing a command is space, number of spaces does not matter
 
-<img src="figures/cli_figure3.png" alt="cli_figure3" width="800px"/>
+<img src="figures/cli_figure3.png" alt="cli_figure3" width="80%"/>
 
 ## Logging into a remote server
 
@@ -53,7 +53,7 @@ Once you're done working on the command line, you can exit. Anything that follow
 
     exit  # kills the current shell!
 
-<img src="figures/cli_figure4.png" alt="cli_figure4" width="800px"/>
+<img src="figures/cli_figure4.png" alt="cli_figure4" width="80%"/>
 
 Go ahead and log back into the server.
 
@@ -136,7 +136,7 @@ The filesystem you're working on is like the branching root system of a tree. Th
     cd ..  # '..' always means *one directory up*
     pwd
 
-<img src="figures/cli_figure5.png" alt="cli_figure5" width="800px"/>
+<img src="figures/cli_figure5.png" alt="cli_figure5" width="80%"/>
 
 You should also notice the location changes in your prompt.
 
@@ -148,12 +148,12 @@ You can think of paths like addresses. You can tell your friend how to go to a p
 
 **relative** (start here, take two steps up, then down through share and workshop)
 
-    cd ../../share/workshop/mrnaseq_workshop//
+    cd ../../share/workshop/mrnaseq_workshop/
     pwd
 
 **absolute** (start at root, take steps)
 
-    cd /share/workshop/mrnaseq_workshop//
+    cd /share/workshop/mrnaseq_workshop/
     pwd
 
 
@@ -165,6 +165,7 @@ Using tab-completion is a must on the command line. A single <tab> auto-complete
 
 touch updates the timestamp on a file, here we use it to create three empty files.
 
+    cd
     touch one seven september
     ls o
 
