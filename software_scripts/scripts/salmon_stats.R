@@ -4,9 +4,9 @@
 suppressWarnings(dir.create("r_lib"))
 new_rlib = file.path(getwd(),"r_lib")
 
-if (!any(rownames(installed.packages()) == "rjson")) install.packages("rjson", repos='http://cran.us.r-project.org', lib=new_rlib)
+if (!any(rownames(installed.packages()) == "jsonlite")) install.packages("rjson", repos='http://cran.us.r-project.org', lib=new_rlib)
 
-require(rjson, lib.loc=new_rlib)
+require(jsonlite, lib.loc=new_rlib)
 
 samples <- readLines("samples.txt")
 salmon_dir <- "02-Salmon_alignment"
