@@ -145,7 +145,7 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 
     * *Can you think of a way to view the output from hts_Stats in less without creating out.tab?*
 
-    By default, all HTS apps output tab formatted files to the stdout. 
+    By default, all HTS apps output tab formatted files to the stdout.
 
     Take a look at the output (remember ```q``` quits):
     ```bash
@@ -240,7 +240,7 @@ We will use these sequences to identify rRNA in our reads, which are from human.
 
 Save this file to your computer, and rename it to 'human_rrna.fasta'.
 
-Upload your human_rrna.fasta file **to the 'References' directory** in your project folder using either **scp** or FileZilla (or equivalent). 
+Upload your human_rrna.fasta file **to the 'References' directory** in your project folder using either **scp** or FileZilla (or equivalent).
 
 Or if you feel like 'cheating', just copy/paste the contents of human_rrna.fa using nano into a file named /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/human_rrna.fasta
 
@@ -254,7 +254,7 @@ paste contents of human_rrna.fa and save
 This is *really* cheating, but if all else fails:
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References
-wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/human_rrna.fasta 
+wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/human_rrna.fasta
 ```
 
 ### Using HTStream to count ribosomal rna (not remove, but just to count the occurrences).
@@ -400,7 +400,7 @@ Both hts_AdapterTrimmer and hts_Overlapper employ this principle to identify and
 ### Now lets see if we can find evidence of Illumina sequencing adapters in our subset.
 Remember that Illumina reads must have P5 and P7 adapters and generally look like this (in R1 orientation):
 
-P5---Read1primer---INSERT---IndexReadprimer--index--P7(rc) 
+P5---Read1primer---INSERT---IndexReadprimer--index--P7(rc)
 
 This sequence is P7(rc): ATCTCGTATGCCGTCTTCTGCTTG. It should be at the end of any R1 that contains a full-length adapter sequence.
 
@@ -637,7 +637,7 @@ multiqc -i HTSMultiQC-cleaning-report -o 01-HTS-multiqc-report ./01-HTS_Preproc
 deactivate  # turn off python virtual environment
 ```
 
-Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser. 
+Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser.
 
 
 Or in case of emergency, download this copy: (HTSMultiQC-cleaning-report_multiqc_report.html)[https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/HTSMultiQC-cleaning-report_multiqc_report.html]
@@ -672,19 +672,3 @@ Or in case of emergency, download this copy: (HTSMultiQC-cleaning-report_multiqc
 * *Any problematic samples?*
 
 * *Anything else worth discussing?*
-
-## Scripts
-
-slurm script for preprocessing using slurm task array and htstream
-
-[hts_preproc.slurm](../software_scripts/scripts/hts_preproc.slurm)
-
-shell script for preprocessing using bash loop and htstream.
-
-[hts_preproc.sh](../software_scripts/scripts/hts_preproc.sh)
-
-<!--
-R script to produce summary table, assumes exact htstream operations and order as described above.
-
-[summary_stats.R](../software_scripts/scripts/summarize_stats.R)
--->
