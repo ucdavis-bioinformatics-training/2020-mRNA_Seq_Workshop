@@ -237,137 +237,147 @@ Choose the appropriate column given the library preparation characteristics and 
 
 ## Alignments
 
-**1\.** We are now ready to try an alignment:
+1. We are now ready to try an alignment:
 
+    ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    ```
 
-and let's run STAR (via srun) on the pair of streamed test files we created earlier:
+    and let's run STAR (via srun) on the pair of streamed test files we created earlier:
 
-    srun --time=15:00:00 -n 8 --mem=32g --reservation=workshop --account=workshop --pty /bin/bash
+    ```bash
+    srun --time=15:00:00 -n 8 --mem=32g --reservation=mrnaseq_workshop --account=mrnaseq_workshop --pty /bin/bash
+    ```
 
-Once you've been given an interactive session we can run STAR. You can ignore the two warnings/errors and you know your on a cluster node because your server will change. Here you see I'm on tadpole, then after the srun command is successful, I am now on drove-13.
+    Once you've been given an interactive session we can run STAR. You can ignore the two warnings/errors and you know your on a cluster node because your server will change. Here you see I'm on tadpole, then after the srun command is successful, I am now on drove-13.
 
-<div class="output">msettles@tadpole:/share/workshop/msettles/rnaseq_example/> HTS_testing$ srun --time=15:00:00 -n 8 --mem=32g --reservation=workshop --account=workshop --pty /bin/bash
-srun: job 29372920 queued and waiting for resources
-srun: job 29372920 has been allocated resources
-groups: cannot find name for group ID 2020
-bash: /home/msettles/.bashrc: Permission denied
-msettles@drove-13:/share/workshop/msettles/rnaseq_example/> HTS_testing$
-</div>
+    <div class="output">msettles@tadpole:/share/workshop/msettles/rnaseq_example/> HTS_testing$ srun --time=15:00:00 -n 8 --mem=32g --reservation=mrnaseq_workshop --account=mrnaseq_workshop --pty /bin/bash
+    srun: job 29372920 queued and waiting for resources
+    srun: job 29372920 has been allocated resources
+    groups: cannot find name for group ID 2020
+    bash: /home/msettles/.bashrc: Permission denied
+    msettles@drove-13:/share/workshop/msettles/rnaseq_example/> HTS_testing$
+    </div>
 
-Then run the star commands
+1. Then run the star commands
 
-    module load star/2.7.0e
+    ```bash
+    module load star
     STAR \
     --runThreadN 8 \
-    --genomeDir ../References/star.overlap100.gencode.v34 \
-    --outSAMtype BAM SortedByCoordinate \
-    --quantMode GeneCounts \
-    --outFileNamePrefix SampleAC1.streamed_ \
-    --readFilesCommand zcat \
-    --readFilesIn SampleAC1.streamed_R1.fastq.gz SampleAC1.streamed_R2.fastq.gz
+       --genomeDir ../References/star.overlap100.gencode.v34 \
+       --outSAMtype BAM SortedByCoordinate \
+       --quantMode GeneCounts \
+       --outFileNamePrefix SampleAC1.streamed_ \
+       --readFilesCommand zcat \
+       --readFilesIn SampleAC1.streamed_R1.fastq.gz SampleAC1.streamed_R2.fastq.gz
+    ```
 
-In the command, we are telling star to count reads on a gene level ('--quantMode GeneCounts'), the prefix for all the output files will be SampleAC1.streamed_, the command to unzip the files (zcat), and finally, the input file pair.
+    In the command, we are telling star to count reads on a gene level ('--quantMode GeneCounts'), the prefix for all the output files will be SampleAC1.streamed_, the command to unzip the files (zcat), and finally, the input file pair.
 
-Once finished please 'exit' the srun session. You'll know you were successful when your back on tadpole
+    Once finished please 'exit' the srun session. You'll know you were successful when your back on tadpole
 
-<div class="output">msettles@drove-13:/share/workshop/msettles/rnaseq_example/HTS_testing$ exit
-exit
-msettles@tadpole:/share/workshop/msettles/rnaseq_example/HTS_testing$
-</div>
+    <div class="output">msettles@drove-13:/share/workshop/msettles/rnaseq_example/HTS_testing$ exit
+    exit
+    msettles@tadpole:/share/workshop/msettles/rnaseq_example/HTS_testing$
+    </div>
 
-##  Now let's take a look at an alignment in IGV.
+###  Now let's take a look at an alignment in IGV.
 
-**1\.** We first need to index the bam file, will use 'samtools' for this step, which is a program to manipulate SAM/BAM files. Take a look at the options for samtools and 'samtools index'.
+1.  We first need to index the bam file, will use 'samtools' for this step, which is a program to manipulate SAM/BAM files. Take a look at the options for samtools and 'samtools index'.
 
-    module load samtools/1.9
+    ```bash
+    module load samtools
     samtools
     samtools index
+    ```
 
-We need to index the BAM file:
+    We need to index the BAM file:
 
+    ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
     samtools index SampleAC1.streamed_Aligned.sortedByCoord.out.bam
+    ```
 
-**IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
+    **IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
 
+    ```bash
     cp -r /share/biocore/workshops/2020_mRNAseq/HTS_testing/SampleAC1.streamed_Aligned.sortedByCoord.out.bam* /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    ```
 
----
-**2\.** Transfer SampleAC1.streamed_Aligned.sortedByCoord.out.bam and SampleAC1.streamed_Aligned.sortedByCoord.out.bam (the index file) to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work].
+2. Transfer SampleAC1.streamed_Aligned.sortedByCoord.out.bam and SampleAC1.streamed_Aligned.sortedByCoord.out.bam (the index file) to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work].
 
-In a new shell session on my laptop. **NOT logged into tadpole**.
-
+    In Mac/Linux, Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole**. Replace my username with your username
+    ```bash
     mkdir ~/rnaseq_workshop
     cd ~/rnaseq_workshop
-    scp msettles@tadpole.genomecenter.ucdavis.edu:/share/workshop/msettles/rnaseq_example/HTS_testing/SampleAC1.streamed_Aligned.sortedByCoord.out.bam* .
+    scp msettles@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/msettles/rnaseq_example/HTS_testing/SampleAC1.streamed_Aligned.sortedByCoord.out.bam* .
+    ```
 
-Its ok of the mkdir command fails ("File exists") because we aleady created the directory earlier.
+    Its ok of the mkdir command fails ("File exists") because we aleady created the directory earlier.
 
----
-**3\.** Now we are ready to use IGV. Go to the [IGV page at the Broad Institute](http://software.broadinstitute.org/software/igv/).
 
-<img src="alignment_figures/index_igv1.png" alt="index_igv1" width="800px"/>
+1. Now we are ready to use IGV.
 
-And then navigate to the download page, [IGV download](http://software.broadinstitute.org/software/igv/download)
+    Go to the [IGV page at the Broad Institute](http://software.broadinstitute.org/software/igv/).
 
-<img src="alignment_figures/index_igv2.png" alt="index_igv2" width="800px"/>
+    <img src="alignment_figures/index_igv1.png" alt="index_igv1" width="80%" style="border:5px solid #ADD8E6;"/>
 
-Here you can download IGV for your respective platform (Window, Mac OSX, Linux), but we are going to use the web application they supply, [IGV web app](https://igv.org/app/).
+    And then navigate to the download page, [IGV download](http://software.broadinstitute.org/software/igv/download)
 
-<img src="alignment_figures/index_igv3.png" alt="index_igv3" width="800px"/>
+    <img src="alignment_figures/index_igv2.png" alt="index_igv2" width="80%" style="border:5px solid #ADD8E6;"/>
 
----
-**4\.** The first thing we want to do is load the Human genome. Click on "Genomes" in the menu and choose "Human (GRCh38/hg38)".
+    Here you can download IGV for your respective platform (Window, Mac OSX, Linux), but we are going to use the web application they supply, [IGV web app](https://igv.org/app).
 
-<img src="alignment_figures/index_igv4.png" alt="index_igv4" width="800px"/>
+    <img src="alignment_figures/index_igv3.png" alt="index_igv3" width="80%" style="border:5px solid #ADD8E6;"/>
 
----
-**5\.** Now let's load the alignment bam and index files. Click on "Tracks" and choose "Local File ...".
+1. The first thing we want to do is load the Human genome. Click on "Genomes" in the menu and choose "Human (GRCh38/hg38)".
 
-<img src="alignment_figures/index_igv5.png" alt="index_igv5" width="800px"/>
+    <img src="alignment_figures/index_igv4.png" alt="index_igv4" width="80%" style="border:5px solid #ADD8E6;"/>
 
-Navigate to where you transferred the bam and index file and select them both.
+1. Now let's load the alignment bam and index files. Click on "Tracks" and choose "Local File ...".
 
-<img src="alignment_figures/index_igv6.png" alt="index_igv6" width="800px"/>
+    <img src="alignment_figures/index_igv5.png" alt="index_igv5" width="80%" style="border:5px solid #ADD8E6;"/>
 
-Now your alignment is loaded. Any loaded bam file aligned to a genome is called a "track".
+    Navigate to where you transferred the bam and index file and select them **both**.
 
-<img src="alignment_figures/index_igv7.png" alt="index_igv7" width="800px"/>
+    <img src="alignment_figures/index_igv6.png" alt="index_igv6" width="80%" style="border:5px solid #ADD8E6;"/>
 
----
-**6\.** Lets take a look at the alignment associated with the gene __HBB__, and if for some reason it doesn't find HBB (web IGV can be fickle) go to position __chr11:5,224,466-5,228,071__
+    Now your alignment is loaded. Any loaded bam file aligned to a genome is called a "track".
 
-<img src="alignment_figures/index_igv8.png" alt="index_igv8" width="800px"/>
+    <img src="alignment_figures/index_igv7.png" alt="index_igv7" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv9.png" alt="index_igv9" width="800px"/>
+1. Lets take a look at the alignment associated with the gene __HBB__, and if for some reason it doesn't find HBB (web IGV can be fickle) go to position __chr11:5,224,466-5,228,071__. If you don't see any reads, this likely means your in the wrong genome, double check that it says **hg38** in the top left.
 
-You can zoom in by clicking on the plus sign (top right) or zoom out by clicking the negative sign. You also may have to move around by clicking and dragging in the BAM track window.
+    <img src="alignment_figures/index_igv8.png" alt="index_igv8" width="80%" style="border:5px solid #ADD8E6;"/>
 
-You can also zoom in by clicking and dragging across the number line at the top. That section will highlight, and when you release the button, it will zoom into that section.
+    <img src="alignment_figures/index_igv9.png" alt="index_igv9" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv10.png" alt="index_igv10" width="800px"/>
+    You can zoom in by clicking on the plus sign (top right) or zoom out by clicking the negative sign. You also may have to move around by clicking and dragging in the BAM track window.
 
-<img src="alignment_figures/index_igv11.png" alt="index_igv11" width="800px"/>
+    You can also zoom in by clicking and dragging across the number line at the top. That section will highlight, and when you release the button, it will zoom into that section.
 
-Reset the window by searching for HBB again. And zoom in 1 step.
+    <img src="alignment_figures/index_igv10.png" alt="index_igv10" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv12.png" alt="index_igv12" width="800px"/>
+    <img src="alignment_figures/index_igv11.png" alt="index_igv11" width="80%" style="border:5px solid #ADD8E6;"/>
+
+    Reset the window by searching for HBB again, **and** then zoom in 1 step.
+
+    <img src="alignment_figures/index_igv12.png" alt="index_igv12" width="80%" style="border:5px solid #ADD8E6;"/>
 
 ---
 **7\.** See that the reads should be aligning within the exons in the gene. This makes sense, since RNA-Seq reads are from exons. Play with the settings on the right hand side a bit.
 
-<img src="alignment_figures/index_igv13.png" alt="index_igv13" width="800px"/>
+<img src="alignment_figures/index_igv13.png" alt="index_igv13" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv14.png" alt="index_igv14" width="800px"/>
+<img src="alignment_figures/index_igv14.png" alt="index_igv14" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv15.png" alt="index_igv15" width="800px"/>
+<img src="alignment_figures/index_igv15.png" alt="index_igv15" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv16.png" alt="index_igv16" width="800px"/>
+<img src="alignment_figures/index_igv16.png" alt="index_igv16" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv17.png" alt="index_igv17" width="800px"/>
+<img src="alignment_figures/index_igv17.png" alt="index_igv17" width="80%" style="border:5px solid #ADD8E6;"/>
 
----
 
 ## Running STAR on the experiment
 
@@ -387,8 +397,8 @@ Reset the window by searching for HBB again. And zoom in 1 step.
 #SBATCH --time=60
 #SBATCH --mem=32000 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --partition=production
-#SBATCH --reservation=workshop
-#SBATCH --account=workshop
+#SBATCH --reservation=mrnaseq_workshop
+#SBATCH --account=mrnaseq_workshop
 #SBATCH --array=1-16
 #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written

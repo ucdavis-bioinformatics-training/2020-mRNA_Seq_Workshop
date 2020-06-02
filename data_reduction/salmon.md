@@ -92,7 +92,6 @@
     ```bash
     ln -s /share/biocore/workshops/2020_mRNAseq/References/salmon_gencode.v34.index /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
     ```
-
 ## Alignments
 
 **1\.** We are now ready to try an alignment:
@@ -136,8 +135,8 @@ In the command, we are telling salmon to quantify reads with libtype 'auto' ([li
 #SBATCH --time=1440
 #SBATCH --mem=20000 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --partition=production
-#SBATCH --reservation=workshop
-#SBATCH --account=workshop
+#SBATCH --reservation=mrnaseq_workshop
+#SBATCH --account=mrnaseq_workshop
 #SBATCH --output=slurmout/salmon_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/salmon_%A_%a.err # File to which STDERR will be written
 
