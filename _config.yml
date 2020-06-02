@@ -61,8 +61,8 @@ navigation:
     url: data_reduction/salmon
 
   - heading: Data analysis
-  - title: Coming
-    url: /
+  - title: Prepare R for data analysis
+    url: data_analysis/de_analysis_prepare
 
   - heading: ETC
   - title: Closing thoughts
