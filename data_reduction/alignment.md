@@ -307,11 +307,11 @@ Choose the appropriate column given the library preparation characteristics and 
 
 2. Transfer SampleAC1.streamed_Aligned.sortedByCoord.out.bam and SampleAC1.streamed_Aligned.sortedByCoord.out.bam (the index file) to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work].
 
-    In Mac/Linux, Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole**. Replace my username with your username
+    In Mac/Linux, Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole**. Replace [your_username] with your username
     ```bash
     mkdir ~/rnaseq_workshop
     cd ~/rnaseq_workshop
-    scp msettles@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/msettles/rnaseq_example/HTS_testing/SampleAC1.streamed_Aligned.sortedByCoord.out.bam* .
+    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/HTS_testing/SampleAC1.streamed_Aligned.sortedByCoord.out.bam* .
     ```
 
     Its ok of the mkdir command fails ("File exists") because we aleady created the directory earlier.
@@ -365,126 +365,115 @@ Choose the appropriate column given the library preparation characteristics and 
 
     <img src="alignment_figures/index_igv12.png" alt="index_igv12" width="80%" style="border:5px solid #ADD8E6;"/>
 
----
-**7\.** See that the reads should be aligning within the exons in the gene. This makes sense, since RNA-Seq reads are from exons. Play with the settings on the right hand side a bit.
+1. See that the reads should be aligning within the exons in the gene. This makes sense, since RNA-Seq reads are from exons. Play with the settings on the right hand side a bit.
 
-<img src="alignment_figures/index_igv13.png" alt="index_igv13" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_figures/index_igv13.png" alt="index_igv13" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv14.png" alt="index_igv14" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_figures/index_igv14.png" alt="index_igv14" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv15.png" alt="index_igv15" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_figures/index_igv15.png" alt="index_igv15" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv16.png" alt="index_igv16" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_figures/index_igv16.png" alt="index_igv16" width="80%" style="border:5px solid #ADD8E6;"/>
 
-<img src="alignment_figures/index_igv17.png" alt="index_igv17" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_figures/index_igv17.png" alt="index_igv17" width="80%" style="border:5px solid #ADD8E6;"/>
 
 
 ## Running STAR on the experiment
 
-**1\.** We can now run STAR across all samples on the real data using a SLURM script, [star.slurm](../scripts/star.slurm), that we should take a look at now.
+1. We can now run STAR across all samples on the real data using a SLURM script, [star.slurm](../scripts/star.slurm), that we should take a look at now.
 
+    ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example  # We'll run this from the main directory
     wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/star.slurm
     less star.slurm
+    ```
 
- When you are done, type "q" to exit.
+    <div class="script">#!/bin/bash
 
-<div class="script">#!/bin/bash
+    #SBATCH --job-name=star # Job name
+    #SBATCH --nodes=1
+    #SBATCH --ntasks=8
+    #SBATCH --time=60
+    #SBATCH --mem=32000 # Memory pool for all cores (see also --mem-per-cpu)
+    #SBATCH --partition=production
+    #SBATCH --reservation=mrnaseq_workshop
+    #SBATCH --account=mrnaseq_workshop
+    #SBATCH --array=1-16
+    #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
+    #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
 
-#SBATCH --job-name=star # Job name
-#SBATCH --nodes=1
-#SBATCH --ntasks=8
-#SBATCH --time=60
-#SBATCH --mem=32000 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --partition=production
-#SBATCH --reservation=mrnaseq_workshop
-#SBATCH --account=mrnaseq_workshop
-#SBATCH --array=1-16
-#SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
-#SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
+    start=`date +%s`
+    echo $HOSTNAME
+    echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
 
-start=`date +%s`
-echo $HOSTNAME
-echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+    sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
+    REF="References/star.overlap100.gencode.v34"
 
-sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
-REF="References/star.overlap100.gencode.v34"
+    outpath='02-STAR_alignment'
+    [[ -d ${outpath} ]] || mkdir ${outpath}
+    [[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
 
-outpath='02-STAR_alignment'
-[[ -d ${outpath} ]] || mkdir ${outpath}
-[[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
+    echo "SAMPLE: ${sample}"
 
-echo "SAMPLE: ${sample}"
+    module load star
 
-module load star/2.7.0e
+    call="STAR
+         --runThreadN 8 \
+         --genomeDir $REF \
+         --outSAMtype BAM SortedByCoordinate \
+         --readFilesCommand zcat \
+         --readFilesIn 01-HTS_Preproc/${sample}/${sample}_R1.fastq.gz 01-HTS_Preproc/${sample}/${sample}_R2.fastq.gz \
+         --quantMode GeneCounts \
+         --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
+         > ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
 
-call="STAR
-     --runThreadN 8 \
-     --genomeDir $REF \
-     --outSAMtype BAM SortedByCoordinate \
-     --readFilesCommand zcat \
-     --readFilesIn 01-HTS_Preproc/${sample}/${sample}_R1.fastq.gz 01-HTS_Preproc/${sample}/${sample}_R2.fastq.gz \
-     --quantMode GeneCounts \
-     --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
-     ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
+    echo $call
+    eval $call
 
-echo $call
-eval $call
+    end=`date +%s`
+    runtime=$((end-start))
+    echo $runtime
+    </div>
 
-end=`date +%s`
-runtime=$((end-start))
-echo $runtime
-</div>
+    When you are done, type "q" to exit.
 
 
-After looking at the script, lets run it.
+2. After looking at the script, lets run it.
 
+    ```bash
     sbatch star.slurm  # moment of truth!
+    ```
 
-We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
+    We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
 
+    ```sbatch
     squeue -u msettles  # use your username
+    ```
 
 ## Quality Assurance - Mapping statistics as QA/QC.
 
-**1\.** Once your jobs have finished successfully (check the error and out logs like we did in the previous exercise), use a script of ours, [star_stats.sh](../scripts/star_stats.sh) to collect the alignment stats. Don't worry about the script's contents at the moment; you'll use very similar commands to create a counts table in the next section. For now:
+1. Once your jobs have finished successfully, check the error and out logs like we did in the previous exercise.
 
+    Use a script of ours, [star_stats.sh](../scripts/star_stats.sh) to collect the alignment stats. Don't worry about the script's contents at the moment; you'll use very similar commands to create a counts table in the next section. For now:
+
+    ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example  # We'll run this from the main directory
     wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/star_stats.sh
     bash star_stats.sh
+    ```
 
-**2\.** Transfer summary_star_alignments.txt to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
+2. Transfer summary_star_alignments.txt to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
 
-In a new shell session on your laptop. **NOT logged into tadpole**.
+    In Mac/Linux, Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole**. Replace my [your_username] with your username
 
+    ```bash
     mkdir ~/rnaseq_workshop
     cd ~/rnaseq_workshop
-    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/[your_username]/rnaseq_example/summary_star_alignments.txt .
+    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/summary_star_alignments.txt .
+    ```
 
-Its ok of the mkdir command fails ("File exists") because we aleady created the directory earlier.
+    Its ok of the mkdir command fails ("File exists") because we aleady created the directory earlier.
 
-Open in excel (or excel like application), and lets review.
+    Open in excel (or excel like application), and lets review.
 
-The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
-
-## Scripts
-
-slurm script for indexing the genome
-
-[star_index.slurm](../scripts/star_index.slurm)
-
-shell script for indexing the genome
-
-[star_index.sh](../scripts/star_index.sh)
-
-slurm script for mapping using slurm task array and star
-
-[star.slurm](../scripts/star.slurm)
-
-shell script for mapping using bash loop and star.
-
-[star.sh](../scripts/star.sh)
-
-shell script to produce summary mapping table
-
-[star_stats.sh](../scripts/star_stats.sh)
+    The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
