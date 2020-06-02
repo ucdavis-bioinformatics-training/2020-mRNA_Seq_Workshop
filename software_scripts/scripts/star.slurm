@@ -25,7 +25,7 @@ outpath='02-STAR_alignment'
 
 echo "SAMPLE: ${sample}"
 
-module load star/2.7.0e
+module load star
 
 call="STAR
      --runThreadN 8 \

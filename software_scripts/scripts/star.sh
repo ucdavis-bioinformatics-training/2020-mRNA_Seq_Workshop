@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## assumes star version 2.7.0e
+## assumes star
 
 start=`date +%s`
 echo $HOSTNAME
