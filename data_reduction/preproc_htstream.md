@@ -640,7 +640,8 @@ deactivate  # turn off python virtual environment
 Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser.
 
 
-Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc_report.html](https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/HTSMultiQC-cleaning-report_multiqc_report.html)
+Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc_report.html](HTSMultiQC-cleaning-report_multiqc_report.html)
+
 
 
 <!--
