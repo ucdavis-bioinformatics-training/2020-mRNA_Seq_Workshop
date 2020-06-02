@@ -71,5 +71,7 @@ navigation:
     url: photos/photos
   - title: Github page
     url: https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop
+  - title: Report Errors
+    url: https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/issues
   - title: Biocore website
     url: http://bioinformatics.ucdavis.edu
