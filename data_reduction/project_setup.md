@@ -11,7 +11,7 @@ cd
 mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 ```
 
-## Copy Raw Fastq files
+## Link Raw Fastq files
 
 1. Next, go into that directory, create a raw data directory (we are going to call this 00-RawData) and cd into that directory. Lets then create symbolic links to the sample directories that contains the raw data.
 

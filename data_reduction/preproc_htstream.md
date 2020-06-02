@@ -17,7 +17,7 @@ We have found that aggressively “cleaning” and preprocessing of reads can ma
   * Remove reads that are not of primary interest (contamination).
   * Remove too short reads.
 
-Preprocessing also produces a number of statistics that are technical in nature that should be used to evaluate “experimental consistency”.
+Preprocessing also produces a number of statistics about the samples. These can be used to evaluate sample-to-sample consistency.
 
 ### Preprocessing Statistics as QA/QC.
 
@@ -51,7 +51,7 @@ PCA/MDS plots of the preprocessing summary are a great way to look for technical
 
 ## HTStream Streamed Preprocessing of Sequence Data
 
-HTStream is a suite of preprocessing applications for high throughput sequencing data (ex. Illumina). A Fast C++ implementation, designed with discreet functionality that can be pipelined together using standard unix piping.
+HTStream is a suite of preprocessing applications for high throughput sequencing data (ex. Illumina). A fast C++ implementation, designed with discreet functionality that can be pipelined together using standard Unix piping.
 
 Benefits Include:
   * No intermediate files, reducing storage footprint.
@@ -72,7 +72,8 @@ HTStream includes the following applications:
 
 hts_AdapterTrimmer: Identify and remove adapter sequences.  
 hts_CutTrim: Discreet 5' and/or 3' basepair trimming.  
-hts_LengthFilter: Remove reads outside of min and/or max length.  hts_NTrimmer: Extract the longest subsequence with no Ns.    
+hts_LengthFilter: Remove reads outside of min and/or max length.  
+hts_NTrimmer: Extract the longest subsequence with no Ns.    
 hts_Overlapper: Overlap paired end reads, removing adapters when present.  
 hts_PolyATTrim: Identify and remove polyA/T sequence.  
 hts_Primers: Identify and optionally remove 5' and/or 3' primer sequence.  
@@ -81,9 +82,13 @@ hts_SeqScreener: Identify and remove/keep/count contaminants (default phiX).
 hts_Stats: Compute read stats.  
 hts_SuperDeduper: Identify and remove PCR duplicates.  
 
-Can be downloaded and installed from [here](https://github.com/s4hts/HTStream). We hope in the long run to include any and all needed preprocessing routines.
+The source code and pre-compiled binaries for Linux can be downloaded and installed [from the GitHub repository](https://github.com/s4hts/HTStream).
 
-If you encounter any bugs or have suggestions for improvement, please post them to [issues](https://github.com/ibest/HTStream/issues).
+HTStream is also avaiable on [Bioconda](https://bioconda.github.io/), and there is even an image on [Docker Hub](https://hub.docker.com/r/dzs74/htstream).
+
+HTStream was designed to be extensible. We continue to add new preprocessing routines and welcome contributions from collaborators.
+
+If you encounter any bugs or have suggestions for improvement, please post them to [issues](https://github.com/s4hts/HTStream/issues).
 
 # HTStream Setup for our Project
 
@@ -91,13 +96,19 @@ If you encounter any bugs or have suggestions for improvement, please post them 
 
 Let's run the first step of our HTStream preprocessing pipeline, which is always to gather basic stats on the read files. For now, we're only going to run one sample through the pipeline.
 
-1. So let's first take a small subsample of reads, just so our trial run through the pipeline goes really quickly.
+When building a new pipeline, it is almost always a good idea to use a small subset of the data in order to speed up development. A small sample of reads will take seconds to process and help you identify problems that may have only been apparent after hours of waiting for the full data set to process.
+
+1. Let's start by first taking a small subsample of reads, so that our trial run through the pipeline goes really quickly.
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     mkdir HTS_testing
     cd HTS_testing
+    pwd
     ```
+
+    * *Why run ```pwd``` here?*
+
 
     Then create a small dataset.
 
@@ -107,11 +118,11 @@ Let's run the first step of our HTStream preprocessing pipeline, which is always
     ls
     ```
 
-    So we zcat (uncompress and send to screen), pipe to head (param -400000) then pipe to gzip to recompress and name our files subset.
+    So we ```zcat``` (uncompress and send to stdout), pipe ```|```  to ```head``` (param -400000) then pipe to ```gzip``` to recompress and name our files subset.
 
     * *How many reads are we going to analyze in our subset?*
 
-1. Now we'll run our first preprocessing step ... hts_Stats, first loading the module and then looking at help.
+1. Now we'll run our first preprocessing step ```hts_Stats```, first loading the module and then looking at help.
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
@@ -119,12 +130,45 @@ Let's run the first step of our HTStream preprocessing pipeline, which is always
     hts_Stats --help
     ```
 
-    So now lets run hts_Stats and look at the output.
+    * *What version of hts_Stats is loaded?*
+
+
+1. Now lets run ```hts_Stats``` and look at the output.
 
     ```bash
     hts_Stats -1 SampleAC1.subset_R1.fastq.gz \
               -2 SampleAC1.subset_R2.fastq.gz \
-              -L SampleAC1.stats.log -f SampleAC1.stats
+              -L SampleAC1.stats.json > out.tab
+    ```
+
+    * *What happens if you run hts_Stats without piping output to out.tab?*
+
+    * *Can you think of a way to view the output from hts_Stats in less without creating out.tab?*
+
+    By default, all HTS apps output tab formatted files to the stdout. 
+
+    Take a look at the output (remember ```q``` quits):
+    ```bash
+    less out.tab
+    ```
+
+    The output was difficult to understand, lets try without line wrapping (note that you can also type ```-S``` from within ```less``` if you forget). Scroll with the arrow keys, left, right, up, and down.
+    ```bash
+    less -S out.tab
+    ```
+
+    And delete out.tab since we are done with it:
+    ```bash
+    rm out.tab
+    ```
+
+    Remember how this output looks, we will revisit it later.
+
+1. Now lets change the command slightly.
+    ```bash
+    hts_Stats -1 SampleAC1.subset_R1.fastq.gz \
+              -2 SampleAC1.subset_R2.fastq.gz \
+              -L SampleAC1.stats.json -f SampleAC1.stats
     ```
 
     * *What parameters did we use, what do they do?*
@@ -156,11 +200,13 @@ Let's run the first step of our HTStream preprocessing pipeline, which is always
 
     The logs generated by htstream are in [JSON](https://en.wikipedia.org/wiki/JSON) format, like a database format but meant to be readable.
 
+
+
+
 ## Next we are going to screen from ribosomal RNA (rRNA).
 
-Ribosomal RNA can make up 90% or more of a typical _total RNA_ sample. Most library prep methods attempt to reduce the rRNA representation in a sample, oligoDt binds to polyA tails to enrich a sample for mRNA, where Rabo-Depletion binds rRNA sequences to deplete the sample of rRNA. Neither technique is 100% efficient and so knowing the relative proportion of rRNA in each sample can be helpful.
+Ribosomal RNA can make up 90% or more of a typical _total RNA_ sample. Most library prep methods attempt to reduce the rRNA representation in a sample, oligoDt binds to polyA tails to enrich a sample for mRNA, where Ribo-Depletion binds rRNA sequences to biotinylated oligo probes that are captured with streptavidin-coated magnetic beads to deplete the sample of rRNA. Newer methods use targeted probes to facilitate degradation of specific sequences (e.g. Tecan/Nugen [AnyDeplete](https://www.nugen.com/products/technology#inda), [DASH](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0904-5), etc). No technique is 100% efficient all of the time, and some can fail spectacularly, so knowing the relative proportion of rRNA in each sample can be helpful.
 
-Can screen for rRNA in our sample to determine rRNA efficiency.
 
 ### Before we do so we need to find sequences of ribosomal RNA to screen against.
 
@@ -194,7 +240,9 @@ We will use these sequences to identify rRNA in our reads, which are from human.
 
 Save this file to your computer, and rename it to 'human_rrna.fasta'.
 
-Upload your human_rrna.fasta file **to the 'References' directory** in your project folder using either **scp** or FileZilla (or equivalent). Or if you feel like 'cheating', just copy/paste the contents of human_rrna.fa using nano into a file named /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/human_rrna.fasta
+Upload your human_rrna.fasta file **to the 'References' directory** in your project folder using either **scp** or FileZilla (or equivalent). 
+
+Or if you feel like 'cheating', just copy/paste the contents of human_rrna.fa using nano into a file named /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/human_rrna.fasta
 
 ```bash
 nano /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/human_rrna.fasta
@@ -202,7 +250,14 @@ nano /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/human_rrna
 
 paste contents of human_rrna.fa and save
 
-### Using HTStream to count ribosomal rna, but not remove, so just count the occurrences.
+
+This is *really* cheating, but if all else fails:
+```bash
+cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References
+wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/human_rrna.fasta 
+```
+
+### Using HTStream to count ribosomal rna (not remove, but just to count the occurrences).
 
 1. First, view the help documentation for hts_SeqScreener
 
@@ -233,7 +288,7 @@ paste contents of human_rrna.fa and save
 
 ### Stream multiple applications together.
 
-The power of htstream is the ability to stream reads through multiple programs using pipe's. By streaming reads through programs processing will be much quicker, each read is read in only once (written only once), and use significantly less storage as there are no intermediate files. It can do this by streaming a tab-delimited format called tab6.
+The power of HTStream is the ability to stream reads through multiple programs using pipes. By streaming reads through programs, processing will be much quicker because each read is read in only once and written out only once. This approach also uses significantly less storage as there are no intermediate files. HTStream can do this by streaming a tab-delimited format called tab6.
 
 Single end reads are 3 columns:
 
@@ -255,7 +310,7 @@ Paired end reads are 6 columns:
               -r -s ../References/human_rrna.fasta -f SampleAC1.streamed
     ```
 
-    Note the pipe between the two applications!
+    Note the pipe, ```|```, between the two applications!
 
     **Questions**
     * *What new parameters did we use here?*
@@ -267,38 +322,45 @@ Paired end reads are 6 columns:
 
 ## A RNAseq preprocessing pipeline
 
-1. hts_Stats: get stats on raw reads
+1. hts_Stats: get stats on *input* raw reads
 1. hts_SeqScreener: screen out (remove) phiX
-1. hts_SeqScreener: screen for (count) rrnra
+1. hts_SeqScreener: screen for (count) rRNA
 1. hts_SuperDeduper: identify and remove PCR duplicates
 1. hts_AdapterTrimmer: identify and remove adapter sequence
-1. hts_PolyATTrim: remove polyA/T.
-1. hts_NTrimmer: remove any remaining N characters
-1. hts_QWindowTrim: remove poor quality sequence
+1. hts_PolyATTrim: remove polyA/T from the end of reads.
+1. hts_NTrimmer: trim to remove any remaining N characters
+1. hts_QWindowTrim: remove poor quality bases
 1. hts_LengthFilter: use to remove all reads < 50bp
-1. hts_Stats: get stats out output reads
+1. hts_Stats: get stats on *output* cleaned reads
 
 
 ### Why screen for phiX?
 
-PhiX is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in since it does not have a barcode, so in theory should not be in your data.
+PhiX is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
 
 However:
-* When I know PhiX has been spiked in, I find sequence every time
-    * [update] When dual matched barcodes are used, then near zero phiX reads identified.
+* When we know PhiX has been spiked in, we find sequence every time.
+    * [update] When dual matched barcodes are used, then almost zero phiX reads can be identified.
 * When I know PhiX has not been spiked in, I do not find sequence
 
-For RNAseq and variant analysis (any mapping based technique) it is not critical to remove, but for sequence assembly it is. I think its better safe than sorry and screen for it every time.
+For RNAseq and variant analysis (any mapping based technique) it is not critical to remove, but for sequence assembly it is. Unless you are sequencing PhiX, it is noise, so its better safe than sorry to screen for it every time.
 
 ### Removing PCR duplicates with hts_SuperDeduper.
 
-Removing PCR duplicates can be **controversial** for RNAseq, but I'm in favor of it. It tells you alot about the original complexity of each sample and potential impact of sequencing depth.
+Removing PCR duplicates can be **controversial** for RNAseq, but I'm in favor of it for paired-end data. Duplication rate tells you a lot about the original complexity of each sample and potential impact of sequencing depth.
 
-__**However, I would never do PCR duplicate removal on single-end reads!**__
+__**However, I would never do PCR duplicate removal on Single-End reads!**__
+
+Many other read de-duplication algorithms rely on mapping position to identify duplicated reads (although some other reference free methods do exist [https://doi.org/10.1186/s12859-016-1192-5](https://doi.org/10.1186/s12859-016-1192-5)). Reads that are mapped to the same position on the genome probably represent the same original fragment sequenced multiple times (think "technical replicates").
+
+However, this approach requires that there be a reference to map reads against and requires that someone maps them!
+
+hts_SuperDeduper does not require a reference or mapped reads. Instead it uses a small portion of each paired read to identify duplicates. If an identical pattern is identified in multiple reads, extra copies are discarded.
+
 
 <img src="preproc_figures/SD_eval.png" alt="SD_eval" width="80%"/>
 
-Super Deduper only uses a small portion of the reads to identify duplicates.
+
 
 <img src="preproc_figures/SD_performance.png" alt="SD_performance" width="80%"/>
 
@@ -334,25 +396,45 @@ hts_Overlapper product: adapter trimmed, single
 
 Both hts_AdapterTrimmer and hts_Overlapper employ this principle to identify and remove adapters for paired-end reads. For paired-end reads the difference between the two are the output, as overlapper produces single-end reads when the pairs overlap and adapter trimmer keeps the paired end format. For single-end reads, adapter trimmer identifies and removes adapters by looking for the adapter sequence, where overlapper just ignores single-end reads (nothing to overlap).
 
+
+### Now lets see if we can find evidence of Illumina sequencing adapters in our subset.
+Remember that Illumina reads must have P5 and P7 adapters and generally look like this (in R1 orientation):
+
+P5---Read1primer---INSERT---IndexReadprimer--index--P7(rc) 
+
+This sequence is P7(rc): ATCTCGTATGCCGTCTTCTGCTTG. It should be at the end of any R1 that contains a full-length adapter sequence.
+
+    ```bash
+    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    zcat SampleAC1.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
+    ```
+
+    * *What did you find?*
+    * *Do you remember how to count the number of instances?*
+    * *Roughly, what percentage of this data has adapters?*
+
+
 ### Q-window trimming.
 
-As a sequencing run progresses the quality scores tend to get worse, so its common to trim of the worst quality bases.
+As a sequencing run progresses the quality scores tend to get worse. Quality scores are essentially a guess about the accuracy of a base call, so it is common to trim of the worst quality bases.
 
 <img src="preproc_figures/Qwindowtrim.png" alt="Qwindowtrim" width="80%"/>
 
-This is how reads commonly look, the start at "good" quality, increase to "excellent" and degrade to "poor", with R2 always looking worse (except when they don't) than R1 and get worse as the number of cycles increases.
+This is how reads commonly look, they start at "good" quality, increase to "excellent" and degrade to "poor", with R2 always looking worse (except when they don't) than R1 and get worse as the number of cycles increases.
 
-hts_QWindowTrim trim 5' and/or 3' end of the sequence using a windowing (average quality in window) approach.
+hts_QWindowTrim trims 5' and/or 3' end of the sequence using a windowing (average quality in window) approach.
 
 ### What does all this preprocessing get you
 
-Comparing star mapping with raw and preprocessed reads
+Comparing STAR mapping count with raw and preprocessed reads
 
 <img src="preproc_figures/final.png" alt="final" width="40%"/>
 
 ### Lets put it all together
 
 ```bash
+cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+
 hts_Stats -L SampleAC1_htsStats.json -N "initial stats" \
     -1 SampleAC1.subset_R1.fastq.gz \
     -2 SampleAC1.subset_R2.fastq.gz | \
