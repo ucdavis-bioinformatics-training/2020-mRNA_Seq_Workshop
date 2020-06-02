@@ -626,7 +626,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
 1. QA/QC Summary of the json files.
 
-Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here (https://github.com/bnjenner/MultiQC)[https://github.com/bnjenner/MultiQC].
+Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here [https://github.com/bnjenner/MultiQC](https://github.com/bnjenner/MultiQC).
 
 ```bash
 ## Run multiqc to collect statistics and create a report:
@@ -640,7 +640,7 @@ deactivate  # turn off python virtual environment
 Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser.
 
 
-Or in case of emergency, download this copy: (HTSMultiQC-cleaning-report_multiqc_report.html)[https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/HTSMultiQC-cleaning-report_multiqc_report.html]
+Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc_report.html](https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/HTSMultiQC-cleaning-report_multiqc_report.html)
 
 
 <!--
