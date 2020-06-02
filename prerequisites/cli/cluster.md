@@ -89,7 +89,7 @@ The non slurm version is the [template.sh](../software_scripts/scripts/template.
 After finishing you will see two new files in the directory stdout.out and stderr.err where stdout and stderr (respectively) were redirected to.
 
 ---
-**2c\.** ['squeue'](https://slurm.schedmd.com/squeue.html) is to list your currently queued/running jobs. T
+**2c\.** ['squeue'](https://slurm.schedmd.com/squeue.html) is to list your currently queued/running jobs.
 
     squeue --help
 
@@ -108,7 +108,7 @@ You can see the job has been running (ST=R) for 6 seconds (TIME=0:06) on node dr
 
 You can give it a job ID, or if you use the "-u" option with your username, you can cancel all of your jobs at once.
 
-    scancel -j 29390121
+    scancel 29390121
 
 will cancel the above job if its still running.
 

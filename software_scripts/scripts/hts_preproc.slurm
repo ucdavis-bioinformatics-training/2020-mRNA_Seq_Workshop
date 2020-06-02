@@ -27,7 +27,7 @@ outpath="01-HTS_Preproc"
 
 echo "SAMPLE: ${sample}"
 
-module load htstream/1.1.0
+module load htstream/1.3.1
 
 call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
           -1 ${inpath}/${sample}/*R1*.fastq.gz \
