@@ -404,14 +404,14 @@ P5---Read1primer---INSERT---IndexReadprimer--index--P7(rc)
 
 This sequence is P7(rc): ATCTCGTATGCCGTCTTCTGCTTG. It should be at the end of any R1 that contains a full-length adapter sequence.
 
-    ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
-    zcat SampleAC1.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
-    ```
+```bash
+cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+zcat SampleAC1.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
+```
 
-    * *What did you find?*
-    * *Do you remember how to count the number of instances?*
-    * *Roughly, what percentage of this data has adapters?*
+* *What did you find?*
+* *Do you remember how to count the number of instances?*
+* *Roughly, what percentage of this data has adapters?*
 
 
 ### Q-window trimming.
@@ -537,9 +537,12 @@ echo $runtime
 </div>
 
 
-After looking at the script, lets make a slurmout directory for the output to go and let's run it.
+Double check to make sure that slurmout and 01-HTS_Preproc directories have been created for output, then after looking at the script, let's run it.
 
 ```bash
+cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+mkdir -p slurmout  # -p tells mkdir not to complain if the directory already exists
+mkdir -p 01-HTS_Preproc
 sbatch hts_preproc.slurm  # moment of truth!
 ```
 
@@ -602,7 +605,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     zless 00-RawData/SampleAC1/SampleAC1_L3_R1.fastq.gz
     ```
 
-    Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit.
+    Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit. Alternatively, you can use zcat and grep like we did earlier.
 
     Now look at the output file:
 
@@ -610,7 +613,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     zless 01-HTS_Preproc/SampleAC1/SampleAC1_R1.fastq.gz
     ```
 
-    If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **/** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
+    If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
 
     Lets grep for the sequence and count occurrences
 
@@ -623,6 +626,21 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
 1. QA/QC Summary of the json files.
 
+Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here (https://github.com/bnjenner/MultiQC)[https://github.com/bnjenner/MultiQC].
+
+```bash
+## Run multiqc to collect statistics and create a report:
+cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+source /share/workshop/shunter/rnaseq_example/multiqc/bin/activate # setup a python virtual environment
+mkdir -p 01-HTS-multiqc-report
+multiqc -i HTSMultiQC-cleaning-report -o 01-HTS-multiqc-report ./01-HTS_Preproc
+deactivate  # turn off python virtual environment
+```
+
+Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser. 
+
+
+Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc_report.html](HTSMultiQC-cleaning-report_multiqc_report.html)
 
 <!--
     I've created a small R script to read in each json file, pull out some relevant stats and write out a table for all samples.
