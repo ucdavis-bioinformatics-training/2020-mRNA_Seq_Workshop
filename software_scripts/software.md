@@ -17,3 +17,5 @@ Software
 1. [HTStream](https://github.com/s4hts/HTStream)
 1. [Star](https://github.com/alexdobin/STAR)
 1. [Salmon](https://salmon.readthedocs.io/en/latest/)
+1. [IGV](http://software.broadinstitute.org/software/igv/)
+1. [MultiQC](https://multiqc.info/)
