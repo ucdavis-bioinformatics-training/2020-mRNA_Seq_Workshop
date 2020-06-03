@@ -40,7 +40,7 @@ navigation:
   - title: R - Intro to R
     url: prerequisites/intro2R/Intro2R_fixed
   - title: R - Prepare Data in R (extra)
-    url: prerequisites/intro2R/data_in_R_prepare_fixed
+    url: prerequisites/intro2R/data_in_R_prepare
   - title: R - Data in R (extra)
     url: prerequisites/intro2R/data_in_R_fixed
   - title: More Materials (extra)

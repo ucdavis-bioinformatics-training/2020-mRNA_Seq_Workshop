@@ -1,12 +1,10 @@
 ---
 title: "Data_in_R"
 author: "Bioinformatics Core"
-output: 
+output:
     html_document:
-      keep_md: true
+      keep_md: TRUE
 ---
-
-
 
 Recreating (and maybe improving on) some of the figures generated with plot-bamstats application in R.
 
@@ -21,20 +19,20 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ────────────────────────── tidyverse 1.2.1 ──
+## ── Attaching packages ──────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
-## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
-## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
-## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
-## ✔ readr   1.3.1     ✔ forcats 0.4.0
+## ✓ ggplot2 3.3.1     ✓ purrr   0.3.4
+## ✓ tibble  3.0.1     ✓ dplyr   1.0.0
+## ✓ tidyr   1.1.0     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0
 ```
 
 ```
-## ── Conflicts ───────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
+## ── Conflicts ─────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
 ```
 
 ```r
@@ -74,7 +72,7 @@ getwd()
 ```
 
 ```
-## [1] "/Users/mattsettles/projects/src/github.com-ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/intro2R"
+## [1] "/Users/mattsettles/Downloads"
 ```
 
 ```r
@@ -82,7 +80,7 @@ file.exists("Data_in_R_files/bwa_mem_Stats.log")
 ```
 
 ```
-## [1] TRUE
+## [1] FALSE
 ```
 
 If it returned TRUE, great! If not return to the Prepare data_in_R doc and follow the directions to get the file.
@@ -90,7 +88,7 @@ If it returned TRUE, great! If not return to the Prepare data_in_R doc and follo
 So lets read in the file and view the first few lines and get the length
 
 ```r
-data <- readLines("Data_in_R_files/bwa_mem_Stats.log")
+data <- readLines("bwa_mem_Stats.log")
 head(data)
 ```
 
@@ -281,8 +279,8 @@ fq <- separate(data.frame(fq),col=1, into=c("Pair", "Cycle", seq(41)), sep="\t",
 ```
 
 ```
-## Warning: Expected 43 pieces. Additional pieces discarded in 202 rows [1, 2,
-## 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].
+## Warning: Expected 43 pieces. Additional pieces discarded in 202 rows [1, 2, 3,
+## 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].
 ```
 
 We get a message here, saying data is missing. This is because there are no 38,39,40,41 quality scores (the typical range for Illumina qualities).
@@ -315,7 +313,18 @@ First lets extract the indel distribution data and create a table
 
 ```r
 id <- grep("^ID",data, value=TRUE)
-id <- separate(data.frame(id),col=1, into=c("ID", "length", "insertion_count", "deletion_count"), sep="\t", covert=TRUE)[,-1]
+id <- separate(data.frame(id),col=1, into=c("ID", "length", "insertion_count", "deletion_count"), convert=TRUE, sep="\t")[,-1]
+tail(id)
+```
+
+```
+##    length insertion_count deletion_count
+## 34     34               0              1
+## 35     35               0              1
+## 36     36               0              1
+## 37     40               0              1
+## 38     42               0              1
+## 39     43               0              2
 ```
 
 ### Lets get the Indel per cycle
@@ -433,7 +442,7 @@ g <- ggplot(data = is)
 g + geom_line( aes(x=get("insert size"), y=get("all pairs")))
 ```
 
-![](Data_in_R_files/figure-html/plot_is-1.png)<!-- -->
+![](data_in_R_files/figure-html/plot_is-1.png)<!-- -->
 
 
 Ok, now lets add some labels to the plot
@@ -444,7 +453,7 @@ g + geom_line( aes(x=get("insert size"), y=get("all pairs"))) +
   labs( x = "insert size", y = "all pairs", title ="Mapped insert sizes", subtitle = "All Pairs", caption = "all pairs insert size")
 ```
 
-![](Data_in_R_files/figure-html/plot_is_labels-1.png)<!-- -->
+![](data_in_R_files/figure-html/plot_is_labels-1.png)<!-- -->
 
 Ok, what about plotting multiple data objects on the same plot (multiple lines), in that case we can specifically set the y axis in geom_line and color, then call geom_lines twice (or more times).
 
@@ -456,7 +465,7 @@ g + geom_line(aes(y=get("inward")),color="blue") +
     labs( x = "insert size", y = "all pairs", title ="Mapped insert sizes", subtitle = "All Pairs", caption = "all pairs insert size")
 ```
 
-![](Data_in_R_files/figure-html/plot_is_mlines-1.png)<!-- -->
+![](data_in_R_files/figure-html/plot_is_mlines-1.png)<!-- -->
 
 lets try adjusting the x/y limits to 0,600 and 0,20000 respectively.
 
@@ -467,7 +476,7 @@ g + geom_line(aes(y=get("inward")),color="blue") +
   coord_cartesian(xlim=c(0,500), ylim=c(0,600000))
 ```
 
-![](Data_in_R_files/figure-html/plot_is_limits-1.png)<!-- -->
+![](data_in_R_files/figure-html/plot_is_limits-1.png)<!-- -->
 
 Ok so now put all these elements together into a single plot, save final plot as 'g'
 
@@ -489,7 +498,7 @@ g <- g + theme_light()
 plot(g)
 ```
 
-![](Data_in_R_files/figure-html/insert_length-1.png)<!-- -->
+![](data_in_R_files/figure-html/insert_length-1.png)<!-- -->
 
 ### Plotting GC content
 
@@ -516,7 +525,7 @@ h <- h + geom_line()
 h
 ```
 
-![](Data_in_R_files/figure-html/plot_gc-1.png)<!-- -->
+![](data_in_R_files/figure-html/plot_gc-1.png)<!-- -->
 
 ** On your own**: Finish the plot (add labels, etc.). Save the final graph object in h
 
@@ -538,7 +547,7 @@ i <- ic + geom_line() + coord_cartesian(ylim=c(0,100))
 i
 ```
 
-![](Data_in_R_files/figure-html/plot_base_comp-1.png)<!-- -->
+![](data_in_R_files/figure-html/plot_base_comp-1.png)<!-- -->
 
 ** On your own**: Using what you learned until now, finish the plot, save it as object i
 
@@ -550,7 +559,7 @@ i2 <- ic + geom_boxplot()
 i2
 ```
 
-![](Data_in_R_files/figure-html/actg_boxplot-1.png)<!-- -->
+![](data_in_R_files/figure-html/actg_boxplot-1.png)<!-- -->
 
 ** On your own**: Try some other geometries (Ex. bin2d, col, count, which generate an 'interpretable' plot)
 
@@ -571,7 +580,7 @@ j <- ggplot(fqm, aes(Cycle, variable))
 j + geom_tile(aes(fill = as.numeric(value)))
 ```
 
-![](Data_in_R_files/figure-html/plot_heatmap-1.png)<!-- -->
+![](data_in_R_files/figure-html/plot_heatmap-1.png)<!-- -->
 
 Now lets try changing the gradient colors and modify the legend, add labels. The ggplot2 'theme' function can be used to modify individual components of a theme.
 
@@ -595,7 +604,7 @@ j = j + geom_tile(aes(fill = as.numeric(value))) +
 j
 ```
 
-![](Data_in_R_files/figure-html/heatmap-1.png)<!-- -->
+![](data_in_R_files/figure-html/heatmap-1.png)<!-- -->
 
 ** On your own** Try modifying scale_fill_gradient to scale_fill_distiller.
 
@@ -613,7 +622,7 @@ k <- k + geom_line(aes(y=as.numeric(deletion_count)), color = "black", size=1.5)
 k
 ```
 
-![](Data_in_R_files/figure-html/indel_plot-1.png)<!-- -->
+![](data_in_R_files/figure-html/indel_plot-1.png)<!-- -->
 
 Lets try changing the Y axis to log scale
 
@@ -622,7 +631,7 @@ k <- k + scale_y_log10()
 k
 ```
 
-![](Data_in_R_files/figure-html/indel_plot2-1.png)<!-- -->
+![](data_in_R_files/figure-html/indel_plot2-1.png)<!-- -->
 
 Tweek the grid elments using theme
 
@@ -637,7 +646,7 @@ k
 ## Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
-![](Data_in_R_files/figure-html/grid_tweek-1.png)<!-- -->
+![](data_in_R_files/figure-html/grid_tweek-1.png)<!-- -->
 
 ## update the axis labels
 
@@ -650,7 +659,7 @@ k
 ## Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
-![](Data_in_R_files/figure-html/new_axis_lables-1.png)<!-- -->
+![](data_in_R_files/figure-html/new_axis_lables-1.png)<!-- -->
 
 Now lets also plot the ratio of the 2, but first we need to create the object
 
@@ -662,7 +671,7 @@ l <- l + geom_line(aes(y=as.numeric(ratio)), color = "green", size=1.0)
 l
 ```
 
-![](Data_in_R_files/figure-html/ratio-1.png)<!-- -->
+![](data_in_R_files/figure-html/ratio-1.png)<!-- -->
 Tweek the grid
 
 ```r
@@ -672,7 +681,7 @@ l <- l + theme(panel.grid.minor = element_blank(),
 l
 ```
 
-![](Data_in_R_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+![](data_in_R_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
 Update axis labels
 
 ```r
@@ -680,7 +689,7 @@ l <- l + xlab("indel length") + ylab("insertion/deletion ratio")
 l
 ```
 
-![](Data_in_R_files/figure-html/update_labels-1.png)<!-- -->
+![](data_in_R_files/figure-html/update_labels-1.png)<!-- -->
 
 Now lets use gridExtra to plot both in the same plat
 
@@ -692,12 +701,12 @@ grid.arrange(k, l, nrow = 1)
 ## Warning: Transformation introduced infinite values in continuous y-axis
 ```
 
-![](Data_in_R_files/figure-html/grid-1.png)<!-- -->
+![](data_in_R_files/figure-html/grid-1.png)<!-- -->
 
 ### Fancy Multiple plots in a grid
 The gridExtra package is great for plotting multiple object in one plot.
 
-![](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/intro2R/Data_in_R_figures/grid_plot.png)<!-- -->
+![](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/prerequisites/intro2R/Data_in_R_figures/grid_plot.png)<!-- -->
 
 
 ```r
@@ -709,7 +718,7 @@ full <- grid.arrange(
 )
 ```
 
-![](Data_in_R_files/figure-html/cluster-1.png)<!-- -->
+![](data_in_R_files/figure-html/cluster-1.png)<!-- -->
 
 ** on your own**: Play with th grid.arrange function, using the plots you've created to create you own final combined plot.
 
@@ -747,13 +756,13 @@ sessionInfo()
 ```
 
 ```
-## R version 3.6.1 (2019-07-05)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS Mojave 10.14.6
+## R version 4.0.0 (2020-04-24)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.4
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -762,21 +771,23 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] gridExtra_2.3   reshape2_1.4.3  forcats_0.4.0   stringr_1.4.0  
-##  [5] dplyr_0.8.3     purrr_0.3.2     readr_1.3.1     tidyr_0.8.3    
-##  [9] tibble_2.1.3    ggplot2_3.2.1   tidyverse_1.2.1 knitr_1.24     
+##  [1] gridExtra_2.3   reshape2_1.4.4  forcats_0.5.0   stringr_1.4.0  
+##  [5] dplyr_1.0.0     purrr_0.3.4     readr_1.3.1     tidyr_1.1.0    
+##  [9] tibble_3.0.1    ggplot2_3.3.1   tidyverse_1.3.0 knitr_1.28     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.5 xfun_0.9         haven_2.1.1      lattice_0.20-38 
-##  [5] colorspace_1.4-1 generics_0.0.2   vctrs_0.2.0      htmltools_0.3.6 
-##  [9] yaml_2.2.0       rlang_0.4.0      pillar_1.4.2     glue_1.3.1      
-## [13] withr_2.1.2      modelr_0.1.5     readxl_1.3.1     plyr_1.8.4      
-## [17] munsell_0.5.0    gtable_0.3.0     cellranger_1.1.0 rvest_0.3.4     
-## [21] evaluate_0.14    labeling_0.3     highr_0.8        broom_0.5.2     
-## [25] Rcpp_1.0.2       scales_1.0.0     backports_1.1.4  jsonlite_1.6    
-## [29] hms_0.5.1        digest_0.6.20    stringi_1.4.3    grid_3.6.1      
-## [33] cli_1.1.0        tools_3.6.1      magrittr_1.5     lazyeval_0.2.2  
-## [37] crayon_1.3.4     pkgconfig_2.0.2  zeallot_0.1.0    xml2_1.2.2      
-## [41] lubridate_1.7.4  assertthat_0.2.1 rmarkdown_1.15   httr_1.4.1      
-## [45] rstudioapi_0.10  R6_2.4.0         nlme_3.1-141     compiler_3.6.1
+##  [1] tidyselect_1.1.0 xfun_0.14        haven_2.3.1      lattice_0.20-41 
+##  [5] colorspace_1.4-1 vctrs_0.3.0      generics_0.0.2   htmltools_0.4.0 
+##  [9] yaml_2.2.1       blob_1.2.1       rlang_0.4.6      pillar_1.4.4    
+## [13] glue_1.4.1       withr_2.2.0      DBI_1.1.0        dbplyr_1.4.4    
+## [17] modelr_0.1.8     readxl_1.3.1     plyr_1.8.6       lifecycle_0.2.0 
+## [21] munsell_0.5.0    gtable_0.3.0     cellranger_1.1.0 rvest_0.3.5     
+## [25] evaluate_0.14    labeling_0.3     fansi_0.4.1      highr_0.8       
+## [29] broom_0.5.6      Rcpp_1.0.4.6     scales_1.1.1     backports_1.1.7 
+## [33] jsonlite_1.6.1   farver_2.0.3     fs_1.4.1         hms_0.5.3       
+## [37] digest_0.6.25    stringi_1.4.6    grid_4.0.0       cli_2.0.2       
+## [41] tools_4.0.0      magrittr_1.5     crayon_1.3.4     pkgconfig_2.0.3 
+## [45] ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0     lubridate_1.7.8 
+## [49] assertthat_0.2.1 rmarkdown_2.2    httr_1.4.1       rstudioapi_0.11 
+## [53] R6_2.4.1         nlme_3.1-148     compiler_4.0.0
 ```

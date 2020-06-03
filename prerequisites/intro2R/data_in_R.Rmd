@@ -1,22 +1,10 @@
 ---
 title: "Data_in_R"
 author: "Bioinformatics Core"
-output: html_document
+output:
+    html_document:
+      keep_md: TRUE
 ---
-
-```{r setup, include=FALSE, echo=FALSE, warning=FALSE, error=FALSE}
-library(knitr)
-
-colFmt = function(x,color){
-  outputFormat = opts_knit$get("rmarkdown.pandoc.to")
-  if(outputFormat == 'latex')
-    paste("\\textcolor{",color,"}{",x,"}",sep="")
-  else if(outputFormat == 'html')
-    paste("<font color='",color,"'>",x,"</font>",sep="")
-  else
-    x
-}
-```
 
 Recreating (and maybe improving on) some of the figures generated with plot-bamstats application in R.
 
@@ -41,7 +29,7 @@ If it returned TRUE, great! If not return to the Prepare data_in_R doc and follo
 
 So lets read in the file and view the first few lines and get the length
 ```{r load_data}
-data <- readLines("Data_in_R_files/bwa_mem_Stats.log")
+data <- readLines("bwa_mem_Stats.log")
 head(data)
 tail(data)
 length(data)
@@ -185,7 +173,8 @@ First lets extract the indel distribution data and create a table
 
 ```{r get_id}
 id <- grep("^ID",data, value=TRUE)
-id <- separate(data.frame(id),col=1, into=c("ID", "length", "insertion_count", "deletion_count"), sep="\t", covert=TRUE)[,-1]
+id <- separate(data.frame(id),col=1, into=c("ID", "length", "insertion_count", "deletion_count"), convert=TRUE, sep="\t")[,-1]
+tail(id)
 ```
 
 ### Lets get the Indel per cycle
@@ -410,7 +399,6 @@ j = j + geom_tile(aes(fill = as.numeric(value))) +
         axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(fill = "Quality value")
 j
-
 ```
 
 ** On your own** Try modifying scale_fill_gradient to scale_fill_distiller.
@@ -478,10 +466,10 @@ grid.arrange(k, l, nrow = 1)
 The gridExtra package is great for plotting multiple object in one plot.
 
 ```{r grid_image, echo=FALSE, fig.width=1,fig.height=1}
-include_graphics("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/intro2R/Data_in_R_figures/grid_plot.png")
+include_graphics("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/prerequisites/intro2R/Data_in_R_figures/grid_plot.png")
 ```
 
-```{r cluster}
+```{r cluster, fig.width=10}
 full <- grid.arrange(
   g, h, i, i2,
   widths = c(2, 1, 1),
