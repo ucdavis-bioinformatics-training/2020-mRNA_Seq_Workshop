@@ -1,7 +1,7 @@
 ---
 title: "R for Biologist - An Introduction to R"
 author: "Bioinformatics Core"
-date: "2019-08-28"
+date: "2020-06-03"
 output:
   html_document:
     keep_md: TRUE
@@ -10,89 +10,7 @@ output:
 
 
 
-R and RStudio
-========================================================
-
-### What is R?
-[R](http://r-project.org/) is a language and environment for statistical computing and graphics developed in 1993. It provides a wide variety of statistical and graphical techniques (linear and nonlinear modeling, statistical tests, time series analysis, classification, clustering, ...), and is highly extensible, meaning that the user community can write new R tools. It is a GNU project (Free and Open Source).
-
-The R language has its roots in the S language and environment which was developed at Bell Laboratories (formerly AT&T, now Lucent Technologies) by John Chambers and colleagues. R was created by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand, and now, R is developed by the R Development Core Team, of which Chambers is a member. R is named partly after the first names of the first two R authors (Robert Gentleman and Ross Ihaka), and partly as a play on the name of S. R can be considered as a different implementation of S. There are some important differences, but much code written for S runs unaltered under R.
-
-Some of R's strengths:
-
-* The ease with which well-designed publication-quality plots can be produced, including mathematical symbols and formulae where needed. Great care has been taken over the defaults for the minor design choices in graphics, but the user retains full control.
-* It compiles and runs on a wide variety of UNIX platforms and similar systems (including FreeBSD and Linux), Windows and MacOS.
-* R can be extended (easily) via packages.
-* R has its own LaTeX-like documentation format, which is used to supply comprehensive documentation, both on-line in a number of formats and in hardcopy.
-* It has a vast community both in academia and in business.
-* It's FREE!   
-
-### The R environment
-R is an integrated suite of software facilities for data manipulation, calculation and graphical display. It includes
-
-* an effective data handling and storage facility,
-* a suite of operators for calculations on arrays, in particular matrices,
-* a large, coherent, integrated collection of intermediate tools for data analysis,
-* graphical facilities for data analysis and display either on-screen or on hardcopy, and
-* a well-developed, and effective programming language which includes conditionals, loops, user-defined recursive functions and input and output facilities.
-
-The term "environment" is intended to characterize it as a fully planned and coherent system, rather than an incremental accretion of very specific and inflexible tools, as is frequently the case with other data analysis software.
-
-R, like S, is designed around a true computer language, and it allows users to add additional functionality by defining new functions. Much of the system is itself written in the R dialect of S, which makes it easy for users to follow the algorithmic choices made. For computationally-intensive tasks, C, C++ and Fortran code can be linked and called at run time. Advanced users can write C code to manipulate R objects directly.
-
-Many users think of R as a statistics system. The R group prefers to think of it of an environment within which statistical techniques are implemented.   
-
-### The R Homepage
-The R homepage has a wealth of information on it,
-
-[R-project.org](http://r-project.org/)
-
-On the homepage you can:
-
-* Learn more about R
-* Download R
-* Get Documentation (official and user supplied)
-* Get access to CRAN 'Comprehensive R archival network'
-
-### Interface for R
-
-There are many ways one can interface with R language. Here are a few popular ones:
-
-* [RStudio](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/wednesday/Intro2R/rstudio.png)
-* [RGui](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/wednesday/Intro2R/rgui.png)
-* Jupyter and R notebooks
-* text editors, such as vi(m), Emacs...
-
-
-### RStudio
-
-[RStudio](http://rstudio.com/) started in 2010, to offer R a more full featured integrated development environment (IDE) and modeled after matlab's IDE.
-
-RStudio has many features:
-
-* syntax highlighting
-* code completion
-* smart indentation
-* "Projects"
-* workspace browser and data viewer
-* embedded plots
-* Markdown notebooks, Sweave authoring and knitr with one click pdf or html
-* runs on all platforms and over the web
-* etc. etc. etc.
-
-RStudio and its team have contributed to many R packages.[13] These include:
-
-* Tidyverse – R packages for data science, including ggplot2, dplyr, tidyr, and purrr
-* Shiny – An interactive web technology
-* RMarkdown – Insert R code into markdown documents
-* knitr – Dynamic reports combining R, TeX, Markdown & HTML
-* packrat – Package dependency tool
-* devtools – Package development tool
-
-RStudio Cheat Sheets: [rstudio-ide.pdf](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
-
 ---
-
 
 Topics covered in this introduction to R
 ====================================================
@@ -114,6 +32,10 @@ Topic 1. Basic concepts
 There are three concepts that we should be familiar with before working in R:
 
 * Operators
+* Functions
+* Variables
+
+### Operators
 
 <table class="table table-striped" style="width: auto !important; ">
 <caption>Assignment Operators in R</caption>
@@ -141,15 +63,15 @@ There are three concepts that we should be familiar with before working in R:
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;"> \+ </td>
+   <td style="text-align:center;"> + </td>
    <td style="text-align:center;"> Addition </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> \- </td>
+   <td style="text-align:center;"> - </td>
    <td style="text-align:center;"> Subtraction </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> \* </td>
+   <td style="text-align:center;"> * </td>
    <td style="text-align:center;"> Multiplication </td>
   </tr>
   <tr>
@@ -239,17 +161,62 @@ There are three concepts that we should be familiar with before working in R:
 </tbody>
 </table>
 
-* Functions
+### Functions
 
 Functions are essential in all programming languages. A function takes zero or more parameters and return a result. The way to use a function in R is:
 
 function.name(parameter1=value1, ...)
 
 
-* Variables
+```r
+sum(1, 2)
+```
+
+```
+## [1] 3
+```
+
+### Variables
 
 A variable is a named storage. The name of a variable can have letters, numbers, dot and underscore. However, a valid variable name cannot start with a underscore or a number, or start with a dot that is followed by a number.
 
+The following assignments will work:
+
+
+```r
+a <- 1
+a
+```
+
+```
+## [1] 1
+```
+
+```r
+b = 2 # in this context, = works the same way as <-, but we will use <-
+b
+```
+
+```
+## [1] 2
+```
+
+```r
+.c <- 3 # what's different about the way this variable behaves?
+.c
+```
+
+```
+## [1] 3
+```
+
+These variable names are invalid and will produce errors:
+
+
+```r
+1a <- 4
+.1a <- 5
+```
 
 ---
 
@@ -258,7 +225,7 @@ Topic 2. Basic data types in R
 
 ### Simple variables: variables that have a numeric value, a character value (such as a string), or a logical value (True or False)
 
-Examples of numeric values.
+So far, all our variables have been numeric. Examples of numeric values:
 
 ```r
 # assign number 150 to variable a.
@@ -280,7 +247,7 @@ b
 ## [1] 0.03
 ```
 
-Examples of character values.
+Examples of character values:
 
 ```r
 # assign a string "Professor" to variable title
@@ -302,7 +269,7 @@ hello
 ## [1] "Hello World"
 ```
 
-Examples of logical values.
+Examples of logical values:
 
 ```r
 # assign logical value "TRUE" to variable is_female
@@ -335,7 +302,7 @@ is_adult
 ## [1] TRUE
 ```
 
-To find out the type of variable.
+To find out the type of variable, we can use the `class()` function. To check if a variable belongs to a specific class, we can use functions that return a logical value, like `is.numeric()`.
 
 ```r
 class(is_female)
@@ -346,7 +313,6 @@ class(is_female)
 ```
 
 ```r
-# To check whether the variable is a specific type
 is.numeric(hello)
 ```
 
@@ -388,7 +354,7 @@ as.numeric(is_male)
 ## [1] 0
 ```
 
-R does not know how to convert a numeric variable to a character variable.
+R can convert a numeric variable to a character variable...
 
 ```r
 b
@@ -406,6 +372,51 @@ as.character(b)
 ## [1] "0.03"
 ```
 
+...but most of the time, character variables cannot be converted to numeric variables.
+
+```r
+as.numeric(hello)
+```
+
+```
+## Warning: NAs introduced by coercion
+```
+
+```
+## [1] NA
+```
+
+```r
+# unless the character is basically a numerical in quotes
+d <- as.character(b)
+class(d)
+```
+
+```
+## [1] "character"
+```
+
+```r
+as.numeric(d)
+```
+
+```
+## [1] 0.03
+```
+
+```r
+# this won't work:
+e <- "three"
+as.numeric(e)
+```
+
+```
+## Warning: NAs introduced by coercion
+```
+
+```
+## [1] NA
+```
 
 ### Vectors: a vector is a combination of multiple values(numeric, character or logical) in the same object. A vector is created using the function c() (for concatenate).
 
@@ -907,7 +918,7 @@ class(my_matrix)
 ```
 
 ```
-## [1] "matrix"
+## [1] "matrix" "array"
 ```
 
 
@@ -1035,7 +1046,7 @@ A data frame can be extended.
 
 
 ```r
-# add a column that has the information on the marrital status of friends
+# add a column that has the information on the marital status of friends
 friends$married <- c("YES", "YES", "NO", "YES")
 friends
 ```
@@ -1168,7 +1179,7 @@ R base function read.table() is a general funciton that can be used to read a fi
 data <- read.table(file="./Intro2R_files/raw_counts.txt", sep="\t", header=T, stringsAsFactors=F)
 
 # There is a very convenient way to read files from the internet.
-data <- read.table(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/intro2R/Intro2R_files/raw_counts.txt", sep="\t", header=T, stringsAsFactors=F)
+data <- read.table(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/prerequisites/intro2R/Intro2R_files/raw_counts.txt", sep="\t", header=T, stringsAsFactors=F)
 ```
 
 Take a look at the beginning part of the data frame.
@@ -1178,20 +1189,20 @@ head(data)
 ```
 
 ```
-##            C61  C62  C63  C64  C91  C92  C93 C94 I561 I562 I563 I564 I591
-## AT1G01010  322  346  256  396  372  506  361 342  638  488  440  479  770
-## AT1G01020  149   87  162  144  189  169  147 108  163  141  119  147  182
-## AT1G01030   15   32   35   22   24   33   21  35   18    8   54   35   23
-## AT1G01040  687  469  568  651  885  978  794 862  799  769  725  715  811
-## AT1G01046    1    1    5    4    5    3    0   2    4    3    1    0    2
-## AT1G01050 1447 1032 1083 1204 1413 1484 1138 938 1247 1516  984 1044 1374
-##           I592 I593 I594 I861 I862 I863 I864 I891 I892 I893 I894
-## AT1G01010  430  656  467  143  453  429  206  567  458  520  474
-## AT1G01020  156  153  177   43  144  114   50  161  195  157  144
-## AT1G01030    8   16   24   42   17   22   39   26   28   39   30
-## AT1G01040  567  831  694  345  575  605  404  735  651  725  591
-## AT1G01046    8    8    1    0    4    0    3    5    7    0    5
-## AT1G01050 1355 1437 1577  412 1338 1051  621 1434 1552 1248 1186
+##            C61  C62  C63  C64  C91  C92  C93 C94 I561 I562 I563 I564 I591 I592
+## AT1G01010  322  346  256  396  372  506  361 342  638  488  440  479  770  430
+## AT1G01020  149   87  162  144  189  169  147 108  163  141  119  147  182  156
+## AT1G01030   15   32   35   22   24   33   21  35   18    8   54   35   23    8
+## AT1G01040  687  469  568  651  885  978  794 862  799  769  725  715  811  567
+## AT1G01046    1    1    5    4    5    3    0   2    4    3    1    0    2    8
+## AT1G01050 1447 1032 1083 1204 1413 1484 1138 938 1247 1516  984 1044 1374 1355
+##           I593 I594 I861 I862 I863 I864 I891 I892 I893 I894
+## AT1G01010  656  467  143  453  429  206  567  458  520  474
+## AT1G01020  153  177   43  144  114   50  161  195  157  144
+## AT1G01030   16   24   42   17   22   39   26   28   39   30
+## AT1G01040  831  694  345  575  605  404  735  651  725  591
+## AT1G01046    8    1    0    4    0    3    5    7    0    5
+## AT1G01050 1437 1577  412 1338 1051  621 1434 1552 1248 1186
 ```
 
 
@@ -1205,12 +1216,11 @@ read.delim(): for reading "tab separated value" files (".txt"). By default, poin
 
 read.delim2(): for reading "tab separated value" files (".txt"). By default, comma (",") is used as decimal point.
 
+Choosing the correct function (or parameters) is important! If we use `read.csv()` to read our tab-delimited file, it becomes a mess.
 
 ```r
-# We are going to read a file over the internet by providing the url of the file.
-data2 <- read.csv(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/intro2R/Intro2R_files/raw_counts.txt", stringsAsFactors=F)
+data2 <- read.csv(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/prerequisites/intro2R/Intro2R_files/raw_counts.txt", stringsAsFactors=F)
 
-# To look at the file:
 head(data2)
 ```
 
@@ -1224,6 +1234,44 @@ head(data2)
 ## 6 AT1G01050\t1447\t1032\t1083\t1204\t1413\t1484\t1138\t938\t1247\t1516\t984\t1044\t1374\t1355\t1437\t1577\t412\t1338\t1051\t621\t1434\t1552\t1248\t1186
 ```
 
+However, the `read.csv()` function is appropriate for a comma-delimited file.
+
+```r
+data3 <- read.csv(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/prerequisites/intro2R/Intro2R_files/raw_counts.csv", stringsAsFactors=F)
+
+head(data3)
+```
+
+```
+##            C61  C62  C63  C64  C91  C92  C93 C94 I561 I562 I563 I564 I591 I592
+## AT1G01010  322  346  256  396  372  506  361 342  638  488  440  479  770  430
+## AT1G01020  149   87  162  144  189  169  147 108  163  141  119  147  182  156
+## AT1G01030   15   32   35   22   24   33   21  35   18    8   54   35   23    8
+## AT1G01040  687  469  568  651  885  978  794 862  799  769  725  715  811  567
+## AT1G01046    1    1    5    4    5    3    0   2    4    3    1    0    2    8
+## AT1G01050 1447 1032 1083 1204 1413 1484 1138 938 1247 1516  984 1044 1374 1355
+##           I593 I594 I861 I862 I863 I864 I891 I892 I893 I894
+## AT1G01010  656  467  143  453  429  206  567  458  520  474
+## AT1G01020  153  177   43  144  114   50  161  195  157  144
+## AT1G01030   16   24   42   17   22   39   26   28   39   30
+## AT1G01040  831  694  345  575  605  404  735  651  725  591
+## AT1G01046    8    1    0    4    0    3    5    7    0    5
+## AT1G01050 1437 1577  412 1338 1051  621 1434 1552 1248 1186
+```
+
+Since the data contained in these files is the same, we don't need to keep three copies.
+
+```r
+identical(data, data3)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+rm(data2, data3)
+```
 
 
 R base function write.table() can be used to export data to a file.
@@ -1231,7 +1279,7 @@ R base function write.table() can be used to export data to a file.
 
 ```r
 # To write to a file called "output.txt" in your current working directory.
-write.table(data2[1:20,], file="output.txt", sep="\t", quote=F, row.names=T, col.names=T)
+write.table(data[1:20,], file="output.txt", sep="\t", quote=F, row.names=T, col.names=T)
 ```
 
 It is also possible to export data to a csv file.
@@ -1239,9 +1287,6 @@ It is also possible to export data to a csv file.
 write.csv()
 
 write.csv2()
-
-
-\newpage
 
 ---
 
@@ -1256,12 +1301,12 @@ getwd()
 ```
 
 ```
-## [1] "/Users/mattsettles/projects/src/github.com-ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/intro2R"
+## [1] "/Users/hannah/Documents/Jobs/bioinformatics_training_program/workshop_documentation/mRNASeq/prerequisites/intro2R"
 ```
 
 ```r
 # to set a different working directory, use setwd
-#setwd("/Users/jli/Desktop")
+#setwd("~/Desktop")
 
 # to list all variables in the environment
 ls()
@@ -1269,11 +1314,11 @@ ls()
 
 ```
 ##  [1] "a"             "age"           "b"             "col1"         
-##  [5] "col2"          "col3"          "colFmt"        "data"         
-##  [9] "data2"         "friend_ages"   "friend_groups" "friend_names" 
-## [13] "friends"       "has_child"     "hello"         "is_adult"     
-## [17] "is_female"     "is_male"       "my_data"       "my_friends"   
-## [21] "my_list"       "my_matrix"     "title"
+##  [5] "col2"          "col3"          "colFmt"        "d"            
+##  [9] "data"          "e"             "friend_ages"   "friend_groups"
+## [13] "friend_names"  "friends"       "has_child"     "hello"        
+## [17] "is_adult"      "is_female"     "is_male"       "my_data"      
+## [21] "my_friends"    "my_list"       "my_matrix"     "title"
 ```
 
 ```r
@@ -1314,12 +1359,35 @@ rep(1:3, each=3)
 
 
 ```r
-str(data2)
+str(data)
 ```
 
 ```
-## 'data.frame':	33602 obs. of  1 variable:
-##  $ C61.C62.C63.C64.C91.C92.C93.C94.I561.I562.I563.I564.I591.I592.I593.I594.I861.I862.I863.I864.I891.I892.I893.I894: chr  "AT1G01010\t322\t346\t256\t396\t372\t506\t361\t342\t638\t488\t440\t479\t770\t430\t656\t467\t143\t453\t429\t206\t"| __truncated__ "AT1G01020\t149\t87\t162\t144\t189\t169\t147\t108\t163\t141\t119\t147\t182\t156\t153\t177\t43\t144\t114\t50\t161\t195\t157\t144" "AT1G01030\t15\t32\t35\t22\t24\t33\t21\t35\t18\t8\t54\t35\t23\t8\t16\t24\t42\t17\t22\t39\t26\t28\t39\t30" "AT1G01040\t687\t469\t568\t651\t885\t978\t794\t862\t799\t769\t725\t715\t811\t567\t831\t694\t345\t575\t605\t404\t"| __truncated__ ...
+## 'data.frame':	33602 obs. of  24 variables:
+##  $ C61 : int  322 149 15 687 1 1447 2667 297 0 74 ...
+##  $ C62 : int  346 87 32 469 1 1032 2472 226 0 79 ...
+##  $ C63 : int  256 162 35 568 5 1083 2881 325 0 138 ...
+##  $ C64 : int  396 144 22 651 4 1204 2632 341 0 85 ...
+##  $ C91 : int  372 189 24 885 5 1413 5120 199 0 68 ...
+##  $ C92 : int  506 169 33 978 3 1484 6176 180 0 41 ...
+##  $ C93 : int  361 147 21 794 0 1138 7088 195 0 110 ...
+##  $ C94 : int  342 108 35 862 2 938 6810 107 0 81 ...
+##  $ I561: int  638 163 18 799 4 1247 2258 377 0 72 ...
+##  $ I562: int  488 141 8 769 3 1516 1808 534 0 76 ...
+##  $ I563: int  440 119 54 725 1 984 2279 300 0 184 ...
+##  $ I564: int  479 147 35 715 0 1044 2299 223 0 156 ...
+##  $ I591: int  770 182 23 811 2 1374 4755 298 0 96 ...
+##  $ I592: int  430 156 8 567 8 1355 3128 318 0 70 ...
+##  $ I593: int  656 153 16 831 8 1437 4419 397 0 77 ...
+##  $ I594: int  467 177 24 694 1 1577 3726 373 0 77 ...
+##  $ I861: int  143 43 42 345 0 412 1452 86 0 174 ...
+##  $ I862: int  453 144 17 575 4 1338 1516 266 0 113 ...
+##  $ I863: int  429 114 22 605 0 1051 1455 281 0 69 ...
+##  $ I864: int  206 50 39 404 3 621 1429 164 0 176 ...
+##  $ I891: int  567 161 26 735 5 1434 3867 230 0 69 ...
+##  $ I892: int  458 195 28 651 7 1552 4718 270 0 80 ...
+##  $ I893: int  520 157 39 725 0 1248 4580 220 0 81 ...
+##  $ I894: int  474 144 30 591 5 1186 3575 229 0 62 ...
 ```
 
 
@@ -1346,25 +1414,25 @@ lapply(1:dim(data)[1], function(x){sum(data[x,])})
 
 ```
 ## [[1]]
-## [1] 0.9394493
+## [1] 0.4965508
 ## 
 ## [[2]]
-## [1] 3.498673
+## [1] -0.1448789
 ## 
 ## [[3]]
-## [1] 2.140273
+## [1] -1.251489
 ## 
 ## [[4]]
-## [1] 2.096878
+## [1] -5.09543
 ## 
 ## [[5]]
-## [1] 1.541112
+## [1] -1.015072
 ## 
 ## [[6]]
-## [1] 0.03483846
+## [1] -5.904339
 ## 
 ## [[7]]
-## [1] -1.116205
+## [1] 1.619468
 ```
 
 ```r
@@ -1372,8 +1440,7 @@ apply(data, MARGIN=1, sum)
 ```
 
 ```
-## [1]  0.93944927  3.49867295  2.14027334  2.09687822  1.54111165  0.03483846
-## [7] -1.11620494
+## [1]  0.4965508 -0.1448789 -1.2514890 -5.0954301 -1.0150724 -5.9043391  1.6194685
 ```
 
 ```r
@@ -1382,29 +1449,37 @@ lapply(1:dim(data)[1], function(x){log10(sum(data[x,]))})
 
 ```
 ## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
 ```
 
 ```
 ## [[1]]
-## [1] -0.02712667
+## [1] -0.3040363
 ## 
 ## [[2]]
-## [1] 0.5439033
+## [1] NaN
 ## 
 ## [[3]]
-## [1] 0.3304692
+## [1] NaN
 ## 
 ## [[4]]
-## [1] 0.3215732
+## [1] NaN
 ## 
 ## [[5]]
-## [1] 0.1878341
+## [1] NaN
 ## 
 ## [[6]]
-## [1] -1.457941
+## [1] NaN
 ## 
 ## [[7]]
-## [1] NaN
+## [1] 0.2093725
 ```
 
 #### The function sapply() works like function lapply(), but tries to simplify the output to the most elementary data structure that is possible. As a matter of fact, sapply() is a "wrapper" function for lapply(). By default, it returns a vector.
@@ -1419,11 +1494,18 @@ sapply(1:dim(data)[1], function(x){log10(sum(data[x,]))})
 
 ```
 ## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
 ```
 
 ```
-## [1] -0.02712667  0.54390335  0.33046924  0.32157321  0.18783410 -1.45794110
-## [7]         NaN
+## [1] -0.3040363        NaN        NaN        NaN        NaN        NaN  0.2093725
 ```
 
 #### If the "simplify" parameter is turned off, sapply() will produced exactly the same results as lapply(), in the form of a list. By default, "simplify" is turned on.
@@ -1434,29 +1516,37 @@ sapply(1:dim(data)[1], function(x){log10(sum(data[x,]))}, simplify=FALSE)
 
 ```
 ## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
+
+## Warning in FUN(X[[i]], ...): NaNs produced
 ```
 
 ```
 ## [[1]]
-## [1] -0.02712667
+## [1] -0.3040363
 ## 
 ## [[2]]
-## [1] 0.5439033
+## [1] NaN
 ## 
 ## [[3]]
-## [1] 0.3304692
+## [1] NaN
 ## 
 ## [[4]]
-## [1] 0.3215732
+## [1] NaN
 ## 
 ## [[5]]
-## [1] 0.1878341
+## [1] NaN
 ## 
 ## [[6]]
-## [1] -1.457941
+## [1] NaN
 ## 
 ## [[7]]
-## [1] NaN
+## [1] 0.2093725
 ```
 
 ---
@@ -1523,10 +1613,8 @@ apply(data, 2, mean)
 ```
 
 ```
-##          V1          V2          V3          V4          V5          V6 
-##  0.38447484  0.49181913 -0.35523947 -0.44494529  0.08749222  0.21590775 
-##          V7 
-##  0.92549352
+##         V1         V2         V3         V4         V5         V6         V7 
+##  0.1800418 -0.2534468 -0.1897400 -0.5426865 -0.1894511 -0.2531511 -0.3651648
 ```
 
 Calculate the range of expression for each sample.
@@ -1537,12 +1625,9 @@ apply(data, 2, range)
 ```
 
 ```
-##             V1        V2        V3         V4         V5         V6
-## [1,] -1.057522 -1.594726 -1.319862 -2.0252357 -0.9448364 -0.9075704
-## [2,]  2.195689  1.745992  1.236270  0.9487987  1.1573999  1.3134008
-##              V7
-## [1,] -0.1891506
-## [2,]  2.2566140
+##              V1        V2         V3         V4        V5         V6        V7
+## [1,] -0.6225434 -2.452988 -1.1885474 -1.5352739 -1.311441 -1.3231301 -3.108072
+## [2,]  0.9157785  1.558738  0.5844574  0.5020093  1.986243  0.8357217  1.515365
 ```
 
 Calculate the quantiles of each samples.
@@ -1553,18 +1638,18 @@ apply(data, 2, quantile)
 ```
 
 ```
-##              V1         V2         V3         V4         V5         V6
-## 0%   -1.0575225 -1.5947263 -1.3198616 -2.0252357 -0.9448364 -0.9075704
-## 25%  -0.4041226  0.3554335 -0.8752390 -1.3243273 -0.5317714 -0.6560503
-## 50%  -0.2863864  0.8034528 -0.4286163 -0.4850001 -0.0371838  0.3668206
-## 75%   1.3238943  0.8885743 -0.1119954  0.5477373  0.7503043  1.0254019
-## 100%  2.1956895  1.7459918  1.2362704  0.9487987  1.1573999  1.3134008
-##              V7
-## 0%   -0.1891506
-## 25%   0.2454125
-## 50%   1.0015498
-## 75%   1.4593082
-## 100%  2.2566140
+##               V1         V2         V3          V4          V5         V6
+## 0%   -0.62254340 -2.4529883 -1.1885474 -1.53527385 -1.31144098 -1.3231301
+## 25%  -0.24319891 -1.4878457 -0.4367767 -1.03930207 -0.83116242 -0.9900499
+## 50%   0.08886876  0.2487017 -0.3765026 -0.58285066 -0.50073601 -0.4826310
+## 75%   0.68229320  0.9235564  0.2629829 -0.05204306  0.08105049  0.5890407
+## 100%  0.91577852  1.5587378  0.5844574  0.50200930  1.98624311  0.8357217
+##               V7
+## 0%   -3.10807211
+## 25%  -0.84236920
+## 50%  -0.05402889
+## 75%   0.38766034
+## 100%  1.51536487
 ```
 
 ---
@@ -1581,13 +1666,13 @@ y <- 1 + sqrt(x)/2
 plot(x,y)
 ```
 
-![](Intro2R_files/figure-html/unnamed-chunk-67-1.png)<!-- -->
+![](Intro2R_files/figure-html/unnamed-chunk-72-1.png)<!-- -->
 
 ```r
 plot(x,y, type="l")
 ```
 
-![](Intro2R_files/figure-html/unnamed-chunk-67-2.png)<!-- -->
+![](Intro2R_files/figure-html/unnamed-chunk-72-2.png)<!-- -->
 
 ```r
 # plot both the points and lines
@@ -1596,7 +1681,7 @@ plot(x,y)
 lines(x,y, type="l")
 ```
 
-![](Intro2R_files/figure-html/unnamed-chunk-67-3.png)<!-- -->
+![](Intro2R_files/figure-html/unnamed-chunk-72-3.png)<!-- -->
 
 ```r
 ## lines() can only be used to add information to a graph, while it cannot produce a graph on its own.
@@ -1610,7 +1695,7 @@ boxplot() can be used to summarize data.
 boxplot(data, xlab="Sample ID", ylab="Raw Counts")
 ```
 
-![](Intro2R_files/figure-html/unnamed-chunk-68-1.png)<!-- -->
+![](Intro2R_files/figure-html/unnamed-chunk-73-1.png)<!-- -->
 
 add more details to the plot.
 
@@ -1619,7 +1704,7 @@ add more details to the plot.
 boxplot(data, xlab="Sample ID", ylab="Raw Counts", main="Expression levels", col="blue", border="black")
 ```
 
-![](Intro2R_files/figure-html/unnamed-chunk-69-1.png)<!-- -->
+![](Intro2R_files/figure-html/unnamed-chunk-74-1.png)<!-- -->
 
 
 
@@ -1628,7 +1713,7 @@ x <- rnorm(1000)
 boxplot(x)
 ```
 
-![](Intro2R_files/figure-html/unnamed-chunk-70-1.png)<!-- -->
+![](Intro2R_files/figure-html/unnamed-chunk-75-1.png)<!-- -->
 
 hist() can be used to create histograms of data.
 
@@ -1636,14 +1721,14 @@ hist() can be used to create histograms of data.
 hist(x)
 ```
 
-![](Intro2R_files/figure-html/unnamed-chunk-71-1.png)<!-- -->
+![](Intro2R_files/figure-html/unnamed-chunk-76-1.png)<!-- -->
 
 ```r
 # use user defined break points
 hist(x, breaks=seq(range(x)[1]-1, range(x)[2]+1, by=0.5))
 ```
 
-![](Intro2R_files/figure-html/unnamed-chunk-71-2.png)<!-- -->
+![](Intro2R_files/figure-html/unnamed-chunk-76-2.png)<!-- -->
 
 
 ```r
@@ -1716,18 +1801,18 @@ Topic 8. Save data in R session
 
 
 ```r
-#savehistory(file="March27.history")
+#savehistory(file="intro_20200603.history")
 
-#loadhistory(file="March27.history")
+#loadhistory(file="intro_20200603.history")
 ```
 
 #### To save objects in R session
 
 
 ```r
-save(list=c("x", "data"), file="March27.RData")
+save(list=c("x", "data"), file="intro_20200603.RData")
 
-#load("March27.RData")
+#load("intro_20200603.RData")
 ```
 
 Challenge
