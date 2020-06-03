@@ -454,7 +454,7 @@ Choose the appropriate column given the library preparation characteristics and 
 
 1. Once your jobs have finished successfully, check the error and out logs like we did in the previous exercise.
 
-    Use a script of ours, [star_stats.sh](../scripts/star_stats.sh) to collect the alignment stats. Don't worry about the script's contents at the moment; you'll use very similar commands to create a counts table in the next section. For now:
+    Use a script of ours, [star_stats.sh](../software_scripts/scripts/star_stats.sh) to collect the alignment stats. Don't worry about the script's contents at the moment; you'll use very similar commands to create a counts table in the next section. For now:
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example  # We'll run this from the main directory
