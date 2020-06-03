@@ -52,11 +52,11 @@
 **2:30 pm**     [preprocessing Recap](../data_reduction/preproc_htstream)      
 **2:45 pm**  15 minute break   
 **3:00 pm**   [Files and file types (fasta/gtf)](../data_reduction/filetypes)     
-**3:15 pm**  [Aligments References](data_reduction/alignment)
+**3:15 pm**  [Aligments References](../data_reduction/alignment)
 **3:30 pm**    _Hands_on_     
-**3:45 pm**  [Aligments](data_reduction/alignment)   
+**3:45 pm**  [Aligments](../data_reduction/alignment)   
 **4:00 pm**    _Hands_on_     
-**4:15 pm**  [Aligments](data_reduction/alignment)    
+**4:15 pm**  [Aligments](../data_reduction/alignment)    
 **4:30 pm**    _Hands_on_     
 **4:45 pm**  Recap and Homework and Extra    
 **5:00 pm**  Zoom session ends   
