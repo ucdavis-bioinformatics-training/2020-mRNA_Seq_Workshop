@@ -38,7 +38,7 @@ navigation:
   - title: R - Getting Started
     url: prerequisites/intro2R/RStudio
   - title: R - Intro to R
-    url: prerequisites/intro2R/Intro2R
+    url: prerequisites/intro2R/Intro2R_fixed
   - title: R - Prepare Data in R (extra)
     url: prerequisites/intro2R/data_in_R_prepare
   - title: R - Data in R (extra)
