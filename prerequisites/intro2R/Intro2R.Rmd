@@ -22,89 +22,7 @@ colFmt = function(x,color){
 }
 ```
 
-R and RStudio
-========================================================
-
-### What is R?
-[R](http://r-project.org/) is a language and environment for statistical computing and graphics developed in 1993. It provides a wide variety of statistical and graphical techniques (linear and nonlinear modeling, statistical tests, time series analysis, classification, clustering, ...), and is highly extensible, meaning that the user community can write new R tools. It is a GNU project (Free and Open Source).
-
-The R language has its roots in the S language and environment which was developed at Bell Laboratories (formerly AT&T, now Lucent Technologies) by John Chambers and colleagues. R was created by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand, and now, R is developed by the R Development Core Team, of which Chambers is a member. R is named partly after the first names of the first two R authors (Robert Gentleman and Ross Ihaka), and partly as a play on the name of S. R can be considered as a different implementation of S. There are some important differences, but much code written for S runs unaltered under R.
-
-Some of R's strengths:
-
-* The ease with which well-designed publication-quality plots can be produced, including mathematical symbols and formulae where needed. Great care has been taken over the defaults for the minor design choices in graphics, but the user retains full control.
-* It compiles and runs on a wide variety of UNIX platforms and similar systems (including FreeBSD and Linux), Windows and MacOS.
-* R can be extended (easily) via packages.
-* R has its own LaTeX-like documentation format, which is used to supply comprehensive documentation, both on-line in a number of formats and in hardcopy.
-* It has a vast community both in academia and in business.
-* It's FREE!   
-
-### The R environment
-R is an integrated suite of software facilities for data manipulation, calculation and graphical display. It includes
-
-* an effective data handling and storage facility,
-* a suite of operators for calculations on arrays, in particular matrices,
-* a large, coherent, integrated collection of intermediate tools for data analysis,
-* graphical facilities for data analysis and display either on-screen or on hardcopy, and
-* a well-developed, and effective programming language which includes conditionals, loops, user-defined recursive functions and input and output facilities.
-
-The term "environment" is intended to characterize it as a fully planned and coherent system, rather than an incremental accretion of very specific and inflexible tools, as is frequently the case with other data analysis software.
-
-R, like S, is designed around a true computer language, and it allows users to add additional functionality by defining new functions. Much of the system is itself written in the R dialect of S, which makes it easy for users to follow the algorithmic choices made. For computationally-intensive tasks, C, C++ and Fortran code can be linked and called at run time. Advanced users can write C code to manipulate R objects directly.
-
-Many users think of R as a statistics system. The R group prefers to think of it of an environment within which statistical techniques are implemented.   
-
-### The R Homepage
-The R homepage has a wealth of information on it,
-
-[R-project.org](http://r-project.org/)
-
-On the homepage you can:
-
-* Learn more about R
-* Download R
-* Get Documentation (official and user supplied)
-* Get access to CRAN 'Comprehensive R archival network'
-
-### Interface for R
-
-There are many ways one can interface with R language. Here are a few popular ones:
-
-* [RStudio](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/wednesday/Intro2R/rstudio.png)
-* [RGui](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/wednesday/Intro2R/rgui.png)
-* Jupyter and R notebooks
-* text editors, such as vi(m), Emacs...
-
-
-### RStudio
-
-[RStudio](http://rstudio.com/) started in 2010, to offer R a more full featured integrated development environment (IDE) and modeled after matlab's IDE.
-
-RStudio has many features:
-
-* syntax highlighting
-* code completion
-* smart indentation
-* "Projects"
-* workspace browser and data viewer
-* embedded plots
-* Markdown notebooks, Sweave authoring and knitr with one click pdf or html
-* runs on all platforms and over the web
-* etc. etc. etc.
-
-RStudio and its team have contributed to many R packages.[13] These include:
-
-* Tidyverse – R packages for data science, including ggplot2, dplyr, tidyr, and purrr
-* Shiny – An interactive web technology
-* RMarkdown – Insert R code into markdown documents
-* knitr – Dynamic reports combining R, TeX, Markdown & HTML
-* packrat – Package dependency tool
-* devtools – Package development tool
-
-RStudio Cheat Sheets: [rstudio-ide.pdf](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
-
 ---
-
 
 Topics covered in this introduction to R
 ====================================================
@@ -126,30 +44,54 @@ Topic 1. Basic concepts
 There are three concepts that we should be familiar with before working in R:
 
 * Operators
+* Functions
+* Variables
+
+### Operators
 
 ```{r echo=FALSE, results= 'asis'}
 library(knitr)
 library(kableExtra)
 kable(data.frame(Operator=paste("<-", " =", sep=","), Description="Assignment", stringsAsFactors=F), align='c', caption="Assignment Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
 
-kable(data.frame(Operator=c("\\+", "\\-", "\\*", "/", "^", "%%", "%/%"), Description=c("Addition", "Subtraction", "Multiplication", "Division", "Exponent", "Modulus", "Integer Division"), stringsAsFactors=F), align='c', caption="Arithmetic Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
+kable(data.frame(Operator=c("+", "-", "*", "/", "^", "%%", "%/%"), Description=c("Addition", "Subtraction", "Multiplication", "Division", "Exponent", "Modulus", "Integer Division"), stringsAsFactors=F), align='c', caption="Arithmetic Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
 
 kable(data.frame(Operator=c("<", ">", "<=", ">=", "==", "!="), Description=c("Less than", "Greater than", "Less than or equal to", "Greater than or equal to", "Equal to", "Not equal to"), stringsAsFactors=F), align='c', caption="Relational Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
 
 kable(data.frame(Operator=c("!", "&", "&&", "|", "||"), Description=c("Logical NOT", "Element-wise logical AND", "Logical AND", "Element-wise logical OR", "Logical OR"), stringsAsFactors=F), align='c', caption="Logical Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
 ```
 
-* Functions
+### Functions
 
 Functions are essential in all programming languages. A function takes zero or more parameters and return a result. The way to use a function in R is:
 
 function.name(parameter1=value1, ...)
 
+```{r}
+sum(1, 2)
+```
 
-* Variables
+### Variables
 
 A variable is a named storage. The name of a variable can have letters, numbers, dot and underscore. However, a valid variable name cannot start with a underscore or a number, or start with a dot that is followed by a number.
 
+The following assignments will work:
+
+```{r}
+a <- 1
+a
+b = 2 # in this context, = works the same way as <-, but we will use <-
+b
+.c <- 3 # what's different about the way this variable behaves?
+.c
+```
+
+These variable names are invalid and will produce errors:
+
+```{r, eval=FALSE}
+1a <- 4
+.1a <- 5
+```
 
 ---
 
@@ -158,7 +100,7 @@ Topic 2. Basic data types in R
 
 ### Simple variables: variables that have a numeric value, a character value (such as a string), or a logical value (True or False)
 
-Examples of numeric values.
+So far, all our variables have been numeric. Examples of numeric values:
 ```{r}
 # assign number 150 to variable a.
 a <- 150
@@ -168,7 +110,7 @@ b <- 3e-2
 b
 ```
 
-Examples of character values.
+Examples of character values:
 ```{r}
 # assign a string "Professor" to variable title
 title <- "Professor"
@@ -178,7 +120,7 @@ hello <- "Hello World"
 hello
 ```
 
-Examples of logical values.
+Examples of logical values:
 ```{r}
 # assign logical value "TRUE" to variable is_female
 is_female <- TRUE
@@ -192,10 +134,9 @@ is_adult <- age > 18
 is_adult
 ```
 
-To find out the type of variable.
+To find out the type of variable, we can use the `class()` function. To check if a variable belongs to a specific class, we can use functions that return a logical value, like `is.numeric()`.
 ```{r}
 class(is_female)
-# To check whether the variable is a specific type
 is.numeric(hello)
 is.numeric(a)
 is.character(hello)
@@ -207,12 +148,23 @@ as.numeric(is_female)
 as.numeric(is_male)
 ```
 
-R does not know how to convert a numeric variable to a character variable.
+R can convert a numeric variable to a character variable...
 ```{r}
 b
 as.character(b)
 ```
 
+...but most of the time, character variables cannot be converted to numeric variables.
+```{r}
+as.numeric(hello)
+# unless the character is basically a numerical in quotes
+d <- as.character(b)
+class(d)
+as.numeric(d)
+# this won't work:
+e <- "three"
+as.numeric(e)
+```
 
 ### Vectors: a vector is a combination of multiple values(numeric, character or logical) in the same object. A vector is created using the function c() (for concatenate).
 
@@ -478,7 +430,7 @@ subset(friends, select=age)
 A data frame can be extended.
 
 ```{r}
-# add a column that has the information on the marrital status of friends
+# add a column that has the information on the marital status of friends
 friends$married <- c("YES", "YES", "NO", "YES")
 friends
 ```
@@ -543,7 +495,7 @@ R base function read.table() is a general funciton that can be used to read a fi
 data <- read.table(file="./Intro2R_files/raw_counts.txt", sep="\t", header=T, stringsAsFactors=F)
 
 # There is a very convenient way to read files from the internet.
-data <- read.table(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/intro2R/Intro2R_files/raw_counts.txt", sep="\t", header=T, stringsAsFactors=F)
+data <- read.table(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/prerequisites/intro2R/Intro2R_files/raw_counts.txt", sep="\t", header=T, stringsAsFactors=F)
 
 ```
 
@@ -563,21 +515,32 @@ read.delim(): for reading "tab separated value" files (".txt"). By default, poin
 
 read.delim2(): for reading "tab separated value" files (".txt"). By default, comma (",") is used as decimal point.
 
+Choosing the correct function (or parameters) is important! If we use `read.csv()` to read our tab-delimited file, it becomes a mess.
 ```{r}
-# We are going to read a file over the internet by providing the url of the file.
-data2 <- read.csv(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/intro2R/Intro2R_files/raw_counts.txt", stringsAsFactors=F)
+data2 <- read.csv(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/prerequisites/intro2R/Intro2R_files/raw_counts.txt", stringsAsFactors=F)
 
-# To look at the file:
 head(data2)
 ```
 
+However, the `read.csv()` function is appropriate for a comma-delimited file.
+```{r}
+data3 <- read.csv(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/prerequisites/intro2R/Intro2R_files/raw_counts.csv", stringsAsFactors=F)
+
+head(data3)
+```
+
+Since the data contained in these files is the same, we don't need to keep three copies.
+```{r}
+identical(data, data3)
+rm(data2, data3)
+```
 
 
 R base function write.table() can be used to export data to a file.
 
 ```{r}
 # To write to a file called "output.txt" in your current working directory.
-write.table(data2[1:20,], file="output.txt", sep="\t", quote=F, row.names=T, col.names=T)
+write.table(data[1:20,], file="output.txt", sep="\t", quote=F, row.names=T, col.names=T)
 ```
 
 It is also possible to export data to a csv file.
@@ -585,11 +548,6 @@ It is also possible to export data to a csv file.
 write.csv()
 
 write.csv2()
-
-
-```{r echo=FALSE, results='asis'}
-cat("\\newpage")
-```
 
 ---
 
@@ -602,7 +560,7 @@ Topic 4. Functions in R
 getwd()
 
 # to set a different working directory, use setwd
-#setwd("/Users/jli/Desktop")
+#setwd("~/Desktop")
 
 # to list all variables in the environment
 ls()
@@ -625,7 +583,7 @@ rep(1:3, each=3)
 
 
 ```{r}
-str(data2)
+str(data)
 ```
 
 
@@ -795,17 +753,17 @@ Topic 8. Save data in R session
 #### To save history in R session
 
 ```{r}
-#savehistory(file="March27.history")
+#savehistory(file="intro_20200603.history")
 
-#loadhistory(file="March27.history")
+#loadhistory(file="intro_20200603.history")
 ```
 
 #### To save objects in R session
 
 ```{r}
-save(list=c("x", "data"), file="March27.RData")
+save(list=c("x", "data"), file="intro_20200603.RData")
 
-#load("March27.RData")
+#load("intro_20200603.RData")
 ```
 
 Challenge
