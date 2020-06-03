@@ -63,6 +63,8 @@ navigation:
   - heading: Data analysis
   - title: Prepare R for data analysis
     url: data_analysis/de_analysis_prepare
+  - title: Annotation from BioMart
+    url: data_analysis/annotation
 
   - heading: ETC
   - title: Closing thoughts
