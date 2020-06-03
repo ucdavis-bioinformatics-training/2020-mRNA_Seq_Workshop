@@ -14,7 +14,7 @@ navigation:
   - title: What is Bioinformatics/Genomics?
     url: https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/genomics/Genomics_a_perspective_May_2020.pdf
   - title: Experimental Design and Cost Estimation
-    url: https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/mrma/mRNAseq-expDesign_May_2020.pdf
+    url: https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/mrna/mRNAseq-expDesign_May_2020.pdf
   - title: RNA Sequencing Technologies - Dr. Lutz Froenicke
     url: https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/mrna/Bioinformatics_Workshop_2020_RNA.pdf
 
@@ -63,6 +63,8 @@ navigation:
   - heading: Data analysis
   - title: Prepare R for data analysis
     url: data_analysis/de_analysis_prepare
+  - title: Annotation from BioMart
+    url: data_analysis/annotation
 
   - heading: ETC
   - title: Closing thoughts

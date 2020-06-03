@@ -2,7 +2,7 @@
 
 **The forest through the trees.**
 
-<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/flowcharts/flowchart2.png" alt="flowchart2" width="600px"/>
+<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/flowcharts/flowchart_mrna.png" alt="flowchart_mrna.png" width="600px"/>
 
 ## Be Consistent
 
