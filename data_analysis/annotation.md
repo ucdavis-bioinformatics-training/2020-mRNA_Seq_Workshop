@@ -36,4 +36,4 @@ Annotation from [BioMart](https://uswest.ensembl.org/biomart/martview/) with Ens
 
 <img src="annotation_figures/annotation_figures11.png" alt="annotation_figures11" width="80%" style="border:5px solid #ADD8E6;"/>
 
-1. The file will save as "mart_export.txt", put the file into our working directory, rename to "ensembl_hg_95.tsv" and open the file in Excel to view the annotation.
+1. The file will save as "mart_export.txt", put the file into our working directory, rename to "ensembl_hg_100.tsv" and open the file in Excel to view the annotation.

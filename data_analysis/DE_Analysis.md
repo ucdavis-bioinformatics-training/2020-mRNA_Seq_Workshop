@@ -94,7 +94,7 @@ d0 <- DGEList(counts)
 **1a\.** Read in Annotation
 
 ```r
-anno <- read.delim("ensembl_hg_95.tsv",as.is=T)
+anno <- read.delim("ensembl_hg_100.tsv",as.is=T)
 dim(anno)
 ```
 

@@ -124,7 +124,7 @@ tmp <- contrasts.fit(fit, contr)
 tmp <- eBayes(tmp)
 DE.salmon <- topTable(tmp, sort.by = "P", n = Inf)
 
-anno <- read.delim("ensembl_hg_95.tsv", stringsAsFactors = F)
+anno <- read.delim("ensembl_hg_100.tsv", stringsAsFactors = F)
 ```
 
 ### Top 10 genes with STAR
