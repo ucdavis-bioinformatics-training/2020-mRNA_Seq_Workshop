@@ -20,9 +20,9 @@ navigation:
 
   - heading: Support
   - title: Using Zoom
-  - url: base/zoom
+    url: base/zoom
   - title: Using Slack
-  - url: base/slack
+    url: base/slack
   - title: Cheat Sheets
     url: base/cheatSheetIndex
   - title: Software and Links
