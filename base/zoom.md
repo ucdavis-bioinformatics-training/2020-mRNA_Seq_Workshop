@@ -14,7 +14,7 @@
 
 The basic controls can be found at the bottom of the Zoom window. These controls allow participants to control their audio and video. You will automatically be muted on joining the call, but can unmute yourself at any time. When the  "Participants" icon in the control menu is selected, a panel will expand from the right side of the Zoom window to display a list of participants.
 
- <img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/participants.png" alt="participants panel" width="800px"/>
+ <img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/participants.png" alt="participants panel" width="400px"/>
 
 ## Non-verbal Responses
 
@@ -34,14 +34,13 @@ During hands-on sections of the course, breakout rooms may be opened to allow ma
 
 If you accept the invitation, you will be moved to a breakout room. From within the breakout room, you will not be able to interact with others in the main Zoom room. For this reason, you will need to use Slack to request help if you need it when you are within a breakout room.
 
-<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/breakout_icon.png" alt="joining a breakout room later" width="400px"/>
+<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/breakout_icon.png" alt="joining a breakout room later" width="600px"/>
 
 As long as the breakout rooms are open, you will have the option to enter your breakout room.
 
 ### Screen Sharing
 
 Within your breakout room, you may be asked to share your screen so than an instructor can help you troubleshoot any problem you may be encountering. To do so, simply click on "share screen" in the controls menu at the bottom of the Zoom window.
-
 
 ###  Remote Control
 
