@@ -26,17 +26,15 @@ During lectures, our instructors will occasionally request non-verbal feedback f
 
 In addition to non-verbal feedback, we want to hear from participants during lecture sections. Please raise your hand using the "raise hand" option under "more" beneath the participants panel to get the speaker's attention. The instructor will invite you to ask your question, and you should unmute yourself and speak. When your question has been answered, lower your hand.
 
-<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/raise.png" alt="raise hand" width="800px"/>
-
 ## Breakout rooms
 
 During hands-on sections of the course, breakout rooms may be opened to allow many participants to receive one-on-one assistance at the same time. When breakout rooms are opened, you will receive an invitation to join.
 
-<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/breakout_invite.png" alt="invitation to join breakout room" width="800px"/>
+<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/breakout_invite.png" alt="invitation to join breakout room" width="600px"/>
 
 If you accept the invitation, you will be moved to a breakout room. From within the breakout room, you will not be able to interact with others in the main Zoom room. For this reason, you will need to use Slack to request help if you need it when you are within a breakout room.
 
-<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/breakout_icon.png" alt="joining a breakout room later" width="800px"/>
+<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/breakout_icon.png" alt="joining a breakout room later" width="400px"/>
 
 As long as the breakout rooms are open, you will have the option to enter your breakout room.
 
@@ -44,14 +42,12 @@ As long as the breakout rooms are open, you will have the option to enter your b
 
 Within your breakout room, you may be asked to share your screen so than an instructor can help you troubleshoot any problem you may be encountering. To do so, simply click on "share screen" in the controls menu at the bottom of the Zoom window.
 
-<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/share_screen.png" alt="share screen" width="800px"/>
-
 
 ###  Remote Control
 
 In some cases, an instructor may request control of your computer once you have shared your screen. You will see a pop-up window.
 
-<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/remote_control.png" alt="remote control request" width="800px"/>
+<img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/zoom/remote_control.png" alt="remote control request" width="600px"/>
 
 If you approve, the person you are sharing your screen with will be able to move your cursor and type to any open application. You can stop remote control at any time.
 
