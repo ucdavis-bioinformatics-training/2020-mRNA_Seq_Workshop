@@ -5,7 +5,7 @@ All documentation for the workshop is best viewed from the github.io pages
 
 June 1, 2020 - June 4, 2020, 9 a.m. - 5:00 p.m daily. **online learning**
 
-July 27, 2020 - July 31, 2020, 9 a.m. - 5:00 p.m daily. **@ UC Davis**
+July 27, 2020 - July 31, 2020, 9 a.m. - 5:00 p.m daily. **online learning**
 
 Contact - UC Davis Bioinformatics Core, [training.bioinformatics@ucdavis.edu](mailto:training.bioinformatics@ucdavis.edu)
 
@@ -42,4 +42,4 @@ If you have any questions, please don’t hesitate to contact us at [training.bi
 
 For the remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_remote/) in June.
 
-For the onsite UC Davis [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_Davis/) in July.
+For the remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_07_2020/) in July.

@@ -1,6 +1,8 @@
-## Tentative Schedule June Workshop
+## Schedule
 
-### Day 1
+As the workshop progresses,
+
+### Monday, July 27
 
 **8:50 am**  Zoom session starts    
 **9:00 am**  [Welcome, format and expectations and introductions](welcome)    
@@ -28,9 +30,7 @@
 **4:45 pm**  Recap and Homework       
 **5:00 pm**  Zoom session ends        
 
-**5:00pm - 6:00pm** Happy hour discussion  
-
-### Day 2
+### Tuesday, July 28
 
 **8:50 am**  Zoom session starts  
 **9:00 am** Recap and check everyones session
@@ -61,9 +61,7 @@
 **4:45 pm**  Recap and Homework and Extra    
 **5:00 pm**  Zoom session ends   
 
-**5:00pm - 6:00pm** Happy hour discussion  
-
-### Day 3
+### Wednesday, July 29
 
 **8:50 am**  Zoom session starts  
 **9:00 am** Recap and questions  
@@ -72,7 +70,16 @@
 **4:45 pm** Closing  
 **5:00  pm**  Zoom session ends  
 
-### Day 4
+### Thursday, July 30
+
+**8:50 am**  Zoom session starts  
+**9:00 am** Recap and questions  
+**10:45 am**   15 minute break  
+**12:00 pm** Lunch hour    
+**4:45 pm** Closing  
+**5:00 pm**  Zoom session ends  
+
+### Friday, July 31
 
 **8:50 am**  Zoom session starts  
 **9:00 am** Recap and questions  
