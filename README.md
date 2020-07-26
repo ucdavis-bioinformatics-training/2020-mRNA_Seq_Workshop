@@ -13,7 +13,7 @@ This workshop will include a rich collection of lectures and hands-on sessions w
 
 Participants must have access to a computer with a recent version of R, Rstudio, and Java installed, and an application that allows them to ssh into a server (e.g. Bash for Windows, or Terminal for Apple), as well as the ability to connect to the internet.
 
-There are no additional prerequisites other than basic familiarity with genomic concepts and RNA sequencing and analysis. This workshop will be held twice in 2020 online via Zoom (June workshop) and on the UCD campus (July workshop) and will run from 9:00am to 5:00pm each day with an hour break for lunch.
+There are no additional prerequisites other than basic familiarity with genomic concepts and RNA sequencing and analysis. This workshop will be held twice in 2020 online via Zoom (June workshop) and will run from 9:00am to 5:00pm each day with an hour break for lunch.
 
 Participants must supply their own laptop/desktop with a reliable connection to the internet. The labtop/desktop should have a current versions of [R version 4.0](https://cloud.r-project.org/), [Rstudio](https://rstudio.com/products/rstudio/download/#download), and an application that allows them to ssh into a server (see this [page](https://ucdavis-bioinformatics-training.github.io/2020-mRNA_Seq_Workshop/prerequisites/cli/logging-in))
 
@@ -42,4 +42,4 @@ If you have any questions, please don’t hesitate to contact us at [training.bi
 
 For the remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_remote/) in June.
 
-For the remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_07_2020/) in July.
+For the  remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_07_2020/) in July.
