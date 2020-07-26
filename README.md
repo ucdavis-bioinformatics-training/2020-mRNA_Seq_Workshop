@@ -5,7 +5,7 @@ All documentation for the workshop is best viewed from the github.io pages
 
 June 1, 2020 - June 4, 2020, 9 a.m. - 5:00 p.m daily. **online learning**
 
-July 27, 2020 - July 31, 2020, 9 a.m. - 5:00 p.m daily. **@ UC Davis**
+July 27, 2020 - July 31, 2020, 9 a.m. - 5:00 p.m daily. **online learning**
 
 Contact - UC Davis Bioinformatics Core, [training.bioinformatics@ucdavis.edu](mailto:training.bioinformatics@ucdavis.edu)
 
@@ -15,7 +15,7 @@ Participants must have access to a computer with a recent version of R, Rstudio,
 
 There are no additional prerequisites other than basic familiarity with genomic concepts and RNA sequencing and analysis. This workshop will be held twice in 2020 online via Zoom (June workshop) and on the UCD campus (July workshop) and will run from 9:00am to 5:00pm each day with an hour break for lunch.
 
-Participants must supply their own laptop/desktop with a reliable connection to the internet (UC Davis internet will be used for the July workshop). The labtop/desktop should have a current versions of [R version 4.0](https://cloud.r-project.org/), [Rstudio](https://rstudio.com/products/rstudio/download/#download), and an application that allows them to ssh into a server (see this [page](https://ucdavis-bioinformatics-training.github.io/2020-mRNA_Seq_Workshop/prerequisites/cli/logging-in))
+Participants must supply their own laptop/desktop with a reliable connection to the internet. The labtop/desktop should have a current versions of [R version 4.0](https://cloud.r-project.org/), [Rstudio](https://rstudio.com/products/rstudio/download/#download), and an application that allows them to ssh into a server (see this [page](https://ucdavis-bioinformatics-training.github.io/2020-mRNA_Seq_Workshop/prerequisites/cli/logging-in))
 
 ### FAQ
 
