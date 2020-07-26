@@ -42,4 +42,4 @@ If you have any questions, please don’t hesitate to contact us at [training.bi
 
 For the remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_remote/) in June.
 
-For the onsite UC Davis [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_2020_Davis/) in July.
+For the remote/virtual [course](https://registration.genomecenter.ucdavis.edu/events/RNASeq_07_2020/) in July.
