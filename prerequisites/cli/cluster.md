@@ -44,7 +44,7 @@ use Exit on the command line to exit the session
 
     sbatch --help
 
-Generally, we do not use any options for sbatch ... we typically give it a script (i.e. a text file with commands inside) to run. Let's take a look at a template script [template.slurm](../software_scripts/scripts/template.slurm):
+Generally, we do not use any options for sbatch ... we typically give it a script (i.e. a text file with commands inside) to run. Let's take a look at a template script [template.slurm](../../software_scripts/scripts/template.slurm):
 
 <div class="script">#!/bin/bash
 
@@ -68,7 +68,7 @@ begin=`date +%s`
 echo $HOSTNAME
 
 # Sleep for 60 seconds
-sleep 300
+sleep 60
 
 # getting end time to calculate time elapsed
 end=`date +%s`
@@ -84,7 +84,7 @@ The first line tells sbatch what scripting language (bash here) the rest of the 
     cat template.slurm
     sbatch template.slurm
 
-The non slurm version is the [template.sh](../software_scripts/scripts/template.sh) script. You'll notice it looks the same only missing the #SBATCH commands.
+The non slurm version is the [template.sh](../../software_scripts/scripts/template.sh) script. You'll notice it looks the same only missing the #SBATCH commands.
 
 After finishing you will see two new files in the directory stdout.out and stderr.err where stdout and stderr (respectively) were redirected to.
 
@@ -165,7 +165,7 @@ You'll see that hts_Stats is located in a completely different place and yet you
 
     echo $PATH
 
-You'll see that the directory for scythe has been added to PATH.
+You'll see that the directory for hts_Stats has been added to PATH.
 
 ---
 **2\.** A few more module sub-commands that are useful:
