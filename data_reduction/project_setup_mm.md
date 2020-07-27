@@ -19,7 +19,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     mkdir 00-RawData
     cd 00-RawData/
-    ln -s /share/biocore/workshops/2020_July_mRNA-Seq/00-RawData/* .
+    ln -s /share/biocore/workshops/2020_mRNAseq_July/00-RawData/* .
     ```
 
     This directory now contains a folder for each sample and the fastq files for each sample are in the sample folders.
