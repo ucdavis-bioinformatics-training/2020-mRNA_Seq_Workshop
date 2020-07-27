@@ -8,7 +8,7 @@
 #SBATCH --partition=production
 #SBATCH --reservation=mrnaseq_workshop
 #SBATCH --account=mrnaseq_workshop
-#SBATCH --array=1-16
+#SBATCH --array=1-22
 #SBATCH --output=slurmout/htstream_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/htstream_%A_%a.err # File to which STDERR will be written
 #SBATCH --mail-type=ALL
@@ -33,7 +33,7 @@ call="hts_Stats -L ${outpath}/${sample}/${sample}_htsStats.log -U ${inpath}/${sa
       hts_SeqScreener -A ${outpath}/${sample}/${sample}_htsStats.log | \
       hts_SeqScreener -s References/human_rrna.fasta -r -A ${outpath}/${sample}/${sample}_htsStats.log | \
       hts_AdapterTrimmer -A ${outpath}/${sample}/${sample}_htsStats.log | \
-      hts_PolyATTrim  -A ${outpath}/${sample}/${sample}.json | \
+      hts_PolyATTrim --no-left --skip_polyT -A ${outpath}/${sample}/${sample}.json | \
       hts_NTrimmer -A ${outpath}/${sample}/${sample}_htsStats.log | \
       hts_QWindowTrim -A ${outpath}/${sample}/${sample}_htsStats.log | \
       hts_LengthFilter -m 45 -A ${outpath}/${sample}/${sample}_htsStats.log | \
