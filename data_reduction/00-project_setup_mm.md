@@ -3,7 +3,7 @@
 
 The paper
 
-    Dorothée Selimoglu-Buet, et al. ["A miR-150/TET3 pathway regulates the generation of mouse and human non-classical monocyte subset."](https://www.nature.com/articles/s41467-018-07801-x) Nature Communications volume 9, Article number: 5455 (2018)
+Dorothée Selimoglu-Buet, et al. ["A miR-150/TET3 pathway regulates the generation of mouse and human non-classical monocyte subset."](https://www.nature.com/articles/s41467-018-07801-x) Nature Communications volume 9, Article number: 5455 (2018)
 
 The project on the European Nucleotide Archive (ENA), [PRJEB29201](https://www.ebi.ac.uk/ena/browser/view/PRJEB29201).
 
