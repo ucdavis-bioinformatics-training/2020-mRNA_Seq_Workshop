@@ -267,24 +267,24 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
     ```
 
     * *What parameters are needed to:
-        1.  provide a reference to hts_SeqScreener and
+        1. provide a reference to hts_SeqScreener and
         2. count, and not screen occurrences?*
 
 1. Run HTStream on the small test set.
 
     ```bash
-    hts_SeqScreener -1 SampleAC1.subset_R1.fastq.gz \
-                    -2 SampleAC1.subset_R2.fastq.gz \
-                    -s ../References/mouse_rrna.fasta -r -L SampleAC1.rrna.json -f SampleAC1.rrna
+    hts_SeqScreener -1 mouse_110_WT_C.subset_R1.fastq.gz \
+                    -2 mouse_110_WT_C.subset_R2.fastq.gz \
+                    -s ../References/mouse_rrna.fasta -r -L mouse_110_WT_C.rrna.json -f mouse_110_WT_C.rrna
     ```
 
     * *Which files were generated from hts\_SeqScreener?*
 
-    * *Lets look at the file SampleAC1.rrna.json?*
+    * *Take look at the file mouse_110_WT_C.rrna.json*
 
-    * *What do you notice about the SampleAC1.rrna.json?*
+        * *What do you notice about the SampleAC1.rrna.json?*
 
-    * *How many reads were identified as rrna?*
+        * *How many reads were identified as rrna?*
 
 ### Stream multiple applications together.
 
@@ -303,11 +303,11 @@ Paired end reads are 6 columns:
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 
-    hts_Stats -1 SampleAC1.subset_R1.fastq.gz \
-              -2 SampleAC1.subset_R2.fastq.gz \
-              -L SampleAC1.streamed.json |
-    hts_SeqScreener -A SampleAC1.streamed.json \
-              -r -s ../References/human_rrna.fasta -f SampleAC1.streamed
+    hts_Stats -1 mouse_110_WT_C.subset_R1.fastq.gz \
+              -2 mouse_110_WT_C.subset_R2.fastq.gz \
+              -L mouse_110_WT_C.streamed.json |
+    hts_SeqScreener -A mouse_110_WT_C.streamed.json \
+              -r -s ../References/mouse_rrna.fasta -f mouse_110_WT_C.streamed
     ```
 
     Note the pipe, ```|```, between the two applications!
@@ -317,7 +317,7 @@ Paired end reads are 6 columns:
 
     * *What parameter is SeqScreener using that specifies how reads are input?*
 
-    * *Lets look at the file SampleAC1.streamed.json?*
+    * *Lets look at the file mouse_110_WT_C.streamed.json?*
 
 
 ## A RNAseq preprocessing pipeline
@@ -406,7 +406,7 @@ This sequence is P7(rc): ATCTCGTATGCCGTCTTCTGCTTG. It should be at the end of an
 
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
-zcat SampleAC1.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
+zcat mouse_110_WT_C.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
 ```
 
 * *What did you find?*
@@ -436,8 +436,8 @@ Comparing STAR mapping count with raw and preprocessed reads
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 
 hts_Stats -L SampleAC1_htsStats.json -N "initial stats" \
-    -1 SampleAC1.subset_R1.fastq.gz \
-    -2 SampleAC1.subset_R2.fastq.gz | \
+    -1 mouse_110_WT_C.subset_R1.fastq.gz \
+    -2 mouse_110_WT_C.subset_R2.fastq.gz | \
 hts_SeqScreener -A SampleAC1_htsStats.json -N "screen phix" | \
 hts_SeqScreener -A SampleAC1_htsStats.json -N "count the number of rRNA reads"\
      -r -s ../References/human_rrna.fasta | \
