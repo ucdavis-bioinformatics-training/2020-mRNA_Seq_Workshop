@@ -282,13 +282,24 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 
     * *Take look at the file mouse_110_WT_C.rrna.json*
 
-        * *What do you notice about the SampleAC1.rrna.json?*
+    * *How many reads were identified as rRNA?*
 
-        * *How many reads were identified as rrna?*
+    * *What fraction of reads were identified as rRNA, do you think cleanup worked well for this sample?*
 
 ### Stream multiple applications together.
 
-The power of HTStream is the ability to stream reads through multiple programs using pipes. By streaming reads through programs, processing will be much quicker because each read is read in only once and written out only once. This approach also uses significantly less storage as there are no intermediate files. HTStream can do this by streaming a tab-delimited format called tab6.
+The power of HTStream is the ability to stream reads through multiple programs using pipes. By streaming reads through programs, processing will be much quicker because each read is read in only once and written out only once. 
+
+#### A traditional preprocessing pipeline:
+
+<img src="preproc_mm_figures/typical_pipeline.png" alt="typical_pipeline" width="80%"/>
+
+
+#### An HTStream preprocessing pipline:
+<img src="preproc_mm_figures/htstream_pipeline.png" alt="typical_pipeline" width="80%"/>
+
+
+This approach also uses significantly less storage as there are no intermediate files. HTStream can do this by streaming a tab-delimited format called tab6.
 
 Single end reads are 3 columns:
 
@@ -298,7 +309,7 @@ Paired end reads are 6 columns:
 
 `read1id  read1seq  read1qual  read2id  read2seq  read2qual`
 
-1. So lets first run hts_Stats and then hts_SeqScreener in a streamed fashion.
+1. Lets try it out. First run hts_Stats and then hts_SeqScreener in a streamed fashion.
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
