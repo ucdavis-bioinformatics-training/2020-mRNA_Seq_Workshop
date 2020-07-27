@@ -18,7 +18,7 @@ do
         hts_SeqScreener -A ${outpath}/${sample}/${sample}_htsStats.log | \
         hts_SeqScreener -s References/human_rrna.fasta -r -A ${outpath}/${sample}/${sample}_htsStats.log | \
         hts_AdapterTrimmer -A ${outpath}/${sample}/${sample}_htsStats.log | \
-        hts_PolyATTrim  -A ${outpath}/${sample}/${sample}.json | \
+        hts_PolyATTrim --no-left --skip_polyT -A ${outpath}/${sample}/${sample}.json | \
         hts_NTrimmer -A ${outpath}/${sample}/${sample}_htsStats.log | \
         hts_QWindowTrim -A ${outpath}/${sample}/${sample}_htsStats.log | \
         hts_LengthFilter -m 45 -A ${outpath}/${sample}/${sample}_htsStats.log | \
