@@ -80,7 +80,6 @@ Genome sequence fasta files and annotation (gff, gtf) files go together! These s
 * If you expect contamination, or the presence of additional sequence/genome, add the sequence(s) to the genome fasta file.
 * Annotation file should be GTF (preferred), and should be the most comprehensive you can find.
   * Chromosome names in the GTF must match those in the fasta file (they don’t always do).
-  * Star recommends the Genecode annotations for mouse/human
 
 ## Counting reads as a proxy for gene expression
 
@@ -140,22 +139,20 @@ Choose the appropriate column given the library preparation characteristics and 
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     ```
 
-1. To align our data we will need the genome (fasta) and annotation (gtf) for human. There are many places to find them, but we are going to get them from the [GENCODE](https://www.gencodegenes.org/human/).
+1. To align our data we will need the genome (fasta) and annotation (gtf) for mouse. There are many places to find them, but we are going to get them from the [Ensembl](https://uswest.ensembl.org/Mus_musculus/Info/Index).
 
-    We need to first get the url for the genome and annotation gtf. For RNAseq we want to use the PRI (primary) genome chromosome and Basic gene annotation. At the time of this workshop the current version of GENCODE is *34*. You will want to update the scripts to use the current version.
+    We need to first get the url for the genome and annotation gtf. For RNAseq we want to use the primary genome chromosomes and basic gene annotation. At the time of this workshop the current version of the Ensembl mouse genome is GRCm38.p6. You will want to update the scripts to use the current version.
 
-    <img src="alignment_figures/index_figure1.png" alt="index_figure1" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_figures/ensembl1.png" alt="index_figure1" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="alignment_figures/index_figure2.png" alt="index_figure2" width="80%" style="border:5px solid #ADD8E6;"/>
-
-1. Lets take a look at the help docs for salmon and its subcommands as well:
+1. We are going to use an aligner called ['STAR'](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3530905/) to align the data. Lets take a look at the help docs for star:
 
     ```bash
     module load star
     STAR -h
     ```
 
-1. We are going to use an aligner called ['STAR'](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3530905/) to align the data, but first we need to index the genome for STAR. Lets pull down a slurm script to index the Ensembl version of the mouse genome.
+1. First we need to index the genome for STAR. Lets pull down a slurm script to index the Ensembl version of the mouse genome.
 
     ```bash
     wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/star_index.slurm
@@ -184,16 +181,17 @@ Choose the appropriate column given the library preparation characteristics and 
     mkdir -p ${outpath}
 
     cd ${outpath}
-    wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_34/GRCh38.primary_assembly.genome.fa.gz
-    gunzip GRCh38.primary_assembly.genome.fa.gz
-    FASTA="../GRCh38.primary_assembly.genome.fa"
+    wget ftp://ftp.ensembl.org/pub/release-100/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz
+    gunzip Mus_musculus.GRCm38.dna.toplevel.fa.gz
+    FASTA="../Mus_musculus.GRCm38.dna.toplevel.fa"
 
-    wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_34/gencode.v34.primary_assembly.annotation.gtf.gz
-    gunzip gencode.v34.primary_assembly.annotation.gtf.gz
-    GTF="../gencode.v34.primary_assembly.annotation.gtf"
+    wget ftp://ftp.ensembl.org/pub/release-100/gtf/mus_musculus/Mus_musculus.GRCm38.100.gtf.gz
+    gunzip Mus_musculus.GRCm38.100.gtf.gz
+    GTF="../Mus_musculus.GRCm38.100.gtf"
 
-    mkdir star.overlap100.gencode.v34
-    cd star.overlap100.gencode.v34
+    mkdir star_2.7.3a_index_GRCm38.p6
+    cd star_2.7.3a_index_GRCm38.p6
+
 
     module load star
 
@@ -215,9 +213,9 @@ Choose the appropriate column given the library preparation characteristics and 
 
     When you are done, type "q" to exit.
 
-    1. The script uses wget to download the fasta and GTF files from GENCODE using the links you found earlier.
+    1. The script uses wget to download the fasta and GTF files from Ensembl using the links you found earlier.
     1. Uncompresses them using gunzip.
-    1. Creates the star index directory [star.overlap100.gencode.v34].
+    1. Creates the star index directory [star_2.7.3a_index_GRCm38.p6].
     1. Change directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
     1. Run star in mode genomeGenerate.
 
@@ -227,12 +225,12 @@ Choose the appropriate column given the library preparation characteristics and 
     sbatch star_index.slurm
     ```
 
-    This step will take a couple hours. You can look at the [STAR documentation](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) while you wait. All of the output files will be written to the star index directory _star.overlap100.gencode.v34_.
+    This step will take a couple hours. You can look at the [STAR documentation](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) while you wait. All of the output files will be written to the star index directory **star_2.7.3a_index_GRCm38.p6**.
 
     **IF** For the sake of time, or for some reason it didn't finish, is corrupted, or you missed the session, you can **link** over a completed copy.
 
     ```bash
-    ln -s /share/biocore/workshops/2020_mRNAseq/References/star.overlap100.gencode.v34 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
+    ln -s /share/biocore/workshops/2020_mRNAseq/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
     ```
 
 ## Alignments
@@ -265,7 +263,7 @@ Choose the appropriate column given the library preparation characteristics and 
     module load star
     STAR \
     --runThreadN 8 \
-       --genomeDir ../References/star.overlap100.gencode.v34 \
+       --genomeDir ../References/star_2.7.3a_index_GRCm38.p6 \
        --outSAMtype BAM SortedByCoordinate \
        --quantMode GeneCounts \
        --outFileNamePrefix SampleAC1.streamed_ \
@@ -407,7 +405,7 @@ Choose the appropriate column given the library preparation characteristics and 
     echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
 
     sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
-    REF="References/star.overlap100.gencode.v34"
+    REF="References/star_2.7.3a_index_GRCm38.p6"
 
     outpath='02-STAR_alignment'
     [[ -d ${outpath} ]] || mkdir ${outpath}
