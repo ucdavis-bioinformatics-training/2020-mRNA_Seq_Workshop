@@ -465,21 +465,21 @@ Comparing STAR mapping count with raw and preprocessed reads
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 
-hts_Stats -L SampleAC1_htsStats.json -N "initial stats" \
+hts_Stats -L mouse_110_WT_C_htsStats.json -N "initial stats" \
     -1 mouse_110_WT_C.subset_R1.fastq.gz \
     -2 mouse_110_WT_C.subset_R2.fastq.gz | \
-hts_SeqScreener -A SampleAC1_htsStats.json -N "screen phix" | \
-hts_SeqScreener -A SampleAC1_htsStats.json -N "count the number of rRNA reads"\
+hts_SeqScreener -A mouse_110_WT_C_htsStats.json -N "screen phix" | \
+hts_SeqScreener -A mouse_110_WT_C_htsStats.json -N "count the number of rRNA reads"\
      -r -s ../References/human_rrna.fasta | \
-hts_SuperDeduper -A SampleAC1_htsStats.json -N "remove PCR duplicates" | \
-hts_AdapterTrimmer -A SampleAC1_htsStats.json -N "trim adapters" | \
-hts_PolyATTrim  -A SampleAC1_htsStats.json -N "trim adapters" | \
-hts_NTrimmer -A SampleAC1_htsStats.json -N "remove any remaining 'N' characters" | \
-hts_QWindowTrim -A SampleAC1_htsStats.json -N "quality trim the ends of reads" | \
-hts_LengthFilter -A SampleAC1_htsStats.json -N "remove reads < 50bp" \
+hts_SuperDeduper -A mouse_110_WT_C_htsStats.json -N "remove PCR duplicates" | \
+hts_AdapterTrimmer -A mouse_110_WT_C_htsStats.json -N "trim adapters" | \
+hts_PolyATTrim  -A mouse_110_WT_C_htsStats.json -N "trim adapters" | \
+hts_NTrimmer -A mouse_110_WT_C_htsStats.json -N "remove any remaining 'N' characters" | \
+hts_QWindowTrim -A mouse_110_WT_C_htsStats.json -N "quality trim the ends of reads" | \
+hts_LengthFilter -A mouse_110_WT_C_htsStats.json -N "remove reads < 50bp" \
     -n -m 50 | \
-hts_Stats -A SampleAC1_htsStats.json -N "final stats" \
-    -f SampleAC1.htstream
+hts_Stats -A mouse_110_WT_C_htsStats.json -N "final stats" \
+    -f mouse_110_WT_C.htstream
 ```
 
 Note the patterns:
@@ -632,7 +632,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-    zless 00-RawData/SampleAC1/SampleAC1_L3_R1.fastq.gz
+    zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz
     ```
 
     Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit. Alternatively, you can use zcat and grep like we did earlier.
@@ -640,7 +640,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     Now look at the output file:
 
     ```bash
-    zless 01-HTS_Preproc/SampleAC1/SampleAC1_R1.fastq.gz
+    zless 01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz
     ```
 
     If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
@@ -648,8 +648,8 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     Lets grep for the sequence and count occurrences
 
     ```bash
-    zcat  00-RawData/SampleAC1/SampleAC1_L3_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
-    zcat  01-HTS_Preproc/SampleAC1/SampleAC1_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
     * *What is the reduction in adapters found?*
