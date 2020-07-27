@@ -10,6 +10,48 @@ Our team offers custom bioinformatics services to academic and private organizat
 
  <img src="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/misc/staff.png" alt="staff" width="800px"/>
 
+### Workshop Materials
+
+Workshop materials are all posted on github, and publicly available
+
+[http://bioinformatics.ucdavis.edu/training](http://bioinformatics.ucdavis.edu/training)
+
+* Workshop registration site:
+
+[https://registration.genomecenter.ucdavis.edu/](https://registration.genomecenter.ucdavis.edu/)
+
+* Public Github repository listing:
+
+[https://ucdavis-bioinformatics-training.github.io/](https://ucdavis-bioinformatics-training.github.io/)
+
+
+* This mRNAseq Workshop
+
+[https://ucdavis-bioinformatics-training.github.io/2020-mRNA_Seq_Workshop/](https://ucdavis-bioinformatics-training.github.io/2020-mRNA_Seq_Workshop/)
+
+### Workshop Goals
+
+* End-to-End understanding of RNAseq differential expression analysis
+  * Discussions/lectures
+  * Technologies
+  * Experimental design
+  * Cost estimation
+  * Data reduction workflow
+  * mRNA gene expression data analysis
+* To work through a complete experiment, starting from raw data to completion, including making figures.
+
+* Goal is 30-40% lecture/discussion 60-70% hands-on
+
+### Computing Cluster
+
+A portion of  this course will be conducted on our servers and compute cluster (tadpole.genomecenter.ucdavis.edu).
+
+Instructions on how to get an account will be sent by email
+
+If you already have, or have had in the past, an account on our systems, then please tell us your username, or email, and we will add you to the workshop. **Do not create a new account**
+
+Cluster usage will be under the slurm reservation  ‘mrnaseq_workshop’
+
 ## Contacts
 
 * Request for data analysis services, consultations.
@@ -39,56 +81,14 @@ Course lecture, discussions, and one-on-one help/troubleshooting will be conduct
 
 Because video is involved, we ask everyone to be respectful and we reserve the right to remove someone if they are being disrespectful or disruptive.
 
-See the "Using Zoom" topic in the menu for more information.
+See the ["Using Zoom"](zoom) topic in the menu for more information.
 
 ####  Slack
 
 Text based communication will be conducted via a Slack channel. Staff will be monitoring the Slack channel to answer questions (and schedule a Zoom break out room if needed). If you know the answer to someone else's question, feel free to answer it.
 
-See the "Using Slack" topic in the menu for more information.
+See the ["Using Slack"](slack) topic in the menu for more information.
 
 #### Patience
 
 We ask for a little more patience as this process is also new to us, but we are comitted to providing you the best educational experience we can (under the current conditions).
-
-### Workshop Goals
-
-* End-to-End understanding of RNAseq differential expression analysis
-  * Discussions/lectures
-  * Technologies
-  * Experimental design
-  * Cost estimation
-  * Data reduction workflow
-  * mRNA gene expression data analysis
-* To work through a complete experiment, starting from raw data to completion, including making figures.
-
-* Goal is 30-40% lecture/discussion 60-70% hands-on
-
-### Workshop Materials
-
-Workshop materials are all posted on github, and publicly available
-
-[http://bioinformatics.ucdavis.edu/training](http://bioinformatics.ucdavis.edu/training)
-
-* Workshop registration site:
-
-   [https://registration.genomecenter.ucdavis.edu/](https://registration.genomecenter.ucdavis.edu/)
-
-* Public Github repository listing:
-
-   [https://ucdavis-bioinformatics-training.github.io/](https://ucdavis-bioinformatics-training.github.io/)
-
-
-* This mRNAseq Workshop
-
-   [https://ucdavis-bioinformatics-training.github.io/2020-mRNA_Seq_Workshop/](https://ucdavis-bioinformatics-training.github.io/2020-mRNA_Seq_Workshop/)
-
-### Computing Cluster
-
-A portion of  this course will be conducted on our servers and compute cluster (tadpole.genomecenter.ucdavis.edu).
-
-Instructions on how to get an account will be sent by email
-
-If you already have, or have had in the past, an account on our systems, then please tell us your username, or email, and we will add you to the workshop. **Do not create a new account**
-
-Cluster usage will be under the slurm reservation  ‘mrnaseq_workshop’

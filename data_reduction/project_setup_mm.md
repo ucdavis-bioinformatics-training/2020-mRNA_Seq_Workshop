@@ -1,3 +1,7 @@
+
+# The Dataset
+
+
 # Project Setup
 
 Let's set up a project directory for the week, and talk a bit about project philosophy..
@@ -11,7 +15,7 @@ cd
 mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 ```
 
-## Link Raw Fastq files
+## Link raw fastq files
 
 1. Next, go into that directory, create a raw data directory (we are going to call this 00-RawData) and cd into that directory. Lets then create symbolic links to the sample directories that contains the raw data.
 
@@ -31,7 +35,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     cat ../samples.txt
     ```
 
-## Getting To Know Your Raw Data
+## Getting to know your data
 
 1. Now, take a look at the raw data directory.
 
@@ -90,7 +94,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 
     See if you can figure out how this command works.
 
-## Prepare for Read preprocessing
+## Prepare our experiment folder for analysis
 
 Now go back to your 'rnaseq_example' directory and create two directories called 'slurmout' and '01-HTS_Preproc':
 
@@ -103,11 +107,11 @@ mkdir 01-HTS_Preproc
 
 We'll put reference sequence, genome, etc. in the References directory. The results of all our slurm script will output .out and .err files into the slurmout folder. The results of our preprocessing steps will be put into the 01-HTS_Preproc directory. The next step after that will go into a "02-..." directory, etc. You can collect scripts that perform each step, and notes and metadata relevant for each step, in the directory for that step. This way anyone looking to replicate your analysis has limited places to search for the commands you used. In addition, you may want to change the permissions on your original 00-RawData directory to "read only", so that you can never accidentally corrupt (or delete) your raw data. We won't worry about this here, because we've linked in sample folders.
 
-## Questions you should now be able to answer.
+### Questions you should now be able to answer.
 
 1. How many reads are in the sample you checked?
 2. How many basepairs is R1, how many is R2?
 3. What is the name of the sequencer this dataset was run on?
-4. Which run number is this for that sequencing?
+4. Which run number is this for that sequencer?
 5. What lane was this ran on?
 6. Randomly check a few samples, were the all run the same sequencing, run, and lane?
