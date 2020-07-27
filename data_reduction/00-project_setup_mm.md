@@ -94,6 +94,12 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 
     See if you can figure out how this command works.
 
+    This will give you the read count without doing any division. See if you can figure out how this command works:
+
+    ```bash
+    zcat mouse_110_WT_C.R1.fastq.gz | grep -c "^@A00461:28"
+    ```
+
 ## Prepare our experiment folder for analysis
 
 Now go back to your 'rnaseq_example' directory and create two directories called 'slurmout' and '01-HTS_Preproc':
