@@ -51,10 +51,10 @@ navigation:
     url: https://ucdavis-bioinformatics-training.github.io/2019-Winter-Bioinformatics_Command_Line_and_R_Prerequisites_Workshop/
 
   - heading: Data Reduction
-  - title: Prepare dataset
-    url: data_reduction/00-project_setup_mm
   - title: Files and Filetypes
     url: data_reduction/filetypes
+  - title: Prepare dataset
+    url: data_reduction/00-project_setup_mm
   - title: Preprocessing raw data
     url: data_reduction/01-preproc_htstream_mm
   - title: Alignment with Star
