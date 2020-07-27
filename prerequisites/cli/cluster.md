@@ -84,7 +84,7 @@ The first line tells sbatch what scripting language (bash here) the rest of the 
     cat template.slurm
     sbatch template.slurm
 
-The non slurm version is the [template.sh](../software_scripts/scripts/template.sh) script. You'll notice it looks the same only missing the #SBATCH commands.
+The non slurm version is the [template.sh](../../software_scripts/scripts/template.sh) script. You'll notice it looks the same only missing the #SBATCH commands.
 
 After finishing you will see two new files in the directory stdout.out and stderr.err where stdout and stderr (respectively) were redirected to.
 
