@@ -165,7 +165,7 @@ You'll see that hts_Stats is located in a completely different place and yet you
 
     echo $PATH
 
-You'll see that the directory for scythe has been added to PATH.
+You'll see that the directory for hts_Stats has been added to PATH.
 
 ---
 **2\.** A few more module sub-commands that are useful:
