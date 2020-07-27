@@ -8,7 +8,7 @@
 #SBATCH --partition=production
 #SBATCH --reservation=mrnaseq_workshop
 #SBATCH --account=mrnaseq_workshop
-#SBATCH --array=1-16
+#SBATCH --array=1-22
 #SBATCH --output=slurmout/htstream_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/htstream_%A_%a.err # File to which STDERR will be written
 #SBATCH --mail-type=ALL
@@ -34,7 +34,7 @@ call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
           -2 ${inpath}/${sample}/*R2*.fastq.gz | \
       hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'screen phix' | \
       hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'count the number of rRNA reads'\
-          -r -s References/human_rrna.fasta | \
+          -r -s References/mouse_rrna.fasta | \
       hts_SuperDeduper -A ${outpath}/${sample}/${sample}.json -N 'remove PCR duplicates' | \
       hts_AdapterTrimmer -A ${outpath}/${sample}/${sample}.json -N 'trim adapters' | \
       hts_PolyATTrim  -A ${outpath}/${sample}/${sample}.json -N 'remove polyAT tails' | \

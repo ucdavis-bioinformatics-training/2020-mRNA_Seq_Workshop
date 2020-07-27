@@ -19,7 +19,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     mkdir 00-RawData
     cd 00-RawData/
-    ln -s /share/biocore/workshops/2020_mRNAseq/00-RawData/* .
+    ln -s /share/biocore/workshops/2020_July_mRNAseq/00-RawData/* .
     ```
 
     This directory now contains a folder for each sample and the fastq files for each sample are in the sample folders.
@@ -54,8 +54,8 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 1. Pick a directory and go into it. View the contents of the files using the 'less' command, when gzipped used 'zless' (which is just the 'less' command for gzipped files):
 
     ```bash
-    cd SampleAC1/
-    zless SampleAC1_L3_R1.fastq.gz
+    cd mouse_110_WT_C/
+    zless mouse_110_WT_C.R1.fastq.gz
     ```
 
     Make sure you can identify which lines correspond to a read and which lines are the header, sequence, and quality values. Press 'q' to exit this screen.
@@ -63,7 +63,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 1. Then, let's figure out the number of reads in this file. A simple way to do that is to count the number of lines and divide by 4 (because the record of each read uses 4 lines). In order to do this use cat to output the uncompressed file and pipe that to "wc" to count the number of lines:
 
     ```bash
-    zcat SampleAC1_L3_R1.fastq.gz | wc -l
+    zcat mouse_110_WT_C.R1.fastq.gz | wc -l
     ```
 
     Divide this number by 4 and you have the number of reads in this file.
@@ -71,7 +71,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
 1. One more thing to try is to figure out the length of the reads without counting each nucleotide. First get the first 4 lines of the file (i.e. the first record):
 
     ```bash
-    zcat SampleAC1_L3_R1.fastq.gz  | head -2 | tail -1
+    zcat mouse_110_WT_C.R1.fastq.gz  | head -2 | tail -1
     ```
 
     Note the header lines (1st and 3rd line) and sequence and quality lines (2nd and 4th) in each 4-line fastq block.
@@ -85,7 +85,7 @@ mkdir -p /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     This will give you the length of the read. Also can do the bash one liner:
 
     ```bash
-    echo -n $(zcat SampleAC1_L3_R1.fastq.gz  | head -2 | tail -1) | wc -c
+    echo -n $(zcat mouse_110_WT_C.R1.fastq.gz  | head -2 | tail -1) | wc -c
     ```
 
     See if you can figure out how this command works.
