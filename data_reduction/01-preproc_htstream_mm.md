@@ -470,7 +470,7 @@ hts_Stats -L mouse_110_WT_C_htsStats.json -N "initial stats" \
     -2 mouse_110_WT_C.subset_R2.fastq.gz | \
 hts_SeqScreener -A mouse_110_WT_C_htsStats.json -N "screen phix" | \
 hts_SeqScreener -A mouse_110_WT_C_htsStats.json -N "count the number of rRNA reads"\
-     -r -s ../References/human_rrna.fasta | \
+     -r -s ../References/mouse_rrna.fasta | \
 hts_SuperDeduper -A mouse_110_WT_C_htsStats.json -N "remove PCR duplicates" | \
 hts_AdapterTrimmer -A mouse_110_WT_C_htsStats.json -N "trim adapters" | \
 hts_PolyATTrim  -A mouse_110_WT_C_htsStats.json -N "trim adapters" | \
@@ -547,7 +547,7 @@ call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
           -2 ${inpath}/${sample}/*R2*.fastq.gz | \
       hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'screen phix' | \
       hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'count the number of rRNA reads'\
-          -r -s References/human_rrna.fasta | \
+          -r -s References/mouse_rrna.fasta | \
       hts_SuperDeduper -A ${outpath}/${sample}/${sample}.json -N 'remove PCR duplicates' | \
       hts_AdapterTrimmer -A ${outpath}/${sample}/${sample}.json -N 'trim adapters' | \
       hts_PolyATTrim  -A ${outpath}/${sample}/${sample}.json -N 'remove polyAT tails' | \
