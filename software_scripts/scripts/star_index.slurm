@@ -35,6 +35,7 @@ module load star
 
 call="STAR
      --runThreadN 8 \
+     --limitGenomeGenerateRAM 33524399488 \
      --runMode genomeGenerate \
      --genomeDir . \
      --sjdbOverhang 100 \
