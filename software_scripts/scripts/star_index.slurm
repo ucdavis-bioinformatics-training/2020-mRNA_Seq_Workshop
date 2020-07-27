@@ -20,21 +20,22 @@ outpath="References"
 mkdir -p ${outpath}
 
 cd ${outpath}
-wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_34/GRCh38.primary_assembly.genome.fa.gz
-gunzip GRCh38.primary_assembly.genome.fa.gz
-FASTA="../GRCh38.primary_assembly.genome.fa"
+wget ftp://ftp.ensembl.org/pub/release-100/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz
+gunzip Mus_musculus.GRCm38.dna.toplevel.fa.gz
+FASTA="../Mus_musculus.GRCm38.dna.toplevel.fa"
 
-wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_34/gencode.v34.primary_assembly.annotation.gtf.gz
-gunzip gencode.v34.primary_assembly.annotation.gtf.gz
-GTF="../gencode.v34.primary_assembly.annotation.gtf"
+wget ftp://ftp.ensembl.org/pub/release-100/gtf/mus_musculus/Mus_musculus.GRCm38.100.gtf.gz
+gunzip Mus_musculus.GRCm38.100.gtf.gz
+GTF="../Mus_musculus.GRCm38.100.gtf"
 
-mkdir star.overlap100.gencode.v34
-cd star.overlap100.gencode.v34
+mkdir star_2.7.3a_index_GRCm38.p6
+cd star_2.7.3a_index_GRCm38.p6
 
 module load star
 
 call="STAR
      --runThreadN 8 \
+     --limitGenomeGenerateRAM 33524399488 \
      --runMode genomeGenerate \
      --genomeDir . \
      --sjdbOverhang 100 \

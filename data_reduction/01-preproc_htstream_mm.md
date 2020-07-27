@@ -1,6 +1,6 @@
 # Sequence Preprocessing
 
-This document assumes [project_setup](./project_setup.md) has been completed.
+This document assumes [project_setup](./00_project_setup_mm.md) has been completed.
 
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
@@ -33,7 +33,7 @@ PCA/MDS plots of the preprocessing summary are a great way to look for technical
 
 **Many technical things happen between original sample and data, preprocessing is working backwards through that process to get as close as we can to original sample**
 
-<img src="preproc_figures/preproc_flowchart.png" alt="preproc_flowchart" width="80%"/>
+<img src="preproc_mm_figures/preproc_flowchart.png" alt="preproc_flowchart" width="80%"/>
 
 ### An RNAseq Preprocessing Workflow
 
@@ -84,7 +84,7 @@ hts_SuperDeduper: Identify and remove PCR duplicates.
 
 The source code and pre-compiled binaries for Linux can be downloaded and installed [from the GitHub repository](https://github.com/s4hts/HTStream).
 
-HTStream is also avaiable on [Bioconda](https://bioconda.github.io/), and there is even an image on [Docker Hub](https://hub.docker.com/r/dzs74/htstream).
+HTStream is also available on [Bioconda](https://bioconda.github.io/), and there is even an image on [Docker Hub](https://hub.docker.com/r/dzs74/htstream).
 
 HTStream was designed to be extensible. We continue to add new preprocessing routines and welcome contributions from collaborators.
 
@@ -113,9 +113,9 @@ When building a new pipeline, it is almost always a good idea to use a small sub
     Then create a small dataset.
 
     ```bash
-    zcat ../00-RawData/SampleAC1/SampleAC1_L3_R1.fastq.gz | head -400000 | gzip > SampleAC1.subset_R1.fastq.gz
-    zcat ../00-RawData/SampleAC1/SampleAC1_L3_R2.fastq.gz | head -400000 | gzip > SampleAC1.subset_R2.fastq.gz
-    ls
+    zcat ../00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | head -400000 | gzip > mouse_110_WT_C.subset_R1.fastq.gz
+    zcat ../00-RawData/mouse_110_WT_C/mouse_110_WT_C.R2.fastq.gz | head -400000 | gzip > mouse_110_WT_C.subset_R2.fastq.gz
+    ls -l
     ```
 
     So we ```zcat``` (uncompress and send to stdout), pipe ```|```  to ```head``` (param -400000) then pipe to ```gzip``` to recompress and name our files subset.
@@ -136,14 +136,14 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 1. Now lets run ```hts_Stats``` and look at the output.
 
     ```bash
-    hts_Stats -1 SampleAC1.subset_R1.fastq.gz \
-              -2 SampleAC1.subset_R2.fastq.gz \
-              -L SampleAC1.stats.json > out.tab
+    hts_Stats -1 mouse_110_WT_C.subset_R1.fastq.gz \
+              -2 mouse_110_WT_C.subset_R2.fastq.gz \
+              -L mouse_110_WT_C.stats.json > out.tab
     ```
 
     * *What happens if you run hts_Stats without piping output to out.tab?*
 
-    * *Can you think of a way to view the output from hts_Stats in less without creating out.tab?*
+    * *Can you think of a way to view the output from hts_Stats in __less__ without creating out.tab?*
 
     By default, all HTS apps output tab formatted files to the stdout.
 
@@ -166,9 +166,9 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 
 1. Now lets change the command slightly.
     ```bash
-    hts_Stats -1 SampleAC1.subset_R1.fastq.gz \
-              -2 SampleAC1.subset_R2.fastq.gz \
-              -L SampleAC1.stats.json -f SampleAC1.stats
+    hts_Stats -1 mouse_110_WT_C.subset_R1.fastq.gz \
+              -2 mouse_110_WT_C.subset_R2.fastq.gz \
+              -L mouse_110_WT_C.stats.json -f mouse_110_WT_C.stats
     ```
 
     * *What parameters did we use, what do they do?*
@@ -179,23 +179,24 @@ When building a new pipeline, it is almost always a good idea to use a small sub
     ls -lah
     ```
 
-    <div class="output">msettles@tadpole:/share/workshop/mrnaseq_workshop/msettles/rnaseq_example/HTS_testing$     ls -lah
-    total 29M
-    drwxrwsr-x 2 msettles mrnaseq_workshop    7 May 31 12:51 .
-    drwxrwsr-x 6 msettles mrnaseq_workshop    7 May 31 12:48 ..
-    -rw-rw-r-- 1 msettles mrnaseq_workshop  60K May 31 12:51 SampleAC1.stats.json
-    -rw-rw-r-- 1 msettles mrnaseq_workshop 6.8M May 31 12:51 SampleAC1.stats_R1.fastq.gz
-    -rw-rw-r-- 1 msettles mrnaseq_workshop 7.5M May 31 12:51 SampleAC1.stats_R2.fastq.gz
-    -rw-rw-r-- 1 msettles mrnaseq_workshop 6.8M May 31 12:48 SampleAC1.subset_R1.fastq.gz
-    -rw-rw-r-- 1 msettles mrnaseq_workshop 7.5M May 31 12:48 SampleAC1.subset_R2.fastq.gz
+    <div class="output">
+    total 20M
+    drwxrwsr-x 2 shunter mrnaseq_workshop    8 Jul 27 13:44 .
+    drwxrwsr-x 8 shunter mrnaseq_workshop    9 Jul 27 13:37 ..
+    -rw-rw-r-- 1 shunter mrnaseq_workshop  40K Jul 27 13:44 mouse_110_WT_C.stats.json
+    -rw-rw-r-- 1 shunter mrnaseq_workshop 4.7M Jul 27 13:44 mouse_110_WT_C.stats_R1.fastq.gz
+    -rw-rw-r-- 1 shunter mrnaseq_workshop 5.0M Jul 27 13:44 mouse_110_WT_C.stats_R2.fastq.gz
+    -rw-rw-r-- 1 shunter mrnaseq_workshop 4.7M Jul 27 13:39 mouse_110_WT_C.subset_R1.fastq.gz
+    -rw-rw-r-- 1 shunter mrnaseq_workshop 5.0M Jul 27 13:39 mouse_110_WT_C.subset_R2.fastq.gz
     </div>
 
     * *Which files were generated from hts\_Stats?*
+    * *Did stats change any of the data (are the contents of mouse_110_WT_C.stats_R1.fastq.gz identical to mouse_110_WT_C.subset_R1.fastq.gz)?*
 
 1. Lets look at the file SampleAC1.stats\.json*
 
     ```bash
-    cat SampleAC1.stats.json
+    less -S mouse_110_WT_C.stats.json
     ```
 
     The logs generated by htstream are in [JSON](https://en.wikipedia.org/wiki/JSON) format, like a database format but meant to be readable.
@@ -212,49 +213,48 @@ Ribosomal RNA can make up 90% or more of a typical _total RNA_ sample. Most libr
 
 We will use these sequences to identify rRNA in our reads, which are from human. One way to do that is to go to [NCBI](https://www.ncbi.nlm.nih.gov/) and search for them.
 
-1. First, go to NCBI and in the Search dropdown select "Taxonomy" and search for "human".
+1. First, go to [NCBI](https://www.ncbi.nlm.nih.gov/) and in the Search dropdown select "Taxonomy" and search for "human".
 
-    <img src="preproc_figures/ncbi01.png" alt="ncbi1" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="preproc_mm_figures/ncbi_mm_01.png" alt="ncbi1" width="80%" style="border:5px solid #ADD8E6;"/>
 
-1. Click on "Homo sapiens".
+1. Click on "Mus musculus".
 
-    <img src="preproc_figures/ncbi02.png" alt="ncbi2" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="preproc_mm_figures/ncbi_mm_02.png" alt="ncbi2" width="80%" style="border:5px solid #ADD8E6;"/>
 
-1. Click on "Homo sapiens" again.
+1. Click on "Mus musculus" again.
 
-    <img src="preproc_figures/ncbi03.png" alt="ncbi3" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="preproc_mm_figures/ncbi_mm_03.png" alt="ncbi3" width="80%" style="border:5px solid #ADD8E6;"/>
 
 1. Click on the "Subtree links" for Nucleotide.
 
-    <img src="preproc_figures/ncbi04.png" alt="ncbi4" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="preproc_mm_figures/ncbi_mm_04.png" alt="ncbi4" width="80%" style="border:5px solid #ADD8E6;"/>
 
 1. Under Molecule Types, click on "rRNA" (left hand side).
 
-    <img src="preproc_figures/ncbi05.png" alt="ncbi5" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="preproc_mm_figures/ncbi_mm_05.png" alt="ncbi5" width="80%" style="border:5px solid #ADD8E6;"/>
 
 1. Click on "Send", choose "File", choose Format "FASTA", and click on "Create File".
 
-    <img src="preproc_figures/ncbi06.png" alt="ncbi6" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="preproc_mm_figures/ncbi_mm_06.png" alt="ncbi6" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="preproc_figures/ncbi07.png" alt="ncbi7" width="80%" style="border:5px solid #ADD8E6;"/>
 
-Save this file to your computer, and rename it to 'human_rrna.fasta'.
+Save this file to your computer, and rename it to 'mouse_rrna.fasta'.
 
-Upload your human_rrna.fasta file **to the 'References' directory** in your project folder using either **scp** or FileZilla (or equivalent).
+Upload your mouse_rrna.fasta file **to the 'References' directory** in your project folder using either **scp** or FileZilla (or equivalent).
 
-Or if you feel like 'cheating', just copy/paste the contents of human_rrna.fa using nano into a file named /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/human_rrna.fasta
+Or if you feel like 'cheating', just copy/paste the contents of mouse_rrna.fa using nano into a file named /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/mouse_rrna.fasta
 
 ```bash
-nano /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/human_rrna.fasta
+nano /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/mouse_rrna.fasta
 ```
 
-paste contents of human_rrna.fa and save
+paste contents of mouse_rrna.fa and save
 
 
 This is *really* cheating, but if all else fails:
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References
-wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/human_rrna.fasta
+wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/raw/master/data_reduction/mouse_rrna.fasta
 ```
 
 ### Using HTStream to count ribosomal rna (not remove, but just to count the occurrences).
@@ -267,28 +267,39 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
     ```
 
     * *What parameters are needed to:
-        1.  provide a reference to hts_SeqScreener and
+        1. provide a reference to hts_SeqScreener and
         2. count, and not screen occurrences?*
 
 1. Run HTStream on the small test set.
 
     ```bash
-    hts_SeqScreener -1 SampleAC1.subset_R1.fastq.gz \
-                    -2 SampleAC1.subset_R2.fastq.gz \
-                    -s ../References/human_rrna.fasta -r -L SampleAC1.rrna.json -f SampleAC1.rrna
+    hts_SeqScreener -1 mouse_110_WT_C.subset_R1.fastq.gz \
+                    -2 mouse_110_WT_C.subset_R2.fastq.gz \
+                    -s ../References/mouse_rrna.fasta -r -L mouse_110_WT_C.rrna.json -f mouse_110_WT_C.rrna
     ```
 
     * *Which files were generated from hts\_SeqScreener?*
 
-    * *Lets look at the file SampleAC1.rrna.json?*
+    * *Take look at the file mouse_110_WT_C.rrna.json*
 
-    * *What do you notice about the SampleAC1.rrna.json?*
+    * *How many reads were identified as rRNA?*
 
-    * *How many reads were identified as rrna?*
+    * *What fraction of reads were identified as rRNA, do you think cleanup worked well for this sample?*
 
 ### Stream multiple applications together.
 
-The power of HTStream is the ability to stream reads through multiple programs using pipes. By streaming reads through programs, processing will be much quicker because each read is read in only once and written out only once. This approach also uses significantly less storage as there are no intermediate files. HTStream can do this by streaming a tab-delimited format called tab6.
+The power of HTStream is the ability to stream reads through multiple programs using pipes. By streaming reads through programs, processing will be much quicker because each read is read in only once and written out only once. 
+
+#### A traditional preprocessing pipeline:
+
+<img src="preproc_mm_figures/typical_pipeline.png" alt="typical_pipeline" width="80%"/>
+
+
+#### An HTStream preprocessing pipline:
+<img src="preproc_mm_figures/htstream_pipeline.png" alt="typical_pipeline" width="80%"/>
+
+
+This approach also uses significantly less storage as there are no intermediate files. HTStream can do this by streaming a tab-delimited format called tab6.
 
 Single end reads are 3 columns:
 
@@ -298,16 +309,16 @@ Paired end reads are 6 columns:
 
 `read1id  read1seq  read1qual  read2id  read2seq  read2qual`
 
-1. So lets first run hts_Stats and then hts_SeqScreener in a streamed fashion.
+1. Lets try it out. First run hts_Stats and then hts_SeqScreener in a streamed fashion.
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 
-    hts_Stats -1 SampleAC1.subset_R1.fastq.gz \
-              -2 SampleAC1.subset_R2.fastq.gz \
-              -L SampleAC1.streamed.json |
-    hts_SeqScreener -A SampleAC1.streamed.json \
-              -r -s ../References/human_rrna.fasta -f SampleAC1.streamed
+    hts_Stats -1 mouse_110_WT_C.subset_R1.fastq.gz \
+              -2 mouse_110_WT_C.subset_R2.fastq.gz \
+              -L mouse_110_WT_C.streamed.json |
+    hts_SeqScreener -A mouse_110_WT_C.streamed.json \
+              -r -s ../References/mouse_rrna.fasta -f mouse_110_WT_C.streamed
     ```
 
     Note the pipe, ```|```, between the two applications!
@@ -317,7 +328,7 @@ Paired end reads are 6 columns:
 
     * *What parameter is SeqScreener using that specifies how reads are input?*
 
-    * *Lets look at the file SampleAC1.streamed.json?*
+    * *Lets look at the file mouse_110_WT_C.streamed.json?*
 
 
 ## A RNAseq preprocessing pipeline
@@ -406,7 +417,7 @@ This sequence is P7(rc): ATCTCGTATGCCGTCTTCTGCTTG. It should be at the end of an
 
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
-zcat SampleAC1.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
+zcat mouse_110_WT_C.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
 ```
 
 * *What did you find?*
@@ -436,8 +447,8 @@ Comparing STAR mapping count with raw and preprocessed reads
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 
 hts_Stats -L SampleAC1_htsStats.json -N "initial stats" \
-    -1 SampleAC1.subset_R1.fastq.gz \
-    -2 SampleAC1.subset_R2.fastq.gz | \
+    -1 mouse_110_WT_C.subset_R1.fastq.gz \
+    -2 mouse_110_WT_C.subset_R2.fastq.gz | \
 hts_SeqScreener -A SampleAC1_htsStats.json -N "screen phix" | \
 hts_SeqScreener -A SampleAC1_htsStats.json -N "count the number of rRNA reads"\
      -r -s ../References/human_rrna.fasta | \
