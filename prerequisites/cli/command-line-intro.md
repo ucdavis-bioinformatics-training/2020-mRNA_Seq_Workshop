@@ -15,9 +15,9 @@ A greater than sign (>) instead of a prompt means the shell is expecting more in
 
 Absolute path: always starts with ”/”
 
-/share/workshop/mrnaseq_workshop//msettles/cli
+/share/workshop/mrnaseq_workshop/msettles/cli
 
-the folder (or file) cli in the folder msettles in the folder workship in the folder share from root.
+the folder (or file) cli in the folder msettles in the folder workshop in the folder share from root.
 
 Relative path: always relative to our current location.
 
