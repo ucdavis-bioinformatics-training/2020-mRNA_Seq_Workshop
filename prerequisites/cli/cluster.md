@@ -44,7 +44,7 @@ use Exit on the command line to exit the session
 
     sbatch --help
 
-Generally, we do not use any options for sbatch ... we typically give it a script (i.e. a text file with commands inside) to run. Let's take a look at a template script [template.slurm](../software_scripts/scripts/template.slurm):
+Generally, we do not use any options for sbatch ... we typically give it a script (i.e. a text file with commands inside) to run. Let's take a look at a template script [template.slurm](../../software_scripts/scripts/template.slurm):
 
 <div class="script">#!/bin/bash
 
