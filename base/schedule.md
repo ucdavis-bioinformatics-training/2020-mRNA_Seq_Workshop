@@ -35,22 +35,22 @@ As the workshop progresses the schedule may be updated
 
 **8:50 am**  Zoom session starts  
 **9:00 am** Recap and check everyones session
-**9:15 am** [Data checkin, preprocessing](../data_reduction/10-preproc_htstream_mm)     
+**9:15 am** [Data checkin, preprocessing](../data_reduction/01-preproc_htstream_mm)     
 **9:30 am**   _Hands on_          
-**9:45 am**     [preprocessing](../data_reduction/10-preproc_htstream_mm)    
+**9:45 am**     [preprocessing](../data_reduction/01-preproc_htstream_mm)    
 **10:00 am**    _Hands_on_    
 **10:15 am**   15 minute break
-**10:30 am**    [preprocessing](../data_reduction/10-preproc_htstream_mm)      
+**10:30 am**    [preprocessing](../data_reduction/01-preproc_htstream_mm)      
 **10:45 am**    _Hands_on_     
-**11:00 pm**    [preprocessing](../data_reduction/10-preproc_htstream_mm)      
+**11:00 pm**    [preprocessing](../data_reduction/01-preproc_htstream_mm)      
 **11:15 pm**    _Hands_on_     
-**11:30 pm**    [preprocessing](../data_reduction/10-preproc_htstream_mm)      
+**11:30 pm**    [preprocessing](../data_reduction/01-preproc_htstream_mm)      
 **11:45 pm**    _Hands_on_     
 **12:00 pm**    Lunch hour      
-**1:00 am**     [Technology Seminar by Lutz Froenicke](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/mrna/Bioinformatics_Workshop_2020_RNA.pdf)  
-**2:00 pm**    [preprocessing QA/QC](../data_reduction/10-preproc_htstream_mm)      
+**1:00 pm**     [Technology Seminar by Lutz Froenicke](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/mrna/Bioinformatics_Workshop_2020_RNA.pdf)  
+**2:00 pm**    [preprocessing QA/QC](../data_reduction/01-preproc_htstream_mm)      
 **2:15 pm**    _Hands_on_     
-**2:30 pm**     [preprocessing Recap](../data_reduction/10-preproc_htstream_mm)      
+**2:30 pm**     [preprocessing Recap](../data_reduction/01-preproc_htstream_mm)      
 **2:45 pm**  15 minute break   
 **3:00 pm**   [Files and file types (fasta/gtf)](../data_reduction/filetypes)     
 **3:15 pm**  [Aligments References](../data_reduction/02-alignment_mm)
