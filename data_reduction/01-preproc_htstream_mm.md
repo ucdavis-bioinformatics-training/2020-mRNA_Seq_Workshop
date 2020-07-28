@@ -481,7 +481,7 @@ zcat mouse_110_WT_C.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
 ----
 
 ### PloyATTrimming hts_PolyATTrim: remove polyA/T from the end of reads.
-In eukaryotes, mRNA maturation includes a polyadenylation step in which a poly(A) tail is added to the transcript. These bases (and the complementary poly(T) in some types of libraries) do not actually exist in the genome and are commonly trimmed in RNA-seq preprocessing pipelines. 
+In eukaryotes, mRNA maturation includes a polyadenylation step in which a poly(A) tail is added to the transcript. These bases (and the complementary poly(T) in some types of libraries) do not actually exist in the genome and are commonly trimmed in RNA-seq preprocessing pipelines.
 
 
 ------
@@ -665,7 +665,7 @@ Results like those above can help inform you of how you might change your protoc
 
 The next step is to consider quality metrics for each sample. The key consideration is that **(SAMPLES SHOULD BE CONSISTENT!)**. Plots of the preprocessing summary statistics are a great way to look for technical bias and batch effects within your experiment. Poor quality samples often appear as outliers and can ethically be removed due to identified technical issues.  
 
-The JSON files output by HTStream provide this type of information. 
+The JSON files output by HTStream provide this type of information.
 
 
 
@@ -701,12 +701,12 @@ The JSON files output by HTStream provide this type of information.
 
     ```bash
     ls -lh *
-    
-    du -sh * 
+
+    du -sh *
     ```
 
     *All of the samples started with the same number of reads. What can you tell from the file sizes about how cleaning went across the samples?*
-    
+
     **IF for some reason HTStream didn't finish, the files are corrupted or you missed the session, please let one of us know and we will help. You can also copy over the HTStream output.**
 
     ```bash
@@ -757,7 +757,7 @@ The JSON files output by HTStream provide this type of information.
 
 1. QA/QC Summary of the JSON files.
 
-Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here [https://github.com/bnjenner/MultiQC](https://github.com/bnjenner/MultiQC).
+Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here [https://github.com/s4hts/MultiQC](https://github.com/s4hts/MultiQC).
 
 ```bash
 ## Run multiqc to collect statistics and create a report:
