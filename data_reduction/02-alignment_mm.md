@@ -2,11 +2,10 @@
 
 This document assumes [reference indexing](./02-alignment-indexref_mm.md) has been completed.
 
-**IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
+**IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
 
 ```bash
-cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
 ```
 
 ## Alignment vs Assembly
