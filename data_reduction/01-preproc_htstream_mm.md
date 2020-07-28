@@ -521,7 +521,7 @@ When you are done, type "q" to exit.
 #SBATCH --partition=production
 #SBATCH --reservation=mrnaseq_workshop
 #SBATCH --account=mrnaseq_workshop
-#SBATCH --array=1-16
+#SBATCH --array=1-22
 #SBATCH --output=slurmout/htstream_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/htstream_%A_%a.err # File to which STDERR will be written
 #SBATCH --mail-type=ALL
@@ -540,7 +540,7 @@ outpath="01-HTS_Preproc"
 
 echo "SAMPLE: ${sample}"
 
-module load htstream
+module load htstream/1.3.2
 
 call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
           -1 ${inpath}/${sample}/*R1*.fastq.gz \
@@ -550,7 +550,7 @@ call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
           -r -s References/mouse_rrna.fasta | \
       hts_SuperDeduper -A ${outpath}/${sample}/${sample}.json -N 'remove PCR duplicates' | \
       hts_AdapterTrimmer -A ${outpath}/${sample}/${sample}.json -N 'trim adapters' | \
-      hts_PolyATTrim  -A ${outpath}/${sample}/${sample}.json -N 'remove polyAT tails' | \
+      hts_PolyATTrim --no-left --skip_polyT -A ${outpath}/${sample}/${sample}.json -N 'remove polyAT tails' | \
       hts_NTrimmer -A ${outpath}/${sample}/${sample}.json -N 'remove any remaining N characters' | \
       hts_QWindowTrim -A ${outpath}/${sample}/${sample}.json -N 'quality trim the ends of reads' | \
       hts_LengthFilter -A ${outpath}/${sample}/${sample}.json -N 'remove reads < 50bp' \
