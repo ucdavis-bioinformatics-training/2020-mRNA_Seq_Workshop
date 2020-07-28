@@ -1,20 +1,6 @@
 
 # Indexing a Reference sequence and annotation
 
-
-This document assumes [preproc htstream](./01-preproc_htstream_mm.md) has been completed.
-
-**IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
-
-```bash
-cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-```
-
-# Indexing the reference.
-
-Before we can align reads to a reference genome/transcriptome, its typical to first build an index. Indexing a genome/transcriptome is similar to indexing a book. If you want to know on which page a certain word appears or a chapter begins (chromosome section a kmer appears in our case), it is much more efficient/faster to look it up in a pre-built index than going through every page of the book until you find it. Same goes for alignments. Indices allow the aligner to narrow down the potential locations of a query sequence within the genome, saving both time and memory.
-
 1. First lets make sure we are where we are supposed to be and that the References directory is available.
 
     ```bash
