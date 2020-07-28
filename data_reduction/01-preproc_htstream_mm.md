@@ -338,8 +338,8 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 
         * *Were the programs run in the order you expected?*
 
-    * *hts_SeqScreener will screen out PhiX reads by default. Try to modify the pipeline as follows:* 
-        
+    * *hts_SeqScreener will screen out PhiX reads by default. Try to modify the pipeline as follows:*
+
         * *hts_Stats --> hts_SeqScreener discard PhiX  --> hts_SeqScreener count rRNA and output*
 
         * *Check the JSON file that is produced. Were any PhiX reads identified?
@@ -498,21 +498,21 @@ Observations:
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 
-hts_Stats -L mouse_110_WT_C.subset.json -N "initial stats" \
+hts_Stats -L mouse_110_WT_C_htsStats.json -N "initial stats" \
     -1 mouse_110_WT_C.subset_R1.fastq.gz \
     -2 mouse_110_WT_C.subset_R2.fastq.gz | \
-hts_SeqScreener -A mouse_110_WT_C.subset.json -N "screen phix" | \
-hts_SeqScreener -A mouse_110_WT_C.subset.json -N "count the number of rRNA reads"\
+hts_SeqScreener -A mouse_110_WT_C_htsStats.json -N "screen phix" | \
+hts_SeqScreener -A mouse_110_WT_C_htsStats.json -N "count the number of rRNA reads"\
      -r -s ../References/mouse_rrna.fasta | \
-hts_SuperDeduper -A mouse_110_WT_C.subset.json -N "remove PCR duplicates" | \
-hts_AdapterTrimmer -A mouse_110_WT_C.subset.json -N "trim adapters" | \
-hts_PolyATTrim -A mouse_110_WT_C.subset.json -N "trim adapters" | \
-hts_NTrimmer -A mouse_110_WT_C.subset.json -N "remove any remaining 'N' characters" | \
-hts_QWindowTrim -A mouse_110_WT_C.subset.json -N "quality trim the ends of reads" | \
-hts_LengthFilter -A mouse_110_WT_C.subset.json -N "remove reads < 50bp" \
+hts_SuperDeduper -A mouse_110_WT_C_htsStats.json -N "remove PCR duplicates" | \
+hts_AdapterTrimmer -A mouse_110_WT_C_htsStats.json -N "trim adapters" | \
+hts_PolyATTrim  -A mouse_110_WT_C_htsStats.json -N "trim adapters" | \
+hts_NTrimmer -A mouse_110_WT_C_htsStats.json -N "remove any remaining 'N' characters" | \
+hts_QWindowTrim -A mouse_110_WT_C_htsStats.json -N "quality trim the ends of reads" | \
+hts_LengthFilter -A mouse_110_WT_C_htsStats.json -N "remove reads < 50bp" \
     -n -m 50 | \
-hts_Stats -A mouse_110_WT_C.subset.json -N "final stats" \
-    -f mouse_110_WT_C.subset.htstream
+hts_Stats -A mouse_110_WT_C_htsStats.json -N "final stats" \
+    -f mouse_110_WT_C.htstream
 ```
 
 Note the patterns:
@@ -554,7 +554,7 @@ When you are done, type "q" to exit.
 #SBATCH --partition=production
 #SBATCH --reservation=mrnaseq_workshop
 #SBATCH --account=mrnaseq_workshop
-#SBATCH --array=1-16
+#SBATCH --array=1-22
 #SBATCH --output=slurmout/htstream_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/htstream_%A_%a.err # File to which STDERR will be written
 #SBATCH --mail-type=ALL
@@ -573,7 +573,7 @@ outpath="01-HTS_Preproc"
 
 echo "SAMPLE: ${sample}"
 
-module load htstream
+module load htstream/1.3.2
 
 call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
           -1 ${inpath}/${sample}/*R1.fastq.gz \
@@ -583,7 +583,7 @@ call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
           -r -s References/mouse_rrna.fasta | \
       hts_SuperDeduper -A ${outpath}/${sample}/${sample}.json -N 'remove PCR duplicates' | \
       hts_AdapterTrimmer -A ${outpath}/${sample}/${sample}.json -N 'trim adapters' | \
-      hts_PolyATTrim  -A ${outpath}/${sample}/${sample}.json -N 'remove polyAT tails' | \
+      hts_PolyATTrim --no-left --skip_polyT -A ${outpath}/${sample}/${sample}.json -N 'remove polyAT tails' | \
       hts_NTrimmer -A ${outpath}/${sample}/${sample}.json -N 'remove any remaining N characters' | \
       hts_QWindowTrim -A ${outpath}/${sample}/${sample}.json -N 'quality trim the ends of reads' | \
       hts_LengthFilter -A ${outpath}/${sample}/${sample}.json -N 'remove reads < 50bp' \
@@ -665,7 +665,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-    zless 00-RawData/SampleAC1/SampleAC1_L3_R1.fastq.gz
+    zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz
     ```
 
     Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit. Alternatively, you can use zcat and grep like we did earlier.
@@ -673,7 +673,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     Now look at the output file:
 
     ```bash
-    zless 01-HTS_Preproc/SampleAC1/SampleAC1_R1.fastq.gz
+    zless 01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz
     ```
 
     If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
@@ -681,8 +681,8 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     Lets grep for the sequence and count occurrences
 
     ```bash
-    zcat  00-RawData/SampleAC1/SampleAC1_L3_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
-    zcat  01-HTS_Preproc/SampleAC1/SampleAC1_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
     * *What is the reduction in adapters found?*
@@ -694,10 +694,9 @@ Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our o
 ```bash
 ## Run multiqc to collect statistics and create a report:
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-source /share/workshop/shunter/rnaseq_example/multiqc/bin/activate # setup a python virtual environment
-mkdir -p 01-HTS-multiqc-report
-multiqc -i HTSMultiQC-cleaning-report -o 01-HTS-multiqc-report ./01-HTS_Preproc
-deactivate  # turn off python virtual environment
+module load multiqc/htstream.dev0
+mkdir -p 02-HTS_multiqc_report
+multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report ./01-HTS_Preproc
 ```
 
 Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser.
