@@ -1,5 +1,6 @@
 # Alignment to Read Counts & Visualization in IGV
 
+<<<<<<< HEAD
 1. Mapping vs Assembly
 2. Aligners/Mappers
 3. Mapping against the genome vs transcriptome
@@ -12,12 +13,14 @@
 ---
 
 This document assumes [preproc htstream](./preproc_htstream.md) has been completed.
+=======
+This document assumes [reference indexing](./02-alignment-indexref_mm.md) has been completed.
+>>>>>>> master
 
-**IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
+**IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
 
 ```bash
-cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
 ```
 
 ## Mapping vs Assembly
@@ -161,6 +164,7 @@ ENSMUSG00000104017	0	0	0
 Choose the appropriate column given the library preparation characteristics and generate a matrix expression table, columns are samples, rows are genes.
 
 
+<<<<<<< HEAD
 ## Indexing a Reference sequence and annotation
 
 1. First lets make sure we are where we are supposed to be and that the References directory is available.
@@ -272,6 +276,8 @@ When you are done, type "q" to exit.
     ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
     ```
 
+=======
+>>>>>>> master
 ## Alignments
 
 1. We are now ready to try an alignment:
@@ -438,22 +444,22 @@ When you are done, type "q" to exit.
         #SBATCH --array=1-22
         #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
         #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
-    
+
         start=`date +%s`
         echo $HOSTNAME
         echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-    
+
         sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
         REF="References/star_2.7.3a_index_GRCm38.p6"
-    
+
         outpath='02-STAR_alignment'
         [[ -d ${outpath} ]] || mkdir ${outpath}
         [[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
-    
+
         echo "SAMPLE: ${sample}"
-    
+
         module load star
-    
+
         call="STAR
              --runThreadN 8 \
              --genomeDir $REF \
@@ -463,10 +469,10 @@ When you are done, type "q" to exit.
              --quantMode GeneCounts \
              --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
              > ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
-    
+
         echo $call
         eval $call
-    
+
         end=`date +%s`
         runtime=$((end-start))
         echo $runtime
