@@ -612,22 +612,41 @@ sbatch hts_preproc.slurm  # moment of truth!
 We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
 
 ```bash
-squeue -u msettles  # use your username
+squeue -u $USER  # use your username
 ```
+
+### <font color='red'> End Group Exercise 2 </font>
 
 ## Quality Assurance - Preprocessing statistics as QA/QC.
 
 Beyond generating "better" data for downstream analysis, cleaning statistics also give you an idea as to the original quality and complexity of the sample, library generation, and sequencing quality.
 
-This can help inform you of how you might change your protocol/procedures in the future, either sample preparation, or in library preparation.
+The first step in this process is to talk with your sequencing provider to ask about run level quality metrics. The major sequencing platforms all provide quality metrics that can provide insight into whether things might have gone wrong during library preparation or sequencing. Sequencing providers often generate reports and provide them along with the sequencing data.
 
-I’ve found it best to perform QA/QC on both the run as a whole (poor samples can affect other samples) and on the samples themselves as they compare to other samples **(BE CONSISTENT!)**.
+### BaseSpace Plots for Illumina data
 
-Reports such as Basespace for Illumina, are great ways to evaluate the run as a whole, the sequencing provider usually does this for you. PCA/MDS plots of the preprocessing summary are a great way to look for technical bias across your experiment. Poor quality samples often appear as outliers on the MDS plot and can ethically be removed due to identified technical issues.
+<img src="preproc_mm_figures/good_run.png" alt="good" width="100%"/>
+
+A nice run showing fairly random distribution of bases per cycle, > 80% bases above Q30, good cluster density and high pass filter rate, and very little drop off in read quality even at the end of the read.  
+
+
+
+<img src="preproc_mm_figures/bad_run_PDs.png" alt="bad" width="100%"/>
+A poor run showing less base diversity, only 39% bases above Q30, potentially too high cluster density and low pass filter rate, and extreme drop off in read quality after ~100bp of R1, and an even worse profile in R2.  
+
+Results like those above can help inform you of how you might change your protocol/procedures in the future, either sample preparation (RNA extraction), or in library preparation.  
+
+The next step is to consider quality metrics for each sample. The key consideration is that **(SAMPLES SHOULD BE CONSISTENT!)**. Plots of the preprocessing summary statistics are a great way to look for technical bias and batch effects within your experiment. Poor quality samples often appear as outliers and can ethically be removed due to identified technical issues.  
+
+The JSON files output by HTStream provide this type of information. 
+
+
+
+### <font color='red'> Begin Group Exercise 3 </font>
 
 1. Let's make sure that all jobs completed successfully.
 
-    Lets first check all the "htstream_%\*.out" and "htstream_%\*.err" files:
+    First check all the "htstream_\*.out" and "htstream_\*.err" files:
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
@@ -640,7 +659,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     cat slurmout/htstream_*.err
     ```
 
-    Also, check the output files. First check the number of forward and reverse output files (should be 16 each):
+    Also, check the output files. First check the number of forward and reverse output files (should be 22 each):
 
     ```bash
     cd 01-HTS_Preproc
@@ -648,17 +667,23 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     ls */*R2* | wc -l
     ```
 
+    *Did you get the answer you expected, why or why not?*
+
+
     Check the sizes of the files as well. Make sure there are no zero or near-zero size files and also make sure that the size of the files are in the same ballpark as each other:
 
     ```bash
     ls -lh *
+    
+    du -sh * 
     ```
 
-    **IF** for some reason it didn't finish, is corrupted or you missed the session, please let one of us know and we will help, and you can copy over a completed copy
+    *All of the samples started with the same number of reads. What can you tell from the file sizes about how cleaning went across the samples?*
+    
+    **IF for some reason HTStream didn't finish, the files are corrupted or you missed the session, please let one of us know and we will help. You can also copy over the HTStream output.**
 
     ```bash
-    cp -r /share/biocore/workshops/2020_mRNAseq/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-    cp -r /share/biocore/workshops/2020_mRNAseq/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+    cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
     ```
 
 1. Let's take a look at the differences in adapter content between the input and output files. First look at the input file:
@@ -668,7 +693,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz
     ```
 
-    Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit. Alternatively, you can use zcat and grep like we did earlier.
+    Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit.
 
     Now look at the output file:
 
@@ -677,6 +702,19 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     ```
 
     If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
+
+    Lets grep for the sequence and get an idea of where it occurs in the raw sequences:
+
+    ```bash
+    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    ```
+
+    * *What do you observe? Are these sequences useful for analysis?*
+
+    ```bash
+    zcat  01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    ```
+
 
     Lets grep for the sequence and count occurrences
 
@@ -687,7 +725,10 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
     * *What is the reduction in adapters found?*
 
-1. QA/QC Summary of the json files.
+    * *How could you modify the cleaning pipeline in order to remove the remaining sequences?*
+
+
+1. QA/QC Summary of the JSON files.
 
 Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here [https://github.com/bnjenner/MultiQC](https://github.com/bnjenner/MultiQC).
 
@@ -704,7 +745,7 @@ Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and ope
 
 Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc_report.html](HTSMultiQC-cleaning-report_multiqc_report.html)
 
-
+### <font color='red'> End Group Exercise 3 </font>
 
 <!--
     I've created a small R script to read in each json file, pull out some relevant stats and write out a table for all samples.
