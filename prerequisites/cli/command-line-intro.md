@@ -551,8 +551,7 @@ nano now occupies the whole screen; see commands at the bottom
 type/paste in the following ...
 (note that '#!' is an interpreted command to the shell, not a comment)
 
-<div class="script">
-#!/bin/bash
+<div class="script">#!/bin/bash
 grep -o . $1 | \
     sort | \
     uniq -c | \
