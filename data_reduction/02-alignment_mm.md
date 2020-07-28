@@ -1,5 +1,16 @@
 # Alignment to Read Counts & Visualization in IGV
 
+1. Mapping vs Assembly
+2. Aligners/Mappers
+3. Mapping against the genome vs transcriptome
+4. Counting reads as a proxy for gene expression
+5. Indexing a Reference sequence and annotation
+6. Alignments
+7. Running STAR on the experiment
+8. Quality Assurance - Mapping statistics as QA/QC.
+
+---
+
 This document assumes [preproc htstream](./preproc_htstream.md) has been completed.
 
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
@@ -9,28 +20,45 @@ cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing /share/workshop/mrn
 cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
 ```
 
-## Alignment vs Assembly
+## Mapping vs Assembly
 
 **Given sequence data**,
 
-_Assembly seeks to put together the puzzle without knowing what the picture is._
+*Assembly* seeks to put together the puzzle without knowing what the picture is._
 
-The focus is on the pieces, how they fit together.
+- The focus is on the pieces, how they fit together.
 
-_Mapping tries to put together the puzzle pieces directly onto an image of the picture._
-
-The focus is on the puzzle, regions of the puzzle that contain certain characteristics (ex. what background) that will help you place the piece onto the puzzle.  
-
-In mapping the question is more, given a small chunk of sequence, where in the genome did this sequence most likely come from.
-
-The goal then is to find the match(es) with either the “best” edit distance (smallest difference), or all matches with edit distance less than max edit distance. Main issues are:
-
+*Mapping* (or alignment to a reference) tries to put together the puzzle pieces directly onto an image of the picture._
+- The focus is on the puzzle, regions of the puzzle that contain certain characteristics (ex. what background) that will help you place the piece onto the puzzle.  
+- In mapping the question is more, given a small chunk of sequence, where in the genome did this sequence most likely come from.
+- The goal then is to find the match(es) with either the “best” edit distance (smallest difference), or all matches with edit distance less than max edit distance. Main issues are:
 * Large search space
 * Regions of similarity (aka repeats)
 * Gaps (INDELS)
 * Complexity (RNA, splicing, transcripts)
 
-#### Considerations
+### Alignment concepts
+
+* Multimappers:
+  * Reads that align equally well to more than one reference location.
+  * Generally, multimappers are discounted in variant detection, and are often discounted in counting applications (like RNA-Seq ... would “cancel” out anyway).
+  * Note: multimapper “rescue” in some algorithms (RSEM, Express?).
+* Duplicates:
+  * Reads or read pairs arising from the same original library fragment, either during library preparation (PCR duplicates).
+  * Generally, duplicates can only be detected reliably with paired-end sequencing. If PE, they’re discounted in variant detection, and discounted in counting applications (like RNA-Seq).
+* Clipping vs Splicing  
+  * soft-clipped: bases in 5' and 3' of the read are NOT part of the alignment.
+  * hard-clipped: bases in 5' and 3' of the read are NOT part of the alignment AND those bases have been 
+  removed from the read sequence in the BAM file. The 'real' sequence length would be length(SEQ)+ count-of-hard-clipped-bases
+  * [From biostars](https://www.biostars.org/p/119537/)
+  
+<img style="padding-left:100px" src="alignment_figures/alignment_figure3.png" alt="alignment_figure3" width="60%"/>  
+* Inner length, insert size, fragment length  
+<img src="alignment_figures/alignment_figure4.jpg" alt="alignment_figure4" width="60%"/>  
+*From [This Biostars answer](https://www.biostars.org/p/106291/)*
+
+
+#### Considerations when mapping
 * Placing reads in regions that do not exist in the reference genome (reads extend off the end of linearized fragments) [ mitochondrial, plasmids, structural variants, etc.].
 * Sequencing errors and genetic variation: alignment between read and true source in genome may have more differences than alignment with some other copy of repeat.
 * What if the closest fully sequenced genome is too divergent?
@@ -41,7 +69,9 @@ In RNAseq data, you must also consider effect of splice junctions, reads may spa
 
 <img src="alignment_figures/alignment_figure1.png" alt="alignment_figure1" width="80%"/>
 
-### Aligners
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_asGjfCTLNE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Aligners/Mappers
 Many [alignment algorithms](https://en.wikipedia.org/wiki/List_of_sequence_alignment_software
 ) to choose from. Examples include:
 * Spliced Aligners
@@ -62,7 +92,7 @@ Many [alignment algorithms](https://en.wikipedia.org/wiki/List_of_sequence_align
 * Blazing FAST and can run on most laptops
 * Experience suggests differences between “traditional” mappers are in the low abundance genes.
 
-### Mapping against the genome vs transcriptome
+## Mapping against the genome vs transcriptome
 
 May seem intuitive to map RNAseq data to transcriptome, but it is not that simple.
   * Transcriptomes are rarely complete.
@@ -104,7 +134,7 @@ Options are (STAR, HTSEQ, featureCounts)
   * intersection-nonempty
 
   <img src="alignment_figures/alignment_figure2.png" alt="alignment_figure2" width="60%"/>
-*from the htseq paper*
+*from the [HTSeq Paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4287950/)*
 
 #### Star Implementation
 Counts coincide with Htseq-counts under default parameters (union and tests all orientations). Need to specify GTF file at genome generation step or during mapping.
@@ -113,23 +143,23 @@ Counts coincide with Htseq-counts under default parameters (union and tests all 
   * Counts for unstranded
   * Counts for first read strand
   * Counts for second read strand
+  
+<div class="output">
+
+N_unmapped	213761	213761	213761
+N_multimapping	132491	132491	132491
+N_noFeature	309643	2619257	322976
+N_ambiguous	116750	892	47031
+ENSMUSG00000102693	0	0	0
+ENSMUSG00000064842	0	0	0
+ENSMUSG00000051951	0	0	0
+ENSMUSG00000102851	0	0	0
+ENSMUSG00000103377	0	0	0
+ENSMUSG00000104017	0	0	0
+</div>
 
 Choose the appropriate column given the library preparation characteristics and generate a matrix expression table, columns are samples, rows are genes.
 
-### Alignment concepts
-
-* Multimappers:
-  * Reads that align equally well to more than one reference location.
-  * Generally, multimappers are discounted in variant detection, and are often discounted in counting applications (like RNA-Seq ... would “cancel” out anyway).
-  * Note: multimapper “rescue” in some algorithms (RSEM, Express?).
-* Duplicates:
-  * Reads or read pairs arising from the same original library fragment, either during library preparation (PCR duplicates).
-  * Generally, duplicates can only be detected reliably with paired-end sequencing. If PE, they’re discounted in variant detection, and discounted in counting applications (like RNA-Seq).
-* Clipping vs Splicing  
-<img src="alignment_figures/alignment_figure3.png" alt="alignment_figure3" width="50%"/>  
-* Inner length, insert size, fragment length  
-<img src="alignment_figures/alignment_figure4.jpg" alt="alignment_figure4" width="50%"/>  
-*From https://www.biostars.org/p/106291/*
 
 ## Indexing a Reference sequence and annotation
 
@@ -212,10 +242,16 @@ Choose the appropriate column given the library preparation characteristics and 
         echo $runtime
     </code></pre>
 
+What this script is doing:
 {:start="1"}
 1. The script uses wget to download the fasta and GTF files from Ensembl using the links you found earlier.
 1. Uncompresses them using gunzip.
 1. Creates the star index directory [star_2.7.3a_index_GRCm38.p6].
+    - What is an index?: "Indexing a genome can be explained similar to indexing a book. 
+    If you want to know on which page a certain word appears or a chapter begins, 
+    it is much more efficient/faster to look it up in a pre-built index than going through every page 
+    of the book until you found it. Same goes for alignments. Indices allow the aligner to narrow down the 
+    potential origin of a query sequence within the genome, saving both time and memory." [From Biostars](https://www.biostars.org/p/212594/#:~:text=Such%20programs%20as%20Maq%20and,shorter%20sequences%20embedded%20within%20it.)
 1. Change directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
 1. Run star in mode genomeGenerate.
 
