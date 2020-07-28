@@ -16,7 +16,7 @@ cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing /share/workshop/mrn
 cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
 ```
 
-*This document assumes [reference indexing](./02-alignment-indexref_mm.md) has been completed.* 
+*This document assumes [reference indexing](./02-alignment-indexref_mm.md) has been completed.*
 
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
 
@@ -52,10 +52,10 @@ ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star.overlap100.genc
   * Generally, duplicates can only be detected reliably with paired-end sequencing. If PE, they’re discounted in variant detection, and discounted in counting applications (like RNA-Seq).
 * Clipping vs Splicing  
   * soft-clipped: bases in 5' and 3' of the read are NOT part of the alignment.
-  * hard-clipped: bases in 5' and 3' of the read are NOT part of the alignment AND those bases have been 
+  * hard-clipped: bases in 5' and 3' of the read are NOT part of the alignment AND those bases have been
   removed from the read sequence in the BAM file. The 'real' sequence length would be length(SEQ)+ count-of-hard-clipped-bases
   * [From biostars](https://www.biostars.org/p/119537/)
-  
+
 <img style="padding-left:100px" src="alignment_figures/alignment_figure3.png" alt="alignment_figure3" width="60%"/>  
 * Inner length, insert size, fragment length  
 <img src="alignment_figures/alignment_figure4.jpg" alt="alignment_figure4" width="60%"/>  
@@ -73,7 +73,7 @@ In RNAseq data, you must also consider effect of splice junctions, reads may spa
 
 <img src="alignment_figures/alignment_figure1.png" alt="alignment_figure1" width="80%"/>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_asGjfCTLNE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="80%" src="https://www.youtube.com/embed/_asGjfCTLNE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Aligners/Mappers
 Many [alignment algorithms](https://en.wikipedia.org/wiki/List_of_sequence_alignment_software
@@ -147,7 +147,7 @@ Counts coincide with Htseq-counts under default parameters (union and tests all 
   * Counts for unstranded
   * Counts for first read strand
   * Counts for second read strand
-  
+
 <div class="output">
 
 N_unmapped	213761	213761	213761
@@ -196,7 +196,7 @@ Choose the appropriate column given the library preparation characteristics and 
     module load star
     STAR \
     --runThreadN 8 \
-       --genomeDir ../References/star_2.7.3a_index_GRCm38.p6 \
+       --genomeDir ../References/star.overlap100.gencode.M25 \
        --outSAMtype BAM SortedByCoordinate \
        --quantMode GeneCounts \
        --outFileNamePrefix mouse_110_WT_C_R1_ \
@@ -338,7 +338,7 @@ Choose the appropriate column given the library preparation characteristics and 
         echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
 
         sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
-        REF="References/star_2.7.3a_index_GRCm38.p6"
+        REF="References/star.overlap100.gencode.M25"
 
         outpath='02-STAR_alignment'
         [[ -d ${outpath} ]] || mkdir ${outpath}

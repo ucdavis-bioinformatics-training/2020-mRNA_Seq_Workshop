@@ -107,6 +107,7 @@
     1. Run star in mode genomeGenerate.
 
 
+
 1. Run star indexing when ready.
 
     ```bash
