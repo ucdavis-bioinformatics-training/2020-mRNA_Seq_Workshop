@@ -337,8 +337,8 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 
         * *Were the programs run in the order you expected?*
 
-    * *hts_SeqScreener will screen out PhiX reads by default. Try to modify the pipeline as follows:* 
-        
+    * *hts_SeqScreener will screen out PhiX reads by default. Try to modify the pipeline as follows:*
+
         * *hts_Stats --> hts_SeqScreener discard PhiX  --> hts_SeqScreener count rRNA and output*
 
         * *Check the JSON file that is produced. Were any PhiX reads identified?
@@ -632,7 +632,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-    zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz
+    zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz
     ```
 
     Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit. Alternatively, you can use zcat and grep like we did earlier.
@@ -648,7 +648,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     Lets grep for the sequence and count occurrences
 
     ```bash
-    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     zcat  01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
