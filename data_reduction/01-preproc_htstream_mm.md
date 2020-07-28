@@ -35,6 +35,35 @@ PCA/MDS plots of the preprocessing summary are a great way to look for technical
 
 <img src="preproc_mm_figures/preproc_flowchart.png" alt="preproc_flowchart" width="80%"/>
 
+
+In order to better understand and preprocess an RNA-seq data set (and to determine the types of problems we might encounter), it is a good idea to learn what type of library prep kit was used, and how it works.
+
+For this data set, [Selimoglu-Buet et al.](https://www.nature.com/articles/s41467-018-07801-x) report the following:
+
+> *SureSelect Automated Strand Specific RNA Library Preparation Kit* was used according to the manufacturer’s instructions with the Bravo Platform. Briefly, 100 ng of total RNA sample was used for poly-A mRNA selection using oligo(dT) beads and subjected to thermal mRNA fragmentation. The fragmented mRNA samples were subjected to cDNA synthesis and were further converted into double-stranded DNA using the reagents supplied in the kit, and the resulting double-stranded DNA was used for library preparation. The final libraries were sequenced on an Hiseq 2000 for human samples and on NovaSeq 6000 for mice samples (Illumina) in paired-end 100 bp mode in order to reach at least 30 millions reads per sample at Gustave Roussy.
+
+Unfortunately the methods don't provide much information about the strandedness of the library. We can learn more by looking up the [user manual](https://www.agilent.com/cs/library/usermanuals/Public/G9691-90010.pdf). Often times manufacturer web sites and user manuals will contain some hints regarding analysis.
+
+> Sequence analysis guidelines
+
+> The SureSelect RNA sequencing library preparation method preserves RNA strandedness using dUTP second- strand marking. The sequence of read 1, which starts at the P5 end, matches the reverse complement of the poly- A RNA transcript strand. Read 2, which starts at the P7 end, matches the poly-A RNA transcript strand. When running analysis of this data to determine strandedness, it is important to include this information. For example, when using the Picard tools (https://broadinstitute.github.io/picard) to calculate RNA sequencing metrics, it is important to include the parameter STRAND_SPECIFICITY= SECOND_READ_TRANSCRIPTION_STRAND to correctly calculate the strand specificity metrics.
+
+Agilent has also produced a [poster](https://www.agilent.com/cs/library/posters/Public/ASHG-poster-SureSelect-strand-specific%20RNA%20library-prep-kit-fast-streamlined-workflow-for-libraries-from-total-RNA.pdf) with additional details about the qualities of this library. The figures below provide additional detail about the library and what to expect.
+
+<img src="preproc_mm_figures/SureSelectLibraryPrep.png" alt="libraryPrep" width="80%"/>
+
+<img src="preproc_mm_figures/SureSelectLibraryCoverage.png" alt="libraryPrep" width="80%"/>
+
+
+Based on the information above we can conclude that R1 should probably always be in reverse complement orientation with respect to the transcript, and that few reads should have poly-(A/T) signals.  
+
+To double check, we could map reads to a "housekeeping gene" like beta actin (NM_007393.5 Mus musculus actin, beta (Actb), mRNA
+). Examining the reads can help us confirm our conclusions about the library, and inform decisions about how to clean in.
+
+
+<img src="preproc_mm_figures/Geneious_read_orientation_check.png" alt="libraryPrep" width="100%"/>
+
+
 ### An RNAseq Preprocessing Workflow
 
 1. Remove contaminants (at least PhiX).
@@ -433,34 +462,33 @@ hts_Overlapper product: adapter trimmed, single
 Both hts_AdapterTrimmer and hts_Overlapper employ this principle to identify and remove adapters for paired-end reads. For paired-end reads the difference between the two are the output, as overlapper produces single-end reads when the pairs overlap and adapter trimmer keeps the paired end format. For single-end reads, adapter trimmer identifies and removes adapters by looking for the adapter sequence, where overlapper just ignores single-end reads (nothing to overlap).
 
 
-### Now lets see if we can find evidence of Illumina sequencing adapters in our subset.
+### You can do a quick check for evidence of Illumina sequencing adapters using basic Linux commnads
+
 Remember that Illumina reads must have P5 and P7 adapters and generally look like this (in R1 orientation):
 
-P5---Read1primer---INSERT---IndexReadprimer--index--P7(rc)
+```code
+P5---Index-Read1primer-------INSERT-------Read2primer--index--P7(rc)
+                     |---R1 starts here-->
+```
 
-This sequence is P7(rc): ATCTCGTATGCCGTCTTCTGCTTG. It should be at the end of any R1 that contains a full-length adapter sequence.
+This sequence is P7(rc): **ATCTCGTATGCCGTCTTCTGCTTG**. It should present in any R1 that contains a full-length adapter sequence. It is easy to search for this sequence using zcat and grep:
 
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 zcat mouse_110_WT_C.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
 ```
 
-* *What did you find?*
-* *Do you remember how to count the number of instances?*
-* *Roughly, what percentage of this data has adapters?*
-
 ----
 
 ### PloyATTrimming hts_PolyATTrim: remove polyA/T from the end of reads.
-1. hts_NTrimmer: trim to remove any remaining N characters
+In eukaryotes, mRNA maturation includes a polyadenylation step in which a poly(A) tail is added to the transcript. These bases (and the complementary poly(T) in some types of libraries) do not actually exist in the genome and are commonly trimmed in RNA-seq preprocessing pipelines. 
 
 
-
----
+------
 
 ### N Trimming
 
-Bases that cannot be called are assigned an "N" by the Illumina base caller. These can be a problem for some 
+Bases that cannot be called are assigned an "N" by the Illumina base caller. These can be a problem for some applications, but most read mappers and quantification strategies should not be impacted unless N's are frequent. By default, hts_NTrimmer will return the longest sequence that contains no Ns, but can also be configured to discard any reads containing Ns as well.
 
 ----
 
@@ -476,18 +504,17 @@ hts_QWindowTrim trims 5' and/or 3' end of the sequence using a windowing (averag
 
 ### What does all this preprocessing get you
 
-Comparing STAR mapping count with raw and preprocessed reads
+Comparing Salmon quant, raw vs preprocessed reads
 
-<img src="preproc_mm_figures/final.png" alt="final" width="40%"/>
+<img src="preproc_mm_figures/reads_per_gene_raw_hts.png" alt="final" width="50%"/>
+<img src="preproc_mm_figures/reads_per_gene_raw_hts-zoomed.png" alt="final" width="50%"/>
 
-* TODO: Salmon quant this sample before/after cleaning and make a new figure.
+Note that the very highly expressed transcript is [Lysozyme 2, ENSMUST00000092163.8](http://uswest.ensembl.org/Mus_musculus/Transcript/Summary?g=ENSMUSG00000069516;r=10:117277331-117282321;t=ENSMUST00000092163), a [primarily bacteriolytic enzyme](https://www.uniprot.org/uniprot/P08905). Not surprising given that "monocytes are components of the mononuclear phagocyte system that is involved in rapid recognition and clearance of invading pathogens".
 
-Counts per million sequenced with raw data on the Y axis, cleaned data on the X axis. Points are genes.
-Observations: 
 
-* The majority of transcripts have the same (or similar) CPMS before/after cleanup.
-* Some low expression transcripts have higher read counts after cleanup.
-* A large number of low expression transcripts had higher counts before cleanup. 
+* The majority of transcripts have similar reads per gene before/after cleanup.
+* Some low expression transcripts had zero reads before cleanup, but hundreds after cleanup (and vice versa).
+* A large number of genes have higher total reads mapped before cleaning.
 
 ### Lets put it all together
 
