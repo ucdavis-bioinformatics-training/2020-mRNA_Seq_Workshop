@@ -42,12 +42,12 @@ As the workshop progresses the schedule may be updated
 **10:15 am**   15 minute break
 **10:30 am**    [preprocessing](../data_reduction/10-preproc_htstream_mm)      
 **10:45 am**    _Hands_on_     
-**11:00 am**     [Technology Seminar by Lutz Froenicke]()  
-**12:00 pm** Lunch hour      
-**1:00 pm**    [preprocessing](../data_reduction/10-preproc_htstream_mm)      
-**1:15 pm**    _Hands_on_     
-**1:30 pm**    [preprocessing](../data_reduction/10-preproc_htstream_mm)      
-**1:45 pm**    _Hands_on_     
+**11:00 pm**    [preprocessing](../data_reduction/10-preproc_htstream_mm)      
+**11:15 pm**    _Hands_on_     
+**11:30 pm**    [preprocessing](../data_reduction/10-preproc_htstream_mm)      
+**11:45 pm**    _Hands_on_     
+**12:00 pm**    Lunch hour      
+**1:00 am**     [Technology Seminar by Lutz Froenicke](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/mrna/Bioinformatics_Workshop_2020_RNA.pdf)  
 **2:00 pm**    [preprocessing QA/QC](../data_reduction/10-preproc_htstream_mm)      
 **2:15 pm**    _Hands_on_     
 **2:30 pm**     [preprocessing Recap](../data_reduction/10-preproc_htstream_mm)      
