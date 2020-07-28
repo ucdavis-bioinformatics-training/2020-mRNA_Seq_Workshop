@@ -34,12 +34,12 @@ As the workshop progresses the schedule may be updated
 ### Tuesday, July 28
 
 **8:50 am**  Zoom session starts  
-**9:00 am** Recap and check everyones session
-**9:15 am** [Data checkin, preprocessing](../data_reduction/01-preproc_htstream_mm)     
+**9:00 am** Recap and check everyones session  
+**9:15 am** [Data checkin, preprocessing](../data_reduction/01-preproc_htstream_mm)      
 **9:30 am**   _Hands on_          
 **9:45 am**     [preprocessing](../data_reduction/01-preproc_htstream_mm)    
 **10:00 am**    _Hands_on_    
-**10:15 am**   15 minute break
+**10:15 am**   15 minute break  
 **10:30 am**    [preprocessing](../data_reduction/01-preproc_htstream_mm)      
 **10:45 am**    _Hands_on_     
 **11:00 pm**    [preprocessing](../data_reduction/01-preproc_htstream_mm)      
