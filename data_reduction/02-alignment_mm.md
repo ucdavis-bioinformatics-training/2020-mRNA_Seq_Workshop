@@ -5,7 +5,7 @@ This document assumes [reference indexing](./02-alignment-indexref_mm.md) has be
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
 
 ```bash
-ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
+ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star.overlap100.gencode.M25 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
 ```
 
 ## Alignment vs Assembly

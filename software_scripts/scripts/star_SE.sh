@@ -8,7 +8,7 @@ echo $HOSTNAME
 outpath='02-STAR_alignment'
 [[ -d ${outpath} ]] || mkdir ${outpath}
 
-REF="References/star_2.7.3a_index_GRCm38.p6"
+REF="References/star.overlap100.gencode.M25"
 
 for sample in `cat samples.txt`
 do

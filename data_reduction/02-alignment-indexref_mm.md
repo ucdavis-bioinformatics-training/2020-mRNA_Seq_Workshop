@@ -19,14 +19,21 @@ Before we can align reads to a reference genome/transcriptome, its typical to fi
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-    mkdir slurmout
+    mkdir -p slurmout
     ```
 
-1. To align our data we will need the genome (fasta) and annotation (gtf) for mouse. There are many places to find them, but we are going to get them from the [Ensembl](https://uswest.ensembl.org/Mus_musculus/Info/Index).
+1. To align our data we will need the genome (fasta) and annotation (gtf) for mouse. There are many places to find them, but we are going to get them from the [GENCODE](https://www.gencodegenes.org/mouse/).
 
-    We need to first get the url for the genome and annotation gtf. For RNAseq we want to use the primary genome chromosomes and basic gene annotation. At the time of this workshop the current version of the Ensembl mouse genome is GRCm38.p6. You will want to update the scripts to use the current version.
+    We need to first get the url for the genome and annotation gtf. For RNAseq we want to use the primary genome chromosomes and basic gene annotation. At the time of this workshop the current version of GENCODE is *M25* . You will want to update the scripts to use the current version.
 
-    <img src="alignment_figures/ensembl1.png" alt="index_figure1" width="80%" style="border:5px solid #ADD8E6;"/>
+    We will need:
+
+    *   Genome sequence, primary assembly (GRCm38)
+    *   Basic gene annotation (CHR)
+
+    <img src="alignment_mm_figures/MM_genome_sequences.png" alt="MM_genome_sequences" width="80%" style="border:5px solid #ADD8E6;"/>
+
+    <img src="alignment_mm_figures/MM_comprehensive_gene_annotation.png" alt="MM_comprehensive_gene_annotation" width="80%" style="border:5px solid #ADD8E6;"/>
 
 1. We are going to use an aligner called ['STAR'](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3530905/) to align the data. Lets take a look at the help docs for star:
 
@@ -34,6 +41,17 @@ Before we can align reads to a reference genome/transcriptome, its typical to fi
     module load star
     STAR -h
     ```
+
+    The basic options to generate genome indices using STAR are as follows:
+
+    --runThreadN: number of threads  
+    --runMode: genomeGenerate mode  
+    --genomeDir: /path/to/store/genome_indices  
+    --genomeFastaFiles: /path/to/FASTA_file  
+    --sjdbGTFfile: /path/to/GTF_file  
+    --sjdbOverhang: readlength -1  
+
+    *NOTE:* In case of reads of varying length, the ideal value for --sjdbOverhang is max(ReadLength)-1. In most cases, the default value of 100 will work similarly to the ideal value.
 
 1. First we need to index the genome for STAR. Lets pull down a slurm script to index the Ensembl version of the mouse genome.
 
@@ -64,27 +82,27 @@ Before we can align reads to a reference genome/transcriptome, its typical to fi
         mkdir -p ${outpath}
 
         cd ${outpath}
-        wget ftp://ftp.ensembl.org/pub/release-100/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz
-        gunzip Mus_musculus.GRCm38.dna.toplevel.fa.gz
-        FASTA="../Mus_musculus.GRCm38.dna.toplevel.fa"
 
-        wget ftp://ftp.ensembl.org/pub/release-100/gtf/mus_musculus/Mus_musculus.GRCm38.100.gtf.gz
-        gunzip Mus_musculus.GRCm38.100.gtf.gz
-        GTF="../Mus_musculus.GRCm38.100.gtf"
+        wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/GRCm38.primary_assembly.genome.fa.gz
+        gunzip GRCm38.primary_assembly.genome.fa.gz
+        FASTA="../GRCm38.primary_assembly.genome.fa"
 
-        mkdir star_2.7.3a_index_GRCm38.p6
-        cd star_2.7.3a_index_GRCm38.p6
+        wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/gencode.vM25.annotation.gtf.gz
+        gunzip gencode.vM25.annotation.gtf.gz
+        GTF="../gencode.vM25.annotation.gtf"
 
+        mkdir star.overlap100.gencode.M25
+        cd star.overlap100.gencode.M25
 
         module load star
 
         call="STAR
-             --runThreadN 8 \
-             --runMode genomeGenerate \
-             --genomeDir . \
-             --sjdbOverhang 100 \
-             --sjdbGTFfile ${GTF} \
-             --genomeFastaFiles ${FASTA}"
+            --runThreadN 8 \
+            --runMode genomeGenerate \
+            --genomeDir . \
+            --genomeFastaFiles ${FASTA}"
+            --sjdbGTFfile ${GTF} \
+            --sjdbOverhang 100 \
 
         echo $call
         eval $call
@@ -94,26 +112,25 @@ Before we can align reads to a reference genome/transcriptome, its typical to fi
         echo $runtime
     </code></pre>
 
-{:start="1"}
-1. The script uses wget to download the fasta and GTF files from Ensembl using the links you found earlier.
-1. Uncompresses them using gunzip.
-1. Creates the star index directory [star_2.7.3a_index_GRCm38.p6].
-1. Change directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
-1. Run star in mode genomeGenerate.
+    When you are done, type "q" to exit.
 
-When you are done, type "q" to exit.
+    1. The script uses wget to download the fasta and GTF files from Gencode using the links you found earlier.
+    1. Uncompresses them using gunzip.
+    1. Creates the star index directory [star.overlap100.gencode.M25].
+    1. Change directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
+    1. Run star in mode genomeGenerate.
 
-{:start="5"}
+
 1. Run star indexing when ready.
 
     ```bash
     sbatch star_index.slurm
     ```
 
-    This step will take a couple hours. You can look at the [STAR documentation](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) while you wait. All of the output files will be written to the star index directory **star_2.7.3a_index_GRCm38.p6**.
+    This step will take a couple hours. You can look at the [STAR documentation](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) while you wait. All of the output files will be written to the star index directory **star.overlap100.gencode.M25**.
 
     **IF** For the sake of time, or for some reason it didn't finish, is corrupted, or you missed the session, you can **link** over a completed copy.
 
     ```bash
-    ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
+    ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star.overlap100.gencode.M25 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
     ```
