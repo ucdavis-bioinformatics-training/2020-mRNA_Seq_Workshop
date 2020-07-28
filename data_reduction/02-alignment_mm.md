@@ -5,8 +5,8 @@ This document assumes [preproc htstream](./preproc_htstream.md) has been complet
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
 
 ```bash
-cp -r /share/biocore/workshops/2020_mRNAseq/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-cp -r /share/biocore/workshops/2020_mRNAseq/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
 ```
 
 ## Alignment vs Assembly
@@ -137,6 +137,7 @@ Choose the appropriate column given the library preparation characteristics and 
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
+    mkdir slurmout
     ```
 
 1. To align our data we will need the genome (fasta) and annotation (gtf) for mouse. There are many places to find them, but we are going to get them from the [Ensembl](https://uswest.ensembl.org/Mus_musculus/Info/Index).
@@ -158,67 +159,69 @@ Choose the appropriate column given the library preparation characteristics and 
     wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/star_index.slurm
     less star_index.slurm
     ```
+    
+    <pre class="prettyprint"><code class="language-py" style="background-color:333333">
+        #!/bin/bash
+        #SBATCH --job-name=star_index # Job name
+        #SBATCH --nodes=1
+        #SBATCH --ntasks=8
+        #SBATCH --time=120
+        #SBATCH --mem=40000 # Memory pool for all cores (see also --mem-per-cpu)
+        #SBATCH --partition=production
+        #SBATCH --reservation=mrnaseq_workshop
+        #SBATCH --account=mrnaseq_workshop
+        #SBATCH --output=slurmout/star-index_%A.out # File to which STDOUT will be written
+        #SBATCH --error=slurmout/star-index_%A.err # File to which STDERR will be written
+        #SBATCH --mail-type=ALL
+        #SBATCH --mail-user=myemail@email.com
+    
+        start=`date +%s`
+        echo $HOSTNAME
+    
+        outpath="References"
+        mkdir -p ${outpath}
+    
+        cd ${outpath}
+        wget ftp://ftp.ensembl.org/pub/release-100/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz
+        gunzip Mus_musculus.GRCm38.dna.toplevel.fa.gz
+        FASTA="../Mus_musculus.GRCm38.dna.toplevel.fa"
+    
+        wget ftp://ftp.ensembl.org/pub/release-100/gtf/mus_musculus/Mus_musculus.GRCm38.100.gtf.gz
+        gunzip Mus_musculus.GRCm38.100.gtf.gz
+        GTF="../Mus_musculus.GRCm38.100.gtf"
+    
+        mkdir star_2.7.3a_index_GRCm38.p6
+        cd star_2.7.3a_index_GRCm38.p6
+    
+    
+        module load star
+    
+        call="STAR
+             --runThreadN 8 \
+             --runMode genomeGenerate \
+             --genomeDir . \
+             --sjdbOverhang 100 \
+             --sjdbGTFfile ${GTF} \
+             --genomeFastaFiles ${FASTA}"
+    
+        echo $call
+        eval $call
+    
+        end=`date +%s`
+        runtime=$((end-start))
+        echo $runtime
+    </code></pre>
 
-    <div class="script">#!/bin/bash
+{:start="1"}
+1. The script uses wget to download the fasta and GTF files from Ensembl using the links you found earlier.
+1. Uncompresses them using gunzip.
+1. Creates the star index directory [star_2.7.3a_index_GRCm38.p6].
+1. Change directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
+1. Run star in mode genomeGenerate.
 
-    #SBATCH --job-name=star_index # Job name
-    #SBATCH --nodes=1
-    #SBATCH --ntasks=8
-    #SBATCH --time=120
-    #SBATCH --mem=40000 # Memory pool for all cores (see also --mem-per-cpu)
-    #SBATCH --partition=production
-    #SBATCH --reservation=mrnaseq_workshop
-    #SBATCH --account=mrnaseq_workshop
-    #SBATCH --output=slurmout/star-index_%A.out # File to which STDOUT will be written
-    #SBATCH --error=slurmout/star-index_%A.err # File to which STDERR will be written
-    #SBATCH --mail-type=ALL
-    #SBATCH --mail-user=myemail@email.com
+When you are done, type "q" to exit.
 
-    start=`date +%s`
-    echo $HOSTNAME
-
-    outpath="References"
-    mkdir -p ${outpath}
-
-    cd ${outpath}
-    wget ftp://ftp.ensembl.org/pub/release-100/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz
-    gunzip Mus_musculus.GRCm38.dna.toplevel.fa.gz
-    FASTA="../Mus_musculus.GRCm38.dna.toplevel.fa"
-
-    wget ftp://ftp.ensembl.org/pub/release-100/gtf/mus_musculus/Mus_musculus.GRCm38.100.gtf.gz
-    gunzip Mus_musculus.GRCm38.100.gtf.gz
-    GTF="../Mus_musculus.GRCm38.100.gtf"
-
-    mkdir star_2.7.3a_index_GRCm38.p6
-    cd star_2.7.3a_index_GRCm38.p6
-
-
-    module load star
-
-    call="STAR
-         --runThreadN 8 \
-         --runMode genomeGenerate \
-         --genomeDir . \
-         --sjdbOverhang 100 \
-         --sjdbGTFfile ${GTF} \
-         --genomeFastaFiles ${FASTA}"
-
-    echo $call
-    eval $call
-
-    end=`date +%s`
-    runtime=$((end-start))
-    echo $runtime
-    </div>
-
-    When you are done, type "q" to exit.
-
-    1. The script uses wget to download the fasta and GTF files from Ensembl using the links you found earlier.
-    1. Uncompresses them using gunzip.
-    1. Creates the star index directory [star_2.7.3a_index_GRCm38.p6].
-    1. Change directory into the new star index directory. We run the star indexing command from inside the directory, for some reason star fails if you try to run it outside this directory.
-    1. Run star in mode genomeGenerate.
-
+{:start="5"}
 1. Run star indexing when ready.
 
     ```bash
@@ -230,7 +233,7 @@ Choose the appropriate column given the library preparation characteristics and 
     **IF** For the sake of time, or for some reason it didn't finish, is corrupted, or you missed the session, you can **link** over a completed copy.
 
     ```bash
-    ln -s /share/biocore/workshops/2020_mRNAseq/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
+    ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
     ```
 
 ## Alignments
@@ -266,9 +269,9 @@ Choose the appropriate column given the library preparation characteristics and 
        --genomeDir ../References/star_2.7.3a_index_GRCm38.p6 \
        --outSAMtype BAM SortedByCoordinate \
        --quantMode GeneCounts \
-       --outFileNamePrefix SampleAC1.streamed_ \
+       --outFileNamePrefix mouse_110_WT_C_R1_ \
        --readFilesCommand zcat \
-       --readFilesIn SampleAC1.streamed_R1.fastq.gz SampleAC1.streamed_R2.fastq.gz
+       --readFilesIn mouse_110_WT_C_R1.fastq.gz mouse_110_WT_C_R2.fastq.gz
     ```
 
     In the command, we are telling star to count reads on a gene level ('--quantMode GeneCounts'), the prefix for all the output files will be SampleAC1.streamed_, the command to unzip the files (zcat), and finally, the input file pair.
@@ -294,13 +297,13 @@ Choose the appropriate column given the library preparation characteristics and 
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
-    samtools index SampleAC1.streamed_Aligned.sortedByCoord.out.bam
+    samtools index mouse_110_WT_C_R1_Aligned.sortedByCoord.out.bam
     ```
 
     **IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
 
     ```bash
-    cp -r /share/biocore/workshops/2020_mRNAseq/HTS_testing/SampleAC1.streamed_Aligned.sortedByCoord.out.bam* /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
+    cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing/mouse_110_WT_C_R1_Aligned.sortedByCoord.out.bam* /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
     ```
 
 2. Transfer SampleAC1.streamed_Aligned.sortedByCoord.out.bam and SampleAC1.streamed_Aligned.sortedByCoord.out.bam (the index file) to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work].
@@ -309,7 +312,7 @@ Choose the appropriate column given the library preparation characteristics and 
     ```bash
     mkdir ~/rnaseq_workshop
     cd ~/rnaseq_workshop
-    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/HTS_testing/SampleAC1.streamed_Aligned.sortedByCoord.out.bam* .
+    scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/HTS_testing/mouse_110_WT_C_R1_Aligned.sortedByCoord.out.bam* .
     ```
 
     Its ok of the mkdir command fails ("File exists") because we aleady created the directory earlier.
@@ -386,56 +389,57 @@ Choose the appropriate column given the library preparation characteristics and 
     less star.slurm
     ```
 
-    <div class="script">#!/bin/bash
-
-    #SBATCH --job-name=star # Job name
-    #SBATCH --nodes=1
-    #SBATCH --ntasks=8
-    #SBATCH --time=60
-    #SBATCH --mem=32000 # Memory pool for all cores (see also --mem-per-cpu)
-    #SBATCH --partition=production
-    #SBATCH --reservation=mrnaseq_workshop
-    #SBATCH --account=mrnaseq_workshop
-    #SBATCH --array=1-16
-    #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
-    #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
-
-    start=`date +%s`
-    echo $HOSTNAME
-    echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-
-    sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
-    REF="References/star_2.7.3a_index_GRCm38.p6"
-
-    outpath='02-STAR_alignment'
-    [[ -d ${outpath} ]] || mkdir ${outpath}
-    [[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
-
-    echo "SAMPLE: ${sample}"
-
-    module load star
-
-    call="STAR
-         --runThreadN 8 \
-         --genomeDir $REF \
-         --outSAMtype BAM SortedByCoordinate \
-         --readFilesCommand zcat \
-         --readFilesIn 01-HTS_Preproc/${sample}/${sample}_R1.fastq.gz 01-HTS_Preproc/${sample}/${sample}_R2.fastq.gz \
-         --quantMode GeneCounts \
-         --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
-         > ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
-
-    echo $call
-    eval $call
-
-    end=`date +%s`
-    runtime=$((end-start))
-    echo $runtime
-    </div>
-
-    When you are done, type "q" to exit.
+    <pre class="prettyprint"><code class="language-py" style="background-color:333333">
+        #!/bin/bash
+        #SBATCH --job-name=star # Job name
+        #SBATCH --nodes=1
+        #SBATCH --ntasks=8
+        #SBATCH --time=60
+        #SBATCH --mem=32000 # Memory pool for all cores (see also --mem-per-cpu)
+        #SBATCH --partition=production
+        #SBATCH --reservation=mrnaseq_workshop
+        #SBATCH --account=mrnaseq_workshop
+        #SBATCH --array=1-22
+        #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
+        #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
+    
+        start=`date +%s`
+        echo $HOSTNAME
+        echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+    
+        sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
+        REF="References/star_2.7.3a_index_GRCm38.p6"
+    
+        outpath='02-STAR_alignment'
+        [[ -d ${outpath} ]] || mkdir ${outpath}
+        [[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
+    
+        echo "SAMPLE: ${sample}"
+    
+        module load star
+    
+        call="STAR
+             --runThreadN 8 \
+             --genomeDir $REF \
+             --outSAMtype BAM SortedByCoordinate \
+             --readFilesCommand zcat \
+             --readFilesIn 01-HTS_Preproc/${sample}/${sample}_R1.fastq.gz 01-HTS_Preproc/${sample}/${sample}_R2.fastq.gz \
+             --quantMode GeneCounts \
+             --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
+             > ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
+    
+        echo $call
+        eval $call
+    
+        end=`date +%s`
+        runtime=$((end-start))
+        echo $runtime
+    </code></pre>
 
 
+When you are done, type "q" to exit.
+
+{:start="2"}
 2. After looking at the script, lets run it.
 
     ```bash

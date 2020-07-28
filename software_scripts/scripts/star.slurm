@@ -8,7 +8,7 @@
 #SBATCH --partition=production
 #SBATCH --reservation=mrnaseq_workshop
 #SBATCH --account=mrnaseq_workshop
-#SBATCH --array=1-16
+#SBATCH --array=1-22
 #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
 #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
 
