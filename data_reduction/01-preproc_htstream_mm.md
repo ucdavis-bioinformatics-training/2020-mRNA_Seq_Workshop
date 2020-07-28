@@ -110,13 +110,14 @@ HTStream was designed to be extensible. We continue to add new preprocessing rou
 
 If you encounter any bugs or have suggestions for improvement, please post them to [issues](https://github.com/s4hts/HTStream/issues).
 
+--------
+
 # HTStream tutorial
 
---------
 
 ### <font color='red'> Start Group Exercise 1: </font>
 
-## Example, running HTStream
+## Running HTStream
 
 Let's run the first step of our HTStream preprocessing pipeline, which is always to gather basic stats on the read files. For now, we're only going to run one sample through the pipeline.
 
@@ -228,7 +229,7 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 
 
 
-## Next we are going to screen from ribosomal RNA (rRNA).
+### Next we are going to screen from ribosomal RNA (rRNA).
 
 Ribosomal RNA can make up 90% or more of a typical _total RNA_ sample. Most library prep methods attempt to reduce the rRNA representation in a sample, oligoDt binds to polyA tails to enrich a sample for mRNA, where Ribo-Depletion binds rRNA sequences to biotinylated oligo probes that are captured with streptavidin-coated magnetic beads to deplete the sample of rRNA. Newer methods use targeted probes to facilitate degradation of specific sequences (e.g. Tecan/Nugen [AnyDeplete](https://www.nugen.com/products/technology#inda), [DASH](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0904-5), etc). No technique is 100% efficient all of the time, and some can fail spectacularly, so knowing the relative proportion of rRNA in each sample can be helpful.
 
@@ -362,10 +363,11 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 1. hts_LengthFilter: use to remove all reads < 50bp
 1. hts_Stats: get stats on *output* cleaned reads
 
+------
 
 ### Why screen for phiX?
 
-PhiX is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
+(PhiX Control v3)[https://www.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html] is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
 
 However:
 * When we know PhiX has been spiked in, we find sequence every time.
@@ -373,6 +375,8 @@ However:
 * When we know that PhiX has not been spiked in, we rarely find matching sequence.
 
 For RNAseq and variant analysis (any mapping based technique) it is not critical to remove, but for sequence assembly it is (and will often assemble into a full-length PhiX genome). Unless you are sequencing PhiX, it is noise, so its better safe than sorry to screen for it every time.
+
+------
 
 ### Removing PCR duplicates with hts_SuperDeduper.
 
@@ -394,7 +398,9 @@ This table compares the performance of SuperDeduper against some other duplicate
 
 <img src="preproc_mm_figures/SD_performance.png" alt="SD_performance" width="80%"/>
 
-We calculated the Youden Index for every combination tested (using results from Picard MarkDuplicates as ground truth). The point that acquired the highest index value occurred at a start position at basepair 5 and a length of 10bp (20bp total over both reads). However in order to avoid the often lower-quality region in the first ~10bp of Illumina Read1, hts_SuperDeduper uses a default start position of basepair 10 and a length of 10bp.
+We calculated the Youden Index for every combination tested (using results from Picard MarkDuplicates as ground truth). The point that acquired the highest index value occurred at a start position of 5 and a length of 10bp (20bp total over both reads). However in order to avoid the often lower-quality region in the first ~10bp of Illumina Read1, hts_SuperDeduper uses a default start position of basepair 10 and a length of 10bp.
+
+------
 
 ### Adapter trimming by overlapping reads.
 
@@ -443,12 +449,26 @@ zcat mouse_110_WT_C.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
 * *Do you remember how to count the number of instances?*
 * *Roughly, what percentage of this data has adapters?*
 
+----
+
+### PloyATTrimming hts_PolyATTrim: remove polyA/T from the end of reads.
+1. hts_NTrimmer: trim to remove any remaining N characters
+
+
+
+---
+
+### N Trimming
+
+Bases that cannot be called are assigned an "N" by the Illumina base caller. These can be a problem for some 
+
+----
 
 ### Q-window trimming.
 
 As a sequencing run progresses the quality scores tend to get worse. Quality scores are essentially a guess about the accuracy of a base call, so it is common to trim of the worst quality bases.
 
-<img src="preproc_figures/Qwindowtrim.png" alt="Qwindowtrim" width="80%"/>
+<img src="preproc_mm_figures/Qwindowtrim.png" alt="Qwindowtrim" width="80%"/>
 
 This is how reads commonly look, they start at "good" quality, increase to "excellent" and degrade to "poor", with R2 always looking worse (except when they don't) than R1 and get worse as the number of cycles increases.
 
@@ -458,28 +478,41 @@ hts_QWindowTrim trims 5' and/or 3' end of the sequence using a windowing (averag
 
 Comparing STAR mapping count with raw and preprocessed reads
 
-<img src="preproc_figures/final.png" alt="final" width="40%"/>
+<img src="preproc_mm_figures/final.png" alt="final" width="40%"/>
+
+* TODO: Salmon quant this sample before/after cleaning and make a new figure.
+
+Counts per million sequenced with raw data on the Y axis, cleaned data on the X axis. Points are genes.
+Observations: 
+
+* The majority of transcripts have the same (or similar) CPMS before/after cleanup.
+* Some low expression transcripts have higher read counts after cleanup.
+* A large number of low expression transcripts had higher counts before cleanup. 
 
 ### Lets put it all together
+
+### <font color='red'> Start Group Exercise 2 </font>
+
+--------
 
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 
-hts_Stats -L SampleAC1_htsStats.json -N "initial stats" \
+hts_Stats -L mouse_110_WT_C.subset.json -N "initial stats" \
     -1 mouse_110_WT_C.subset_R1.fastq.gz \
     -2 mouse_110_WT_C.subset_R2.fastq.gz | \
-hts_SeqScreener -A SampleAC1_htsStats.json -N "screen phix" | \
-hts_SeqScreener -A SampleAC1_htsStats.json -N "count the number of rRNA reads"\
-     -r -s ../References/human_rrna.fasta | \
-hts_SuperDeduper -A SampleAC1_htsStats.json -N "remove PCR duplicates" | \
-hts_AdapterTrimmer -A SampleAC1_htsStats.json -N "trim adapters" | \
-hts_PolyATTrim  -A SampleAC1_htsStats.json -N "trim adapters" | \
-hts_NTrimmer -A SampleAC1_htsStats.json -N "remove any remaining 'N' characters" | \
-hts_QWindowTrim -A SampleAC1_htsStats.json -N "quality trim the ends of reads" | \
-hts_LengthFilter -A SampleAC1_htsStats.json -N "remove reads < 50bp" \
+hts_SeqScreener -A mouse_110_WT_C.subset.json -N "screen phix" | \
+hts_SeqScreener -A mouse_110_WT_C.subset.json -N "count the number of rRNA reads"\
+     -r -s ../References/mouse_rrna.fasta | \
+hts_SuperDeduper -A mouse_110_WT_C.subset.json -N "remove PCR duplicates" | \
+hts_AdapterTrimmer -A mouse_110_WT_C.subset.json -N "trim adapters" | \
+hts_PolyATTrim -A mouse_110_WT_C.subset.json -N "trim adapters" | \
+hts_NTrimmer -A mouse_110_WT_C.subset.json -N "remove any remaining 'N' characters" | \
+hts_QWindowTrim -A mouse_110_WT_C.subset.json -N "quality trim the ends of reads" | \
+hts_LengthFilter -A mouse_110_WT_C.subset.json -N "remove reads < 50bp" \
     -n -m 50 | \
-hts_Stats -A SampleAC1_htsStats.json -N "final stats" \
-    -f SampleAC1.htstream
+hts_Stats -A mouse_110_WT_C.subset.json -N "final stats" \
+    -f mouse_110_WT_C.subset.htstream
 ```
 
 Note the patterns:
@@ -493,7 +526,7 @@ Note the patterns:
 
 * *Confirm that number by counting the number of reads in the final output files.*
 
-* *How many adapters did we detect, cut off?*
+* *How many reads had adapters that were cut off?*
 
 * *How many PCR duplicates were there?*
 
@@ -543,11 +576,11 @@ echo "SAMPLE: ${sample}"
 module load htstream
 
 call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
-          -1 ${inpath}/${sample}/*R1*.fastq.gz \
-          -2 ${inpath}/${sample}/*R2*.fastq.gz | \
+          -1 ${inpath}/${sample}/*R1.fastq.gz \
+          -2 ${inpath}/${sample}/*R2.fastq.gz | \
       hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'screen phix' | \
       hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'count the number of rRNA reads'\
-          -r -s References/human_rrna.fasta | \
+          -r -s References/mouse_rrna.fasta | \
       hts_SuperDeduper -A ${outpath}/${sample}/${sample}.json -N 'remove PCR duplicates' | \
       hts_AdapterTrimmer -A ${outpath}/${sample}/${sample}.json -N 'trim adapters' | \
       hts_PolyATTrim  -A ${outpath}/${sample}/${sample}.json -N 'remove polyAT tails' | \
