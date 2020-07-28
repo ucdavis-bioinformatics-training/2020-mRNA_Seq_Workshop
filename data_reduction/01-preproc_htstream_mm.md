@@ -661,10 +661,9 @@ Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our o
 ```bash
 ## Run multiqc to collect statistics and create a report:
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-source /share/workshop/shunter/rnaseq_example/multiqc/bin/activate # setup a python virtual environment
-mkdir -p 01-HTS-multiqc-report
-multiqc -i HTSMultiQC-cleaning-report -o 01-HTS-multiqc-report ./01-HTS_Preproc
-deactivate  # turn off python virtual environment
+module load multiqc/htstream.dev0
+mkdir -p 02-HTS_multiqc_report
+multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report ./01-HTS_Preproc
 ```
 
 Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser.
