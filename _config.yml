@@ -57,6 +57,8 @@ navigation:
     url: data_reduction/00-project_setup_mm
   - title: Preprocessing raw data
     url: data_reduction/01-preproc_htstream_mm
+  - title: Indexing a Genome
+    url: data_reduction/02-alignment-indexref_mm
   - title: Alignment with Star
     url: data_reduction/02-alignment_mm
   - title: Generating counts tables
