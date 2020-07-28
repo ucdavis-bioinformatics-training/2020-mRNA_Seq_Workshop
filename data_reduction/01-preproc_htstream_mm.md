@@ -35,6 +35,35 @@ PCA/MDS plots of the preprocessing summary are a great way to look for technical
 
 <img src="preproc_mm_figures/preproc_flowchart.png" alt="preproc_flowchart" width="80%"/>
 
+
+In order to better understand and preprocess an RNA-seq data set (and to determine the types of problems we might encounter), it is a good idea to learn what type of library prep kit was used, and how it works.
+
+For this data set, [Selimoglu-Buet et al.](https://www.nature.com/articles/s41467-018-07801-x) report the following:
+
+> *SureSelect Automated Strand Specific RNA Library Preparation Kit* was used according to the manufacturer’s instructions with the Bravo Platform. Briefly, 100 ng of total RNA sample was used for poly-A mRNA selection using oligo(dT) beads and subjected to thermal mRNA fragmentation. The fragmented mRNA samples were subjected to cDNA synthesis and were further converted into double-stranded DNA using the reagents supplied in the kit, and the resulting double-stranded DNA was used for library preparation. The final libraries were sequenced on an Hiseq 2000 for human samples and on NovaSeq 6000 for mice samples (Illumina) in paired-end 100 bp mode in order to reach at least 30 millions reads per sample at Gustave Roussy.
+
+Unfortunately the methods don't provide much information about the strandedness of the library. We can learn more by looking up the [user manual](https://www.agilent.com/cs/library/usermanuals/Public/G9691-90010.pdf). Often times manufacturer web sites and user manuals will contain some hints regarding analysis.
+
+> Sequence analysis guidelines
+
+> The SureSelect RNA sequencing library preparation method preserves RNA strandedness using dUTP second- strand marking. The sequence of read 1, which starts at the P5 end, matches the reverse complement of the poly- A RNA transcript strand. Read 2, which starts at the P7 end, matches the poly-A RNA transcript strand. When running analysis of this data to determine strandedness, it is important to include this information. For example, when using the Picard tools (https://broadinstitute.github.io/picard) to calculate RNA sequencing metrics, it is important to include the parameter STRAND_SPECIFICITY= SECOND_READ_TRANSCRIPTION_STRAND to correctly calculate the strand specificity metrics.
+
+Agilent has also produced a [poster](https://www.agilent.com/cs/library/posters/Public/ASHG-poster-SureSelect-strand-specific%20RNA%20library-prep-kit-fast-streamlined-workflow-for-libraries-from-total-RNA.pdf) with additional details about the qualities of this library. The figures below provide additional detail about the library and what to expect.
+
+<img src="preproc_mm_figures/SureSelectLibraryPrep.png" alt="libraryPrep" width="80%"/>
+
+<img src="preproc_mm_figures/SureSelectLibraryCoverage.png" alt="libraryPrep" width="80%"/>
+
+
+Based on the information above we can conclude that R1 should probably always be in reverse complement orientation with respect to the transcript, and that few reads should have poly-(A/T) signals.  
+
+To double check, we could map reads to a "housekeeping gene" like beta actin (NM_007393.5 Mus musculus actin, beta (Actb), mRNA
+). Examining the reads can help us confirm our conclusions about the library, and inform decisions about how to clean in.
+
+
+<img src="preproc_mm_figures/Geneious_read_orientation_check.png" alt="libraryPrep" width="100%"/>
+
+
 ### An RNAseq Preprocessing Workflow
 
 1. Remove contaminants (at least PhiX).
@@ -110,13 +139,14 @@ HTStream was designed to be extensible. We continue to add new preprocessing rou
 
 If you encounter any bugs or have suggestions for improvement, please post them to [issues](https://github.com/s4hts/HTStream/issues).
 
+--------
+
 # HTStream tutorial
 
---------
 
 ### <font color='red'> Start Group Exercise 1: </font>
 
-## Example, running HTStream
+## Running HTStream
 
 Let's run the first step of our HTStream preprocessing pipeline, which is always to gather basic stats on the read files. For now, we're only going to run one sample through the pipeline.
 
@@ -228,7 +258,7 @@ When building a new pipeline, it is almost always a good idea to use a small sub
 
 
 
-## Next we are going to screen from ribosomal RNA (rRNA).
+### Next we are going to screen from ribosomal RNA (rRNA).
 
 Ribosomal RNA can make up 90% or more of a typical _total RNA_ sample. Most library prep methods attempt to reduce the rRNA representation in a sample, oligoDt binds to polyA tails to enrich a sample for mRNA, where Ribo-Depletion binds rRNA sequences to biotinylated oligo probes that are captured with streptavidin-coated magnetic beads to deplete the sample of rRNA. Newer methods use targeted probes to facilitate degradation of specific sequences (e.g. Tecan/Nugen [AnyDeplete](https://www.nugen.com/products/technology#inda), [DASH](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0904-5), etc). No technique is 100% efficient all of the time, and some can fail spectacularly, so knowing the relative proportion of rRNA in each sample can be helpful.
 
@@ -337,8 +367,8 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 
         * *Were the programs run in the order you expected?*
 
-    * *hts_SeqScreener will screen out PhiX reads by default. Try to modify the pipeline as follows:* 
-        
+    * *hts_SeqScreener will screen out PhiX reads by default. Try to modify the pipeline as follows:*
+
         * *hts_Stats --> hts_SeqScreener discard PhiX  --> hts_SeqScreener count rRNA and output*
 
         * *Check the JSON file that is produced. Were any PhiX reads identified?
@@ -362,10 +392,11 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 1. hts_LengthFilter: use to remove all reads < 50bp
 1. hts_Stats: get stats on *output* cleaned reads
 
+------
 
 ### Why screen for phiX?
 
-PhiX is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
+(PhiX Control v3)[https://www.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html] is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
 
 However:
 * When we know PhiX has been spiked in, we find sequence every time.
@@ -373,6 +404,8 @@ However:
 * When we know that PhiX has not been spiked in, we rarely find matching sequence.
 
 For RNAseq and variant analysis (any mapping based technique) it is not critical to remove, but for sequence assembly it is (and will often assemble into a full-length PhiX genome). Unless you are sequencing PhiX, it is noise, so its better safe than sorry to screen for it every time.
+
+------
 
 ### Removing PCR duplicates with hts_SuperDeduper.
 
@@ -394,7 +427,9 @@ This table compares the performance of SuperDeduper against some other duplicate
 
 <img src="preproc_mm_figures/SD_performance.png" alt="SD_performance" width="80%"/>
 
-We calculated the Youden Index for every combination tested (using results from Picard MarkDuplicates as ground truth). The point that acquired the highest index value occurred at a start position at basepair 5 and a length of 10bp (20bp total over both reads). However in order to avoid the often lower-quality region in the first ~10bp of Illumina Read1, hts_SuperDeduper uses a default start position of basepair 10 and a length of 10bp.
+We calculated the Youden Index for every combination tested (using results from Picard MarkDuplicates as ground truth). The point that acquired the highest index value occurred at a start position of 5 and a length of 10bp (20bp total over both reads). However in order to avoid the often lower-quality region in the first ~10bp of Illumina Read1, hts_SuperDeduper uses a default start position of basepair 10 and a length of 10bp.
+
+------
 
 ### Adapter trimming by overlapping reads.
 
@@ -427,28 +462,41 @@ hts_Overlapper product: adapter trimmed, single
 Both hts_AdapterTrimmer and hts_Overlapper employ this principle to identify and remove adapters for paired-end reads. For paired-end reads the difference between the two are the output, as overlapper produces single-end reads when the pairs overlap and adapter trimmer keeps the paired end format. For single-end reads, adapter trimmer identifies and removes adapters by looking for the adapter sequence, where overlapper just ignores single-end reads (nothing to overlap).
 
 
-### Now lets see if we can find evidence of Illumina sequencing adapters in our subset.
+### You can do a quick check for evidence of Illumina sequencing adapters using basic Linux commnads
+
 Remember that Illumina reads must have P5 and P7 adapters and generally look like this (in R1 orientation):
 
-P5---Read1primer---INSERT---IndexReadprimer--index--P7(rc)
+```code
+P5---Index-Read1primer-------INSERT-------Read2primer--index--P7(rc)
+                     |---R1 starts here-->
+```
 
-This sequence is P7(rc): ATCTCGTATGCCGTCTTCTGCTTG. It should be at the end of any R1 that contains a full-length adapter sequence.
+This sequence is P7(rc): **ATCTCGTATGCCGTCTTCTGCTTG**. It should present in any R1 that contains a full-length adapter sequence. It is easy to search for this sequence using zcat and grep:
 
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
 zcat mouse_110_WT_C.subset_R1.fastq.gz | grep TCTCGTATGCCGTCTTCTGCTTG
 ```
 
-* *What did you find?*
-* *Do you remember how to count the number of instances?*
-* *Roughly, what percentage of this data has adapters?*
+----
 
+### PloyATTrimming hts_PolyATTrim: remove polyA/T from the end of reads.
+In eukaryotes, mRNA maturation includes a polyadenylation step in which a poly(A) tail is added to the transcript. These bases (and the complementary poly(T) in some types of libraries) do not actually exist in the genome and are commonly trimmed in RNA-seq preprocessing pipelines. 
+
+
+------
+
+### N Trimming
+
+Bases that cannot be called are assigned an "N" by the Illumina base caller. These can be a problem for some applications, but most read mappers and quantification strategies should not be impacted unless N's are frequent. By default, hts_NTrimmer will return the longest sequence that contains no Ns, but can also be configured to discard any reads containing Ns as well.
+
+----
 
 ### Q-window trimming.
 
 As a sequencing run progresses the quality scores tend to get worse. Quality scores are essentially a guess about the accuracy of a base call, so it is common to trim of the worst quality bases.
 
-<img src="preproc_figures/Qwindowtrim.png" alt="Qwindowtrim" width="80%"/>
+<img src="preproc_mm_figures/Qwindowtrim.png" alt="Qwindowtrim" width="80%"/>
 
 This is how reads commonly look, they start at "good" quality, increase to "excellent" and degrade to "poor", with R2 always looking worse (except when they don't) than R1 and get worse as the number of cycles increases.
 
@@ -456,11 +504,23 @@ hts_QWindowTrim trims 5' and/or 3' end of the sequence using a windowing (averag
 
 ### What does all this preprocessing get you
 
-Comparing STAR mapping count with raw and preprocessed reads
+Comparing Salmon quant, raw vs preprocessed reads
 
-<img src="preproc_figures/final.png" alt="final" width="40%"/>
+<img src="preproc_mm_figures/reads_per_gene_raw_hts.png" alt="final" width="50%"/>
+<img src="preproc_mm_figures/reads_per_gene_raw_hts-zoomed.png" alt="final" width="50%"/>
+
+Note that the very highly expressed transcript is [Lysozyme 2, ENSMUST00000092163.8](http://uswest.ensembl.org/Mus_musculus/Transcript/Summary?g=ENSMUSG00000069516;r=10:117277331-117282321;t=ENSMUST00000092163), a [primarily bacteriolytic enzyme](https://www.uniprot.org/uniprot/P08905). Not surprising given that "monocytes are components of the mononuclear phagocyte system that is involved in rapid recognition and clearance of invading pathogens".
+
+
+* The majority of transcripts have similar reads per gene before/after cleanup.
+* Some low expression transcripts had zero reads before cleanup, but hundreds after cleanup (and vice versa).
+* A large number of genes have higher total reads mapped before cleaning.
 
 ### Lets put it all together
+
+### <font color='red'> Start Group Exercise 2 </font>
+
+--------
 
 ```bash
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
@@ -493,7 +553,7 @@ Note the patterns:
 
 * *Confirm that number by counting the number of reads in the final output files.*
 
-* *How many adapters did we detect, cut off?*
+* *How many reads had adapters that were cut off?*
 
 * *How many PCR duplicates were there?*
 
@@ -543,8 +603,8 @@ echo "SAMPLE: ${sample}"
 module load htstream/1.3.2
 
 call="hts_Stats -L ${outpath}/${sample}/${sample}.json -N 'initial stats' \
-          -1 ${inpath}/${sample}/*R1*.fastq.gz \
-          -2 ${inpath}/${sample}/*R2*.fastq.gz | \
+          -1 ${inpath}/${sample}/*R1.fastq.gz \
+          -2 ${inpath}/${sample}/*R2.fastq.gz | \
       hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'screen phix' | \
       hts_SeqScreener -A ${outpath}/${sample}/${sample}.json -N 'count the number of rRNA reads'\
           -r -s References/mouse_rrna.fasta | \
@@ -579,22 +639,41 @@ sbatch hts_preproc.slurm  # moment of truth!
 We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
 
 ```bash
-squeue -u msettles  # use your username
+squeue -u $USER  # use your username
 ```
+
+### <font color='red'> End Group Exercise 2 </font>
 
 ## Quality Assurance - Preprocessing statistics as QA/QC.
 
 Beyond generating "better" data for downstream analysis, cleaning statistics also give you an idea as to the original quality and complexity of the sample, library generation, and sequencing quality.
 
-This can help inform you of how you might change your protocol/procedures in the future, either sample preparation, or in library preparation.
+The first step in this process is to talk with your sequencing provider to ask about run level quality metrics. The major sequencing platforms all provide quality metrics that can provide insight into whether things might have gone wrong during library preparation or sequencing. Sequencing providers often generate reports and provide them along with the sequencing data.
 
-I’ve found it best to perform QA/QC on both the run as a whole (poor samples can affect other samples) and on the samples themselves as they compare to other samples **(BE CONSISTENT!)**.
+### BaseSpace Plots for Illumina data
 
-Reports such as Basespace for Illumina, are great ways to evaluate the run as a whole, the sequencing provider usually does this for you. PCA/MDS plots of the preprocessing summary are a great way to look for technical bias across your experiment. Poor quality samples often appear as outliers on the MDS plot and can ethically be removed due to identified technical issues.
+<img src="preproc_mm_figures/good_run.png" alt="good" width="100%"/>
+
+A nice run showing fairly random distribution of bases per cycle, > 80% bases above Q30, good cluster density and high pass filter rate, and very little drop off in read quality even at the end of the read.  
+
+
+
+<img src="preproc_mm_figures/bad_run_PDs.png" alt="bad" width="100%"/>
+A poor run showing less base diversity, only 39% bases above Q30, potentially too high cluster density and low pass filter rate, and extreme drop off in read quality after ~100bp of R1, and an even worse profile in R2.  
+
+Results like those above can help inform you of how you might change your protocol/procedures in the future, either sample preparation (RNA extraction), or in library preparation.  
+
+The next step is to consider quality metrics for each sample. The key consideration is that **(SAMPLES SHOULD BE CONSISTENT!)**. Plots of the preprocessing summary statistics are a great way to look for technical bias and batch effects within your experiment. Poor quality samples often appear as outliers and can ethically be removed due to identified technical issues.  
+
+The JSON files output by HTStream provide this type of information. 
+
+
+
+### <font color='red'> Begin Group Exercise 3 </font>
 
 1. Let's make sure that all jobs completed successfully.
 
-    Lets first check all the "htstream_%\*.out" and "htstream_%\*.err" files:
+    First check all the "htstream_\*.out" and "htstream_\*.err" files:
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
@@ -607,7 +686,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     cat slurmout/htstream_*.err
     ```
 
-    Also, check the output files. First check the number of forward and reverse output files (should be 16 each):
+    Also, check the output files. First check the number of forward and reverse output files (should be 22 each):
 
     ```bash
     cd 01-HTS_Preproc
@@ -615,27 +694,33 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
     ls */*R2* | wc -l
     ```
 
+    *Did you get the answer you expected, why or why not?*
+
+
     Check the sizes of the files as well. Make sure there are no zero or near-zero size files and also make sure that the size of the files are in the same ballpark as each other:
 
     ```bash
     ls -lh *
+    
+    du -sh * 
     ```
 
-    **IF** for some reason it didn't finish, is corrupted or you missed the session, please let one of us know and we will help, and you can copy over a completed copy
+    *All of the samples started with the same number of reads. What can you tell from the file sizes about how cleaning went across the samples?*
+    
+    **IF for some reason HTStream didn't finish, the files are corrupted or you missed the session, please let one of us know and we will help. You can also copy over the HTStream output.**
 
     ```bash
-    cp -r /share/biocore/workshops/2020_mRNAseq/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-    cp -r /share/biocore/workshops/2020_mRNAseq/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+    cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
     ```
 
 1. Let's take a look at the differences in adapter content between the input and output files. First look at the input file:
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-    zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz
+    zless 00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz
     ```
 
-    Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit. Alternatively, you can use zcat and grep like we did earlier.
+    Let's search for the adapter sequence. Type '/' (a forward slash), and then type **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** (the first part of the forward adapter). Press Enter. This will search for the sequence in the file and highlight each time it is found. You can now type "n" to cycle through the places where it is found. When you are done, type "q" to exit.
 
     Now look at the output file:
 
@@ -645,26 +730,41 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
     If you scroll through the data (using the spacebar), you will see that some of the sequences have been trimmed. Now, try searching for **AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC** again. You shouldn't find it (adapters were trimmed remember), but rarely is anything perfect. You may need to use Control-C to get out of the search and then "q" to exit the 'less' screen.
 
+    Lets grep for the sequence and get an idea of where it occurs in the raw sequences:
+
+    ```bash
+    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    ```
+
+    * *What do you observe? Are these sequences useful for analysis?*
+
+    ```bash
+    zcat  01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep --color=auto  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+    ```
+
+
     Lets grep for the sequence and count occurrences
 
     ```bash
-    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
+    zcat  00-RawData/mouse_110_WT_C/mouse_110_WT_C.R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     zcat  01-HTS_Preproc/mouse_110_WT_C/mouse_110_WT_C_R1.fastq.gz | grep  AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC | wc -l
     ```
 
     * *What is the reduction in adapters found?*
 
-1. QA/QC Summary of the json files.
+    * *How could you modify the cleaning pipeline in order to remove the remaining sequences?*
+
+
+1. QA/QC Summary of the JSON files.
 
 Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here [https://github.com/bnjenner/MultiQC](https://github.com/bnjenner/MultiQC).
 
 ```bash
 ## Run multiqc to collect statistics and create a report:
 cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
-source /share/workshop/shunter/rnaseq_example/multiqc/bin/activate # setup a python virtual environment
-mkdir -p 01-HTS-multiqc-report
-multiqc -i HTSMultiQC-cleaning-report -o 01-HTS-multiqc-report ./01-HTS_Preproc
-deactivate  # turn off python virtual environment
+module load multiqc/htstream.dev0
+mkdir -p 02-HTS_multiqc_report
+multiqc -i HTSMultiQC-cleaning-report -o 02-HTS_multiqc_report ./01-HTS_Preproc
 ```
 
 Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and open it in a web browser.
@@ -672,7 +772,7 @@ Transfer HTSMultiQC-cleaning-report_multiqc_report.html to your computer and ope
 
 Or in case of emergency, download this copy: [HTSMultiQC-cleaning-report_multiqc_report.html](HTSMultiQC-cleaning-report_multiqc_report.html)
 
-
+### <font color='red'> End Group Exercise 3 </font>
 
 <!--
     I've created a small R script to read in each json file, pull out some relevant stats and write out a table for all samples.

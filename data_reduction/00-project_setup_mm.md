@@ -147,4 +147,4 @@ $ ls
 3. What is the name of the sequencer this dataset was run on?
 4. Which run number is this for that sequencer?
 5. What lane was this ran on?
-6. Randomly check a few samples, were the all run the same sequencing, run, and lane?
+6. Randomly check a few samples, were they all run on the same sequencer, run, and lane?
