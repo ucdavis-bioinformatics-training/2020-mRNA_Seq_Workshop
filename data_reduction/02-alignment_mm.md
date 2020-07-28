@@ -9,10 +9,14 @@
 7. Quality Assurance - Mapping statistics as QA/QC.
 
 ---
+*This document assumes [preproc htstream](./preproc_htstream.md) has been completed.*
+**IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
+```
+cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+```
 
-This document assumes [preproc htstream](./preproc_htstream.md) has been completed.
-=======
-This document assumes [reference indexing](./02-alignment-indexref_mm.md) has been completed.
+*This document assumes [reference indexing](./02-alignment-indexref_mm.md) has been completed.* 
 
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
 
@@ -24,7 +28,7 @@ ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star_2.7.3a_index_GR
 
 **Given sequence data**,
 
-*Assembly* seeks to put together the puzzle without knowing what the picture is._
+*Assembly* seeks to put together the puzzle without knowing what the picture is.
 
 - The focus is on the pieces, how they fit together.
 
