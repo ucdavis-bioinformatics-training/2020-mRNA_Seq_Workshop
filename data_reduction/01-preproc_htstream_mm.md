@@ -31,7 +31,7 @@ Reports such as Basespace for Illumina, are great ways to evaluate the run as a 
 
 PCA/MDS plots of the preprocessing summary are a great way to look for technical bias across your experiment. Poor quality samples often appear as outliers on the MDS plot and can ethically be removed due to identified technical issues. You should **NOT** see a trend on the MDS plot associated with any experimental factors. That scenario should raise concerns about technical sample processing bias.
 
-**Many technical things happen between original sample and data, preprocessing is working backwards through that process to get as close as we can to original sample**
+**Many technical things happen between original sample and data. Preprocessing is working backwards through that process to get as close as we can to original sample.**
 
 <img src="preproc_mm_figures/preproc_flowchart.png" alt="preproc_flowchart" width="80%"/>
 
@@ -40,7 +40,7 @@ In order to better understand and preprocess an RNA-seq data set (and to determi
 
 For this data set, [Selimoglu-Buet et al.](https://www.nature.com/articles/s41467-018-07801-x) report the following:
 
-> *SureSelect Automated Strand Specific RNA Library Preparation Kit* was used according to the manufacturer’s instructions with the Bravo Platform. Briefly, 100 ng of total RNA sample was used for poly-A mRNA selection using oligo(dT) beads and subjected to thermal mRNA fragmentation. The fragmented mRNA samples were subjected to cDNA synthesis and were further converted into double-stranded DNA using the reagents supplied in the kit, and the resulting double-stranded DNA was used for library preparation. The final libraries were sequenced on an Hiseq 2000 for human samples and on NovaSeq 6000 for mice samples (Illumina) in paired-end 100 bp mode in order to reach at least 30 millions reads per sample at Gustave Roussy.
+> *SureSelect Automated Strand Specific RNA Library Preparation Kit* was used according to the manufacturer’s instructions with the Bravo Platform. Briefly, 100 ng of total RNA sample was used for poly-A mRNA selection using oligo(dT) beads and subjected to thermal mRNA fragmentation. The fragmented mRNA samples were subjected to cDNA synthesis and were further converted into double-stranded DNA using the reagents supplied in the kit, and the resulting double-stranded DNA was used for library preparation. The final libraries were sequenced on an Hiseq 2000 for human samples and on [NovaSeq 6000](https://www.illumina.com/content/dam/illumina-marketing/documents/products/appnotes/novaseq-hiseq-q30-app-note-770-2017-010.pdf) for mice samples (Illumina) in paired-end 100 bp mode in order to reach at least 30 millions reads per sample at Gustave Roussy.
 
 Unfortunately the methods don't provide much information about the strandedness of the library. We can learn more by looking up the [user manual](https://www.agilent.com/cs/library/usermanuals/Public/G9691-90010.pdf). Often times manufacturer web sites and user manuals will contain some hints regarding analysis.
 
@@ -755,7 +755,26 @@ The JSON files output by HTStream provide this type of information.
     * *How could you modify the cleaning pipeline in order to remove the remaining sequences?*
 
 
-1. QA/QC Summary of the JSON files.
+Primer dimers in this dataset:
+
+<img src="preproc_mm_figures/primer_dimers.png" alt="PrimerDimer" width="80%"/>
+
+
+* The set of "AAAA" bases directly adjacent to the Illumina adapter sequence are due to a spacing sequence on the flow cell. 
+* The "GGGGG" sequences occur because the NovaSeq 6000 uses a 2-channel detection system, where the "G" base is the absence of signal. Once the polymerase reaches the end of the template + spacing sequence it stops, so all subsequent flow cycles produce no signal.
+
+
+<img src="preproc_mm_figures/sbs-redgreen-web-graphic.jpg" alt="PrimerDimer" width="80%"/>
+
+**Figure 2. 2-Channel SBS Imaging.**
+Accelerated detection of all 4 DNA bases is performed using only 2 images to capture red and green filter wavelength bands. A bases will be present in both images (yellow cluster), C bases in red only, T bases in green only, and G bases in neither.
+
+From [Illumina 2-Channel SBS Technology](https://www.illumina.com/science/technology/next-generation-sequencing/sequencing-technology/2-channel-sbs.html).
+
+
+--------
+## A MultiQC report for HTStream JSON files
+
 
 Finally lets use [MultiQC](https://multiqc.info/) to generate a summary of our output. Currently MultiQC support for HTStream is in development by Bradley Jenner, and has not been included in the official MultiQC package. If you'd like to try it on your own data, you can find a copy here [https://github.com/s4hts/MultiQC](https://github.com/s4hts/MultiQC).
 

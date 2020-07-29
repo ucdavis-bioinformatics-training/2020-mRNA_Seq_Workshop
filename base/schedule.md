@@ -93,8 +93,10 @@ As the workshop progresses the schedule may be updated
 **10:30 am**  Intro/Adv R  
 **11:00 am**    _Hands on_      
 **11:45 am**  Recap R  
-**12:00 pm** Lunch hour    
-**4:45 pm** Closing  
+**12:00 pm** Lunch hour  
+**1:00 pm** Experimental Design  
+**2:00 pm** DE Analysis
+**4:45 pm** Recap, Homework, and Extra  
 **5:00 pm**  Zoom session ends  
 
 ### Friday, July 31
