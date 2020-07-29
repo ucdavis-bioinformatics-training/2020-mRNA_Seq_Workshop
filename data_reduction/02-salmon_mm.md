@@ -62,7 +62,7 @@
     wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/gencode.vM25.pc_transcripts.fa.gz
     gunzip gencode.vM25.pc_transcripts.fa.gz
     PC_FASTA="gencode.vM25.pc_transcripts.fa"
-    INDEX="salmon_gencode.M25.index"
+    INDEX="salmon_gencode.vM25.index"
 
     module load salmon
     call="salmon index -i ${INDEX} -k 31 --gencode -p 8 -t ${PC_FASTA}"
@@ -79,7 +79,7 @@
     1. The script changes into the References directory.
     1. It uses wget to download the transcript fasta file from GENCODE.
     1. Uncompresses it using gunzip.
-    1. Run Salmon indexing, using the "gencode" flag to parse the GENCODE file properly, and outputting to a new directory called "salmon_gencode.M25.index".
+    1. Run Salmon indexing, using the "gencode" flag to parse the GENCODE file properly, and outputting to a new directory called "salmon_gencode.vM25.index".
 
 1. Run salmon indexing when ready.
 
@@ -87,12 +87,12 @@
     sbatch salmon_index.slurm
     ```
 
-    This step does not take long, about 15 minutes. You can look at the [salmon documentation](https://salmon.readthedocs.io/en/latest/salmon.html) while you wait. All of the output files will be written to the salmon_gencode.v34.index directory.
+    This step does not take long, about 15 minutes. You can look at the [salmon documentation](https://salmon.readthedocs.io/en/latest/salmon.html) while you wait. All of the output files will be written to the salmon_gencode.vM25.index directory.
 
     **IF** for some reason it didn't finish, is corrupted, or you missed the session, you can **link** over a completed copy.
 
     ```bash
-    ln -s /share/biocore/workshops/2020_mRNAseq/References/salmon_gencode.v34.index /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
+    ln -s /share/biocore/workshops/2020_mRNAseq_July/References/salmon_gencode.vM25.index /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
     ```
 ## Alignments
 
@@ -112,20 +112,20 @@
     ```bash
     salmon quant \
     --threads 8 \
-    --index ../References/salmon_gencode.v34.index \
+    --index ../References/salmon_gencode.vM25.index \
     	--libType A \
     	--validateMappings \
-    	--geneMap ../References/gencode.v34.primary_assembly.annotation.gtf \
-    	--output SampleAC1.salmon \
-    -1 SampleAC1.streamed_R1.fastq.gz \
-    	-2 SampleAC1.streamed_R2.fastq.gz
+    	--geneMap ../References/gencode.vM25.primary_assembly.annotation.gtf \
+    	--output mouse_110_WT_C.salmon \
+    -1 mouse_110_WT_C_R1.fastq.gz \
+    	-2 mouse_110_WT_C_R2.fastq.gz
     ```
 
-    In the command, we are telling salmon to quantify reads with libtype 'auto' ([libtype](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype)) on a gene level ('--geneMap'), the folder for all the output files will be SampleAC1.salmon, and finally, the input file pair.
+    In the command, we are telling salmon to quantify reads with libtype 'auto' ([libtype](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype)) on a gene level ('--geneMap'), the folder for all the output files will be mouse_110_WT_C.salmon, and finally, the input file pair.
 
 ## Running Salmon on the experiment
 
-1. We can now run Salmon across all samples on the real data using a SLURM script, [salmon.slurm](../scripts/salmon.slurm), that we should take a look at now.
+1. We can now run Salmon across all samples on the real data using a SLURM script, salmon.slurm, that we should take a look at now.
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example  # We'll run this from the main directory
@@ -135,7 +135,7 @@
 
     <div class="script">#!/bin/bash
 
-    #SBATCH --array=1-16
+    #SBATCH --array=1-22
     #SBATCH --job-name=salmon # Job name
     #SBATCH --nodes=1
     #SBATCH --ntasks=8
@@ -153,8 +153,8 @@
 
     outdir="02-Salmon_alignment"
     sampfile="samples.txt"
-    REF="References/salmon_gencode.v34.index"
-    GTF="References/gencode.v34.primary_assembly.annotation.gtf"
+    REF="References/salmon_gencode.vM25.index"
+    GTF="References/gencode.vM25.primary_assembly.annotation.gtf"
 
     SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} $sampfile | tail -1`
     R1="01-HTS_Preproc/$SAMPLE/${SAMPLE}_R1.fastq.gz"
@@ -202,13 +202,13 @@
     We can watch the progress of our task array using the 'squeue' command. Takes about 30 minutes to process each sample.
 
     ```bash
-    squeue -u msettles  # use your username
+    squeue -u $USER  # use your username
     ```
 
 1. Once the jobs finish, take a look at one of the output files:
 
     ```bash
-    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/02-Salmon_alignment/SampleAC1
+    cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/02-Salmon_alignment/mouse_110_WT_C
     head quant.sf
     ```
 
