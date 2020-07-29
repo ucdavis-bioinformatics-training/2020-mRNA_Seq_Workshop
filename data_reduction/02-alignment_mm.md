@@ -11,20 +11,13 @@
 ---
 ## Initial Setup
 
-*This document assumes [preproc htstream](./preproc_htstream.md) has been completed.*
-**IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
-```
-cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
-```
-
 *This document assumes [reference indexing](./02-alignment-indexref_mm.md) has been completed.*
 
-**EVERYONE** will need to run this command to update some reference changes our group made last night. 
+**IF** will need to run this command to update some reference changes our group made last night.
 
 ```bash
 rm -rf  /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References
-ln -s /share/biocore/workshops/2020_mRNAseq_July/References/ /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+ln -s /share/biocore/workshops/2020_mRNAseq_July/References /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
 ```
 
 ---
@@ -331,7 +324,7 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
     ```
 
     <pre class="prettyprint"><code class="language-py" style="background-color:333333">#!/bin/bash
-    
+
     #SBATCH --job-name=star # Job name
     #SBATCH --nodes=1
     #SBATCH --ntasks=8
@@ -343,22 +336,22 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
     #SBATCH --array=1-22
     #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
     #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
-    
+
     start=`date +%s`
     echo $HOSTNAME
     echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-    
+
     sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
     REF="References/star_2.7.3a_index_GRCm38.p6"
-    
+
     outpath='02-STAR_alignment'
     [[ -d ${outpath} ]] || mkdir ${outpath}
     [[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
-    
+
     echo "SAMPLE: ${sample}"
-    
+
     module load star
-    
+
     call="STAR
          --runThreadN 8 \
          --genomeDir $REF \
@@ -368,10 +361,10 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
          --quantMode GeneCounts \
          --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
          > ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
-    
+
     echo $call
     eval $call
-    
+
     end=`date +%s`
     runtime=$((end-start))
     echo $runtime
@@ -406,7 +399,7 @@ When you are done, type "q" to exit.
     wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/star_stats.sh
     bash star_stats.sh
     ```
-    
+
     <pre class="prettyprint"><code class="language-py" style="background-color:333333">#!/bin/bash
 
     echo -en "sample_names" > names.txt
@@ -428,7 +421,7 @@ When you are done, type "q" to exit.
     rm names.txt
     rm totals.txt
     </code></pre>
-   
+
 
 2. Transfer `summary_star_alignments.txt` to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
 
@@ -443,7 +436,7 @@ When you are done, type "q" to exit.
 
 **Questions:**
 1. Look at the script `star.slurm`. What does the `array=1-22` mean, why is it used, and what is the usage of it in the script itself?
-2. Look through the files in an output directory and check out what is present and discuss what each of them mean. (for example: `cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/02-STAR_alignment/mouse_110_WT_C` ) 
+2. Look through the files in an output directory and check out what is present and discuss what each of them mean. (for example: `cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/02-STAR_alignment/mouse_110_WT_C` )
 3. Come up with a brief command you might use to check that all of the sample alignments using STAR have a reasonable output and/or did not produce any errors.
 4. Open `summary_star_alignments.txt` in excel (or excel like application), and review. The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
 5. If time, find some other regions/genes with high expression using IGV with your group. (Looking at genes the paper references is a great place to start)

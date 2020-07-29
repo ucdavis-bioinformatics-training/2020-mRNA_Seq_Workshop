@@ -85,9 +85,9 @@
         --runThreadN 8 \
         --runMode genomeGenerate \
         --genomeDir . \
-        --genomeFastaFiles ${FASTA}"
+        --genomeFastaFiles ${FASTA} \
         --sjdbGTFfile ${GTF} \
-        --sjdbOverhang 100 \
+        --sjdbOverhang 100"
 
     echo $call
     eval $call
