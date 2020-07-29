@@ -19,7 +19,7 @@ hostname
 outdir="02-Salmon_alignment"
 sampfile="samples.txt"
 REF="References/salmon_gencode.vM25.index"
-GTF="References/gencode.vM25.primary_assembly.annotation.gtf"
+GTF="References/gencode.vM25.annotation.gtf"
 
 SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} $sampfile | tail -1`
 R1="01-HTS_Preproc/$SAMPLE/${SAMPLE}_R1.fastq.gz"

@@ -7,7 +7,7 @@ outpath='02-Salmon_alignment'
 [[ -d ${outpath} ]] || mkdir ${outpath}
 
 REF="References/salmon_gencode.v34.index"
-GTF="References/gencode.v34.primary_assembly.annotation.gtf"
+GTF="References/gencode.vM25.annotation.gtf"
 
 for sample in `cat samples.txt`
 do
