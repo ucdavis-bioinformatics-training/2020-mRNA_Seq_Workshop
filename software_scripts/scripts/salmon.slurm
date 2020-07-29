@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --array=1-16
+#SBATCH --array=1-22
 #SBATCH --job-name=salmon # Job name
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
@@ -18,8 +18,8 @@ hostname
 
 outdir="02-Salmon_alignment"
 sampfile="samples.txt"
-REF="References/salmon_gencode.v34.index"
-GTF="References/gencode.v34.primary_assembly.annotation.gtf"
+REF="References/salmon_gencode.vM25.index"
+GTF="References/gencode.vM25.primary_assembly.annotation.gtf"
 
 SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} $sampfile | tail -1`
 R1="01-HTS_Preproc/$SAMPLE/${SAMPLE}_R1.fastq.gz"
