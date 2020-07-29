@@ -20,7 +20,7 @@ cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/
 
 *This document assumes [reference indexing](./02-alignment-indexref_mm.md) has been completed.*
 
-**IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
+**EVERYONE** will need to run this command to update some reference changes our group made last night. 
 
 ```bash
 rm -rf  /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References
@@ -169,6 +169,7 @@ ENSMUSG00000104017	0	0	0
 
 Choose the appropriate column given the library preparation characteristics and generate a matrix expression table, columns are samples, rows are genes.
 
+What does stranded and unstranded mean? Which is better and why? [Stranded vs Unstraded](https://www.ecseq.com/support/ngs/how-do-strand-specific-sequencing-protocols-work)
 
 ---
 ## Alignments
@@ -441,10 +442,10 @@ When you are done, type "q" to exit.
 
 
 **Questions:**
-- Look at the script `star.slurm`. What does the `array=1-22` mean, why is it used, and what is the usage of it in the script itself?
-- Look through the files in an output directory and check out what is present and discuss what each of them mean. (for example: `cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/02-STAR_alignment/mouse_110_WT_C` ) 
-- Come up with a brief command you might use to check that all of the sample alignments using STAR have a reasonable output and/or did not produce any errors.
-- Open `summary_star_alignments.txt` in excel (or excel like application), and review. The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
-
+1. Look at the script `star.slurm`. What does the `array=1-22` mean, why is it used, and what is the usage of it in the script itself?
+2. Look through the files in an output directory and check out what is present and discuss what each of them mean. (for example: `cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/02-STAR_alignment/mouse_110_WT_C` ) 
+3. Come up with a brief command you might use to check that all of the sample alignments using STAR have a reasonable output and/or did not produce any errors.
+4. Open `summary_star_alignments.txt` in excel (or excel like application), and review. The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
+5. If time, find some other regions/genes with high expression using IGV with your group. (Looking at genes the paper references is a great place to start)
 
 ### <font color='red'> Stop Group Exercise </font>
