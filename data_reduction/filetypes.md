@@ -64,12 +64,12 @@ Fields must be tab-separated and all fields must contain a value; “empty” fi
 
 Columns:
 * Seqname: Name of the sequence chromosome
-Source: the program, or database, that generated the feature
+* Source: the program, or database, that generated the feature
 * Feature: feature type name, (e.g. gene, exon, cds, etc.)
 * Start: start position of the feature, sequences begin at 1
 * End: stop position of the feature, sequences begin at 1
 * Score: a floating point value (e.g. 0.01)
-Strand: Defined as ‘+’ (forward),or ‘-’ (reverse)
+* Strand: Defined as ‘+’ (forward),or ‘-’ (reverse)
 * Frame: One of ‘0’, ‘1’, ‘2’, ‘0’ represents the first base of a codon.
 * Attribute: A semicolon-separated list of tag-value pairs, providing additional information about each feature.
 
