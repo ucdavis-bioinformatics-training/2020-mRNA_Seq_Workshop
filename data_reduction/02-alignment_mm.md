@@ -51,9 +51,9 @@ ln -s /share/biocore/workshops/2020_mRNAseq_July/References /share/workshop/mrna
   removed from the read sequence in the BAM file. The 'real' sequence length would be length(SEQ)+ count-of-hard-clipped-bases
   * [From biostars](https://www.biostars.org/p/119537/)
 
-<img style="padding-left:100px" src="alignment_figures/alignment_figure3.png" alt="alignment_figure3" width="60%"/>  
+<img style="padding-left:100px" src="alignment_mm_figures/alignment_figure3.png" alt="alignment_figure3" width="60%"/>  
 * Inner length, insert size, fragment length  
-<img src="alignment_figures/alignment_figure4.jpg" alt="alignment_figure4" width="60%"/>  
+<img src="alignment_mm_figures/alignment_figure4.jpg" alt="alignment_figure4" width="60%"/>  
 *From [This Biostars answer](https://www.biostars.org/p/106291/)*
 
 
@@ -66,7 +66,7 @@ ln -s /share/biocore/workshops/2020_mRNAseq_July/References /share/workshop/mrna
 
 In RNAseq data, you must also consider effect of splice junctions, reads may span an intron.
 
-<img src="alignment_figures/alignment_figure1.png" alt="alignment_figure1" width="80%"/>
+<img src="alignment_mm_figures/alignment_figure1.png" alt="alignment_figure1" width="80%"/>
 
 <iframe width="80%" src="https://www.youtube.com/embed/_asGjfCTLNE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -135,7 +135,7 @@ Options are (STAR, HTSEQ, featureCounts)
   * intersection-strict
   * intersection-nonempty
 
-  <img src="alignment_figures/alignment_figure2.png" alt="alignment_figure2" width="60%"/>
+  <img src="alignment_mm_figures/alignment_figure2.png" alt="alignment_figure2" width="60%"/>
 *from the [HTSeq Paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4287950/)*
 
 #### Star Implementation
@@ -235,7 +235,7 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
     cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing/mouse_110_WT_C_R1_Aligned.sortedByCoord.out.bam* /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
     ```
 
-2. Transfer mouse_110_WT_C.streamed_Aligned.sortedByCoord.out.bam and mouse_110_WT_C.streamed_Aligned.sortedByCoord.out.bam (the index file) to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work].
+2. Transfer mouse_110_WT_C.streamed_Aligned.sortedByCoord.out.bam and mouse_110_WT_C.streamed_Aligned.sortedByCoord.out.bam.bai (the index file) to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work].
 
     In Mac/Linux, Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole**. Replace [your_username] with your username
     ```bash
@@ -251,61 +251,61 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 
     Go to the [IGV page at the Broad Institute](http://software.broadinstitute.org/software/igv/).
 
-    <img src="alignment_figures/index_igv1.png" alt="index_igv1" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv1.png" alt="index_igv1" width="80%" style="border:5px solid #ADD8E6;"/>
 
     And then navigate to the download page, [IGV download](http://software.broadinstitute.org/software/igv/download)
 
-    <img src="alignment_figures/index_igv2.png" alt="index_igv2" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv2.png" alt="index_igv2" width="80%" style="border:5px solid #ADD8E6;"/>
 
     Here you can download IGV for your respective platform (Window, Mac OSX, Linux), but we are going to use the web application they supply, [IGV web app](https://igv.org/app).
 
-    <img src="alignment_figures/index_igv3.png" alt="index_igv3" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv3.png" alt="index_igv3" width="80%" style="border:5px solid #ADD8E6;"/>
 
-1. The first thing we want to do is load the Human genome. Click on "Genomes" in the menu and choose "Human (GRCh38/hg38)".
+1. The first thing we want to do is load the Human genome. Click on "Genomes" in the menu and choose "Human (GRCm38/mm10)".
 
-    <img src="alignment_figures/index_igv4.png" alt="index_igv4" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv4.png" alt="index_igv4" width="80%" style="border:5px solid #ADD8E6;"/>
 
 1. Now let's load the alignment bam and index files. Click on "Tracks" and choose "Local File ...".
 
-    <img src="alignment_figures/index_igv5.png" alt="index_igv5" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv5.png" alt="index_igv5" width="80%" style="border:5px solid #ADD8E6;"/>
 
     Navigate to where you transferred the bam and index file and select them **both**.
 
-    <img src="alignment_figures/index_igv6.png" alt="index_igv6" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv6.png" alt="index_igv6" width="80%" style="border:5px solid #ADD8E6;"/>
 
     Now your alignment is loaded. Any loaded bam file aligned to a genome is called a "track".
 
-    <img src="alignment_figures/index_igv7.png" alt="index_igv7" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv7.png" alt="index_igv7" width="80%" style="border:5px solid #ADD8E6;"/>
 
-1. Lets take a look at the alignment associated with the gene __HBB__, and if for some reason it doesn't find HBB (web IGV can be fickle) go to position __chr11:5,224,466-5,228,071__. If you don't see any reads, this likely means your in the wrong genome, double check that it says **hg38** in the top left.
+1. Lets take a look at the alignment associated with the gene __Fn1__, and if for some reason it doesn't find HBB (web IGV can be fickle) go to position __chr1:71,610,633-71,628,073__. If you don't see any reads, this likely means your in the wrong genome, double check that it says **mm10** in the top left.
 
-    <img src="alignment_figures/index_igv8.png" alt="index_igv8" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv8.png" alt="index_igv8" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="alignment_figures/index_igv9.png" alt="index_igv9" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv9.png" alt="index_igv9" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    You can zoom in by clicking on the plus sign (top right) or zoom out by clicking the negative sign. You also may have to move around by clicking and dragging in the BAM track window.
+    You can zoom in by clicking on the plus sign (top right) or zoom out by clicking the negative sign (click it twice). You also may have to move around by clicking and dragging in the BAM track window.
 
     You can also zoom in by clicking and dragging across the number line at the top. That section will highlight, and when you release the button, it will zoom into that section.
 
-    <img src="alignment_figures/index_igv10.png" alt="index_igv10" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv10.png" alt="index_igv10" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="alignment_figures/index_igv11.png" alt="index_igv11" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv11.png" alt="index_igv11" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    Reset the window by searching for HBB again, **and** then zoom in 1 step.
+    Reset the window by searching for Fn1 again, **and** then zoom in 2 steps.
 
-    <img src="alignment_figures/index_igv12.png" alt="index_igv12" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv12.png" alt="index_igv12" width="80%" style="border:5px solid #ADD8E6;"/>
 
-1. See that the reads should be aligning within the exons in the gene. This makes sense, since RNA-Seq reads are from exons. Play with the settings on the right hand side a bit.
+1. See that the reads should be aligning within the exons in the gene. This makes sense, since RNA-Seq reads are from exons. Play with the settings on the right hand side a bit and selecting reads.
 
-    <img src="alignment_figures/index_igv13.png" alt="index_igv13" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv13.png" alt="index_igv13" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="alignment_figures/index_igv14.png" alt="index_igv14" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv14.png" alt="index_igv14" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="alignment_figures/index_igv15.png" alt="index_igv15" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv15.png" alt="index_igv15" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="alignment_figures/index_igv16.png" alt="index_igv16" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv16.png" alt="index_igv16" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="alignment_figures/index_igv17.png" alt="index_igv17" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/index_igv17.png" alt="index_igv17" width="80%" style="border:5px solid #ADD8E6;"/>
 
 
 ---
