@@ -212,16 +212,16 @@
     head quant.sf
     ```
 
-    <div class="script">Name	Length	EffectiveLength	TPM	NumReads
-    ENST00000641515.2	2618	2404.721	0.000000	0.000
-    ENST00000335137.4	1054	840.721	0.000000	0.000
-    ENST00000426406.3	995	781.725	1.640828	2.000
-    ENST00000420190.6	1578	1364.721	0.000000	0.000
-    ENST00000437963.5	387	185.880	0.000000	0.000
-    ENST00000342066.8	2557	2343.721	0.000000	0.000
-    ENST00000618181.4	2179	1965.721	0.000000	0.000
-    ENST00000622503.4	2557	2343.721	0.000000	0.000
-    ENST00000618323.4	2159	1945.721	0.000000	0.000
+    <div class="script">Name    Length  EffectiveLength TPM NumReads
+    ENSMUST00000070533.4    3634    3490.053    0.000000    0.000
+    ENSMUST00000208660.1    4170    4026.053    0.000000    0.000
+    ENSMUST00000027032.5    6869    6725.053    0.000000    0.000
+    ENSMUST00000027035.9    3127    2983.053    0.000000    0.000
+    ENSMUST00000195555.1    1977    1833.053    0.000000    0.000
+    ENSMUST00000192650.5    3242    3098.053    0.000000    0.000
+    ENSMUST00000116652.7    1512    1368.053    0.000000    0.000
+    ENSMUST00000191647.1    406 262.201 0.000000    0.000
+    ENSMUST00000191939.1    840 696.074 0.000000    0.000
     </div>
 
     These are the transcript-level counts. Each row describes a single quantification record. The columns have the following interpretation.
@@ -236,7 +236,7 @@
 
 ## Quality Assurance - Mapping statistics as QA/QC.
 
-1. Once your jobs have finished successfully (check the error and out logs like we did in the previous exercise), use a script of ours, [salmon_stats.sh](../scripts/salmon_stats.sh) to collect the alignment stats. Don't worry about the script's contents at the moment; you'll use very similar commands to create a counts table in the next section. For now:
+1. Once your jobs have finished successfully (check the error and out logs like we did in the previous exercise), use a script of ours, salmon_stats.R, to collect the alignment stats. Don't worry about the script's contents at the moment; you'll use very similar commands to create a counts table in the next section. For now:
 
     ```bash
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example  # We'll run this from the main directory
@@ -287,7 +287,7 @@
 
 
     ```bash
-    tail -n +2 02-Salmon_alignment/SampleAC1/quant.genes.sf | cut -f1 > 03-Counts/tmp/geneids.txt
+    tail -n +2 02-Salmon_alignment/mouse_110_WT_C/quant.genes.sf | cut -f1 > 03-Counts/tmp/geneids.txt
     head 03-Counts/tmp/geneids.txt
     ```
 
@@ -321,4 +321,4 @@
 
     Open in excel (or excel like application), and review.
 
-    The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
+    The table that this script creates ("summary_salmon_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
