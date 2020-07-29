@@ -127,17 +127,16 @@ In this section, we will collate all of the count data into one file for analysi
     In Mac/Linux, Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole**. Replace my [your_username] with your username
 
     ```bash
-    mkdir ~/rnaseq_workshop
+    mkdir -p ~/rnaseq_workshop
     cd ~/rnaseq_workshop
     scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/03-Counts/rnaseq_workshop_counts.txt .
     scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/samples.txt .
     ```
 
-    Its ok of the mkdir command fails ("File exists") because we aleady created the directory earlier.
 
-    Open in excel (or excel like application), you may have to move the header column 1 cell to the right, and lets review.
-
-    *Anything else worth discussing?*
+**Questions**:
+1. Open `rnaseq_workshop_counts.txt` in excel (or excel like application), you may have to move the header column 1 cell to the right, and review as a group. *Anything else worth discussing?*
+1. Based on `head 02-STAR_alignment/mouse_110_WT_C/mouse_110_WT_C_ReadsPerGene.out.tab` give some reasoning as to why we are choosing the column we are choosing when creating the counts table. 
 
 
 ### <font color='red'> End Group Exercise </font>
