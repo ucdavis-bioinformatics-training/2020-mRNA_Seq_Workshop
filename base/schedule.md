@@ -85,14 +85,14 @@ As the workshop progresses the schedule may be updated
 
 **8:50 am**  Zoom session starts  
 **9:00 am** Recap and questions  
-**9:15 am**  Intro/Adv R
+**9:15 am**  Intro/Adv R  
 **9:30 am**    _Hands on_      
-**9:45 am**  Intro/Adv R
+**9:45 am**  Intro/Adv R  
 **10:00 am**   _Hands on_    
 **10:15 am**   15 minute break   
-**10:30 am**  Intro/Adv R
+**10:30 am**  Intro/Adv R  
 **11:00 am**    _Hands on_      
-**11:45 am**  Recap R
+**11:45 am**  Recap R  
 **12:00 pm** Lunch hour    
 **4:45 pm** Closing  
 **5:00 pm**  Zoom session ends  

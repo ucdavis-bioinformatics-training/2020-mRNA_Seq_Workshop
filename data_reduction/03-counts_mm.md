@@ -5,7 +5,7 @@ This document assumes [alignment](./alignment.md) has been completed.
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
 
 ```bash
-cp -r /share/biocore/workshops/2020_mRNAseq_July/02-STAR_alignment /share/workshop/mrnaseq_workshop/$USER/rnaseq-example/.
+cp -r /share/biocore/workshops/2020_mRNAseq_July/02-STAR_alignment /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
 cp  /share/biocore/workshops/2020_mRNAseq_July/summary_star_alignments.txt /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
 ```
 
