@@ -90,7 +90,7 @@ As the workshop progresses the schedule may be updated
 **9:45 am**  Intro/Adv R  
 **10:00 am**   _Hands on_    
 **10:15 am**   15 minute break   
-**10:30 am**  Intro/Adv R
+**10:30 am**  Intro/Adv R  
 **11:00 am**    _Hands on_      
 **11:45 am**  Recap R  
 **12:00 pm** Lunch hour    
