@@ -48,17 +48,14 @@ As the workshop progresses the schedule may be updated
 **11:45 pm**    _Hands on_     
 **12:00 pm**    Lunch hour      
 **1:00 pm**     [Technology Seminar by Lutz Froenicke](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/mrna/Bioinformatics_Workshop_2020_RNA.pdf)  
-**2:00 pm**    [preprocessing QA/QC](../data_reduction/01-preproc_htstream_mm)      
-**2:15 pm**    _Hands on_     
-**2:30 pm**     [preprocessing Recap](../data_reduction/01-preproc_htstream_mm)      
+**2:00 pm**    [preprocessing](../data_reduction/01-preproc_htstream_mm)      
 **2:45 pm**  15 minute break   
-**3:00 pm**   [Files and file types (fasta/gtf)](../data_reduction/filetypes)     
-**3:15 pm**  [Aligments References](../data_reduction/02-alignment_mm)  
+**2:30 pm**    _Hands on_     
+**3:00 pm**    [preprocessing QA/QC](../data_reduction/01-preproc_htstream_mm)      
 **3:30 pm**    _Hands on_     
-**3:45 pm**  [Aligments](../data_reduction/02-alignment_mm)   
-**4:00 pm**    _Hands on_     
-**4:15 pm**  [Aligments](../data_reduction/02-alignment_mm)    
-**4:30 pm**    _Hands on_     
+**4:00 pm**     [preprocessing Recap](../data_reduction/01-preproc_htstream_mm)      
+**4:30 pm**  [Aligments References](../data_reduction/02-alignment_mm)  
+**3:30 pm**    _Hands on_     
 **4:45 pm**  Recap and Homework and Extra    
 **5:00 pm**  Zoom session ends   
 
@@ -66,8 +63,21 @@ As the workshop progresses the schedule may be updated
 
 **8:50 am**  Zoom session starts  
 **9:00 am** Recap and questions  
-**10:45 am**   15 minute break  
+**9:10 am**    [preprocessing QA/QC](../data_reduction/01-preproc_htstream_mm)      
+**9:20 am**   [Files and file types (fasta/gtf)](../data_reduction/filetypes#Annotation-based-file-types)     
+**9:30 am**  [Aligments](../data_reduction/02-alignment_mm)   
+**10:00 am**    _Hands on_     
+**10:30 am**   15 minute break  
+**10:45 am**  [Aligments](../data_reduction/02-alignment_mm)    
+**11:15 am**    _Hands on_     
+**11:45 am**  [Aligments Recap](../data_reduction/02-alignment_mm)    
 **12:00 pm** Lunch hour    
+**1:00 pm**   [Files and file types (sam/bam)](../data_reduction/filetypes#Alignment-based-file-types)     
+**1:30 pm** [Creating counts tables](../data_reduction/03-counts_mm)    
+**2:00 pm**    _Hands on_      
+**2:30 pm**   15 minute break    
+**2:45 pm** [Alignment with Salmon](../data_reduction/02-salmon_mm)      
+**3:15 pm**    _Hands on_      
 **4:45 pm** Closing  
 **5:00  pm**  Zoom session ends  
 
@@ -75,7 +85,14 @@ As the workshop progresses the schedule may be updated
 
 **8:50 am**  Zoom session starts  
 **9:00 am** Recap and questions  
-**10:45 am**   15 minute break  
+**9:15 am**  Intro/Adv R
+**9:30 am**    _Hands on_      
+**9:45 am**  Intro/Adv R
+**10:00 am**   _Hands on_    
+**10:15 am**   15 minute break   
+**10:30 am**  Intro/Adv R
+**11:00 am**    _Hands on_      
+**11:45 am**  Recap R
 **12:00 pm** Lunch hour    
 **4:45 pm** Closing  
 **5:00 pm**  Zoom session ends  

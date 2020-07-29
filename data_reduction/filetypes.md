@@ -2,11 +2,10 @@
 
 The primary file types you'll see related to DNA sequence analysis are:
 
-* fasta
-* fastq
-* gtf/gff
-* sam/bam/cram
-* bed
+* [fasta](#fasta)
+* [fastq](#fastq)
+* [gtf/gff](#Annotation-based-file-types)
+* [sam/bam/cram](#Alignment-based-file-types)
 
 ## Sequence based file types
 Sequence based files first started out as fasta with paired qual files (Sanger and 454), with Illumina and quality scores being used more, the fastq file became the default output from DNA sequencers. These days additional file types are being used, including fast5 by Oxford Nanopore and 'unmapped' bam files by Pacific Biosciences.
@@ -53,7 +52,7 @@ Each quality character has a numerical value associated with it (ASCII value). I
 
 <img src="filetypes_figures/filetypes_figure4a.png" alt="figure4a" width="40%"/>
 
-## Annotation based file Types
+## Annotation based file types
 
 ### Gene Transfer Format (GTF) / Gene Feature Format (GFF)
 
