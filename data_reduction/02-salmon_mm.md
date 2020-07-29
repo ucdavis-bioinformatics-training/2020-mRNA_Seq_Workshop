@@ -14,23 +14,23 @@
     cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example
     ```
 
-1. To align our data we will need the transcriptome (fasta) and annotation (gtf) for human. There are many places to find them, but we are going to get it from the [GENCODE](https://www.gencodegenes.org/human/).
+1. To align our data we will need the transcriptome (fasta) and annotation (gtf) for mouse. There are many places to find them, but we are going to get it from the [GENCODE](https://www.gencodegenes.org/mouse/).
 
-    We need to first get the urls for the and protein coding genes. For RNAseq we want to use the protein coding transcript sequences and basic gene annotation. At the time of this workshop the current version of GENCODE is *34*. You will want to update the scripts to use the current version.
+    We need to first get the urls for the and protein coding genes. For RNAseq we want to use the protein coding transcript sequences and basic gene annotation. At the time of this workshop the current version of GENCODE is *M25*. You will want to update the scripts to use the current version.
 
-    <img src="alignment_figures/index_figure1.png" alt="index_figure1" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/mouse_gencode1.png" alt="mouse_gencode1" width="80%" style="border:5px solid #ADD8E6;"/>
 
-    <img src="alignment_figures/index_figure3.png" alt="index_figure3" width="80%" style="border:5px solid #ADD8E6;"/>
+    <img src="alignment_mm_figures/mouse_gencode2.png" alt="mouse_gencode2" width="80%" style="border:5px solid #ADD8E6;"/>
 
 1. Lets take a look at the help docs for salmon and its subcommands as well:
 
     ```bash
     module load salmon
-    salamon -h
+    salmon -h
     salmon index -h
     ```
 
-1. First we need to index the transcriptome for STAR. Lets pull down a slurm script to index the human GENCODE version of the transcriptome.
+1. First we need to index the transcriptome for salmon. Lets pull down a slurm script to get and index the mouse GENCODE version of the transcriptome.
 
     ```bash
     wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/salmon_index.slurm
@@ -59,10 +59,10 @@
     mkdir -p ${outpath}
     cd ${outpath}
 
-    wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_34/gencode.v34.pc_transcripts.fa.gz
-    gunzip gencode.v34.pc_transcripts.fa.gz
-    PC_FASTA="gencode.v34.pc_transcripts.fa"
-    INDEX="salmon_gencode.v34.index"
+    wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/gencode.vM25.pc_transcripts.fa.gz
+    gunzip gencode.vM25.pc_transcripts.fa.gz
+    PC_FASTA="gencode.vM25.pc_transcripts.fa"
+    INDEX="salmon_gencode.M25.index"
 
     module load salmon
     call="salmon index -i ${INDEX} -k 31 --gencode -p 8 -t ${PC_FASTA}"
@@ -79,7 +79,7 @@
     1. The script changes into the References directory.
     1. It uses wget to download the transcript fasta file from GENCODE.
     1. Uncompresses it using gunzip.
-    1. Run Salmon indexing, using the "gencode" flag to parse the GENCODE file properly, and outputting to a new directory called "salmon_gencode.v34.index".
+    1. Run Salmon indexing, using the "gencode" flag to parse the GENCODE file properly, and outputting to a new directory called "salmon_gencode.M25.index".
 
 1. Run salmon indexing when ready.
 
