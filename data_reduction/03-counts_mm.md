@@ -11,6 +11,11 @@ cp  /share/biocore/workshops/2020_mRNAseq_July/summary_star_alignments.txt /shar
 
 In this section, we will collate all of the count data into one file for analysis in R.
 
+
+### <font color='red'> Start Group Exercise: </font>
+- Go through the following commands to generate the collated file for analysis in R. 
+- Answer the questions at the end of this section. 
+
 1. First lets make sure we are where we are supposed to be.
 
     ```bash
@@ -133,3 +138,6 @@ In this section, we will collate all of the count data into one file for analysi
     Open in excel (or excel like application), you may have to move the header column 1 cell to the right, and lets review.
 
     *Anything else worth discussing?*
+
+
+### <font color='red'> End Group Exercise </font>

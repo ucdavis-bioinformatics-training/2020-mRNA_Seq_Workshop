@@ -6,6 +6,8 @@
 
 ## We first need to index the reference (In this case the transcriptome)
 
+
+
 1. First lets make sure we are where we are supposed to be and that the References directory is available.
 
     ```bash

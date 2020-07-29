@@ -1,5 +1,5 @@
 # Alignment to Read Counts & Visualization in IGV
-
+1. Initial Setup
 1. Mapping vs Assembly
 2. Aligners/Mappers
 3. Mapping against the genome vs transcriptome
@@ -9,6 +9,8 @@
 7. Quality Assurance - Mapping statistics as QA/QC.
 
 ---
+## Initial Setup
+
 *This document assumes [preproc htstream](./preproc_htstream.md) has been completed.*
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
 ```
@@ -21,18 +23,18 @@ cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
 
 ```bash
-ln -s /share/biocore/workshops/2020_mRNAseq_July/References/star.overlap100.gencode.M25 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
+rm -rf  /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References
+ln -s /share/biocore/workshops/2020_mRNAseq_July/References/ /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
 ```
 
+---
 ## Mapping vs Assembly
 
-**Given sequence data**,
-
-*Assembly* seeks to put together the puzzle without knowing what the picture is.
+**Assembly** seeks to put together the puzzle without knowing what the picture is.
 
 - The focus is on the pieces, how they fit together.
 
-*Mapping* (or alignment to a reference) tries to put together the puzzle pieces directly onto an image of the picture._
+**Mapping** (or alignment to a reference) tries to put together the puzzle pieces directly onto an image of the picture._
 - The focus is on the puzzle, regions of the puzzle that contain certain characteristics (ex. what background) that will help you place the piece onto the puzzle.  
 - In mapping the question is more, given a small chunk of sequence, where in the genome did this sequence most likely come from.
 - The goal then is to find the match(es) with either the “best” edit distance (smallest difference), or all matches with edit distance less than max edit distance. Main issues are:
@@ -75,6 +77,7 @@ In RNAseq data, you must also consider effect of splice junctions, reads may spa
 
 <iframe width="80%" src="https://www.youtube.com/embed/_asGjfCTLNE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+---
 ## Aligners/Mappers
 Many [alignment algorithms](https://en.wikipedia.org/wiki/List_of_sequence_alignment_software
 ) to choose from. Examples include:
@@ -96,6 +99,7 @@ Many [alignment algorithms](https://en.wikipedia.org/wiki/List_of_sequence_align
 * Blazing FAST and can run on most laptops
 * Experience suggests differences between “traditional” mappers are in the low abundance genes.
 
+---
 ## Mapping against the genome vs transcriptome
 
 May seem intuitive to map RNAseq data to transcriptome, but it is not that simple.
@@ -115,6 +119,7 @@ Genome sequence fasta files and annotation (gff, gtf) files go together! These s
 * Annotation file should be GTF (preferred), and should be the most comprehensive you can find.
   * Chromosome names in the GTF must match those in the fasta file (they don’t always do).
 
+---
 ## Counting reads as a proxy for gene expression
 
 The more you can count (and HTS sequencing systems can count a lot) the better the measure of copy number for even rare transcripts in a population.
@@ -165,7 +170,7 @@ ENSMUSG00000104017	0	0	0
 Choose the appropriate column given the library preparation characteristics and generate a matrix expression table, columns are samples, rows are genes.
 
 
-=======
+---
 ## Alignments
 
 1. We are now ready to try an alignment:
@@ -193,7 +198,7 @@ Choose the appropriate column given the library preparation characteristics and 
 1. Then run the star commands
 
     ```bash
-    module load star
+    module load star/2.7.0e
     STAR \
     --runThreadN 8 \
        --genomeDir ../References/star.overlap100.gencode.M25 \
@@ -204,7 +209,7 @@ Choose the appropriate column given the library preparation characteristics and 
        --readFilesIn mouse_110_WT_C_R1.fastq.gz mouse_110_WT_C_R2.fastq.gz
     ```
 
-    In the command, we are telling star to count reads on a gene level ('--quantMode GeneCounts'), the prefix for all the output files will be SampleAC1.streamed_, the command to unzip the files (zcat), and finally, the input file pair.
+    In the command, we are telling star to count reads on a gene level ('--quantMode GeneCounts'), the prefix for all the output files will be mouse_110_WT_C.streamed_, the command to unzip the files (zcat), and finally, the input file pair.
 
     Once finished please 'exit' the srun session. You'll know you were successful when your back on tadpole
 
@@ -236,7 +241,7 @@ Choose the appropriate column given the library preparation characteristics and 
     cp -r /share/biocore/workshops/2020_mRNAseq_July/HTS_testing/mouse_110_WT_C_R1_Aligned.sortedByCoord.out.bam* /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/HTS_testing
     ```
 
-2. Transfer SampleAC1.streamed_Aligned.sortedByCoord.out.bam and SampleAC1.streamed_Aligned.sortedByCoord.out.bam (the index file) to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work].
+2. Transfer mouse_110_WT_C.streamed_Aligned.sortedByCoord.out.bam and mouse_110_WT_C.streamed_Aligned.sortedByCoord.out.bam (the index file) to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work].
 
     In Mac/Linux, Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole**. Replace [your_username] with your username
     ```bash
@@ -309,7 +314,12 @@ Choose the appropriate column given the library preparation characteristics and 
     <img src="alignment_figures/index_igv17.png" alt="index_igv17" width="80%" style="border:5px solid #ADD8E6;"/>
 
 
+---
 ## Running STAR on the experiment
+### <font color='red'> Start Group Exercise: </font>
+- work through Running STAR on all samples
+- work through QA/QC of the experiment
+- complete the questions at the end
 
 1. We can now run STAR across all samples on the real data using a SLURM script, [star.slurm](../scripts/star.slurm), that we should take a look at now.
 
@@ -319,7 +329,8 @@ Choose the appropriate column given the library preparation characteristics and 
     less star.slurm
     ```
 
-    <div class="script">#!/bin/bash
+    <pre class="prettyprint"><code class="language-py" style="background-color:333333">#!/bin/bash
+    
     #SBATCH --job-name=star # Job name
     #SBATCH --nodes=1
     #SBATCH --ntasks=8
@@ -331,22 +342,22 @@ Choose the appropriate column given the library preparation characteristics and 
     #SBATCH --array=1-22
     #SBATCH --output=slurmout/star_%A_%a.out # File to which STDOUT will be written
     #SBATCH --error=slurmout/star_%A_%a.err # File to which STDERR will be written
-
+    
     start=`date +%s`
     echo $HOSTNAME
     echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-
+    
     sample=`sed "${SLURM_ARRAY_TASK_ID}q;d" samples.txt`
-    REF="References/star.overlap100.gencode.M25"
-
+    REF="References/star_2.7.3a_index_GRCm38.p6"
+    
     outpath='02-STAR_alignment'
     [[ -d ${outpath} ]] || mkdir ${outpath}
     [[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
-
+    
     echo "SAMPLE: ${sample}"
-
+    
     module load star
-
+    
     call="STAR
          --runThreadN 8 \
          --genomeDir $REF \
@@ -356,14 +367,14 @@ Choose the appropriate column given the library preparation characteristics and 
          --quantMode GeneCounts \
          --outFileNamePrefix ${outpath}/${sample}/${sample}_ \
          > ${outpath}/${sample}/${sample}-STAR.stdout 2> ${outpath}/${sample}/${sample}-STAR.stderr"
-
+    
     echo $call
     eval $call
-
+    
     end=`date +%s`
     runtime=$((end-start))
     echo $runtime
-    </div>
+    </code></pre>
 
 
 When you are done, type "q" to exit.
@@ -381,6 +392,8 @@ When you are done, type "q" to exit.
     squeue -u msettles  # use your username
     ```
 
+
+---
 ## Quality Assurance - Mapping statistics as QA/QC.
 
 1. Once your jobs have finished successfully, check the error and out logs like we did in the previous exercise.
@@ -392,19 +405,46 @@ When you are done, type "q" to exit.
     wget https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/software_scripts/scripts/star_stats.sh
     bash star_stats.sh
     ```
+    
+    <pre class="prettyprint"><code class="language-py" style="background-color:333333">#!/bin/bash
 
-2. Transfer summary_star_alignments.txt to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
+    echo -en "sample_names" > names.txt
+    echo -en "total_in_feature\t" > totals.txt
+    cat 02-STAR_alignment/*/*ReadsPerGene.out.tab | head -4 | cut -f1 > stats.txt
+    cat samples.txt | while read sample; do
+        echo ${sample}
+        echo -en "\t${sample}" >> names.txt
+        head -4 02-STAR_alignment/${sample}/${sample}_ReadsPerGene.out.tab | cut -f4 > temp1
+        paste stats.txt temp1 > temp2
+        mv temp2 stats.txt
+        tail -n +5 02-STAR_alignment/${sample}/${sample}_ReadsPerGene.out.tab | cut -f4 | \
+            perl -ne '$tot+=$_ }{ print "$tot\t"' >> totals.txt
+    done
+    echo -en "\n" >> names.txt
+    cat names.txt stats.txt totals.txt > temp1
+    mv temp1 summary_star_alignments.txt
+    rm stats.txt
+    rm names.txt
+    rm totals.txt
+    </code></pre>
+   
+
+2. Transfer `summary_star_alignments.txt` to your computer using scp or winSCP, or copy/paste from cat [sometimes doesn't work],  
 
     In Mac/Linux, Windows users use WinSCP. In a new shell session on my laptop. **NOT logged into tadpole**. Replace my [your_username] with your username
 
     ```bash
-    mkdir ~/rnaseq_workshop
+    mkdir -p ~/rnaseq_workshop
     cd ~/rnaseq_workshop
     scp [your_username]@tadpole.genomecenter.ucdavis.edu:/share/workshop/mrnaseq_workshop/[your_username]/rnaseq_example/summary_star_alignments.txt .
     ```
 
-    Its ok of the mkdir command fails ("File exists") because we aleady created the directory earlier.
 
-    Open in excel (or excel like application), and lets review.
+**Questions:**
+- Look at the script `star.slurm`. What does the `array=1-22` mean, why is it used, and what is the usage of it in the script itself?
+- Look through the files in an output directory and check out what is present and discuss what each of them mean. (for example: `cd /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/02-STAR_alignment/mouse_110_WT_C` ) 
+- Come up with a brief command you might use to check that all of the sample alignments using STAR have a reasonable output and/or did not produce any errors.
+- Open `summary_star_alignments.txt` in excel (or excel like application), and review. The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
 
-    The table that this script creates ("summary_star_alignments.txt") can be pulled to your laptop via 'scp', or WinSCP, etc., and imported into a spreadsheet. Are all samples behaving similarly? Discuss ...
+
+### <font color='red'> Stop Group Exercise </font>
