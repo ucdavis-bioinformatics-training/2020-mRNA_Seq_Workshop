@@ -25,8 +25,8 @@ cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/
 **IF** will need to run this command to update some reference changes our group made last night.
 
 ```bash
-rm -rf  /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References
-ln -s /share/biocore/workshops/2020_mRNAseq_July/References /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+rm -rf  /share/biocore/workshops/2020_mRNAseq/References/star_2.7.3a_index_GRCm38.p6
+ln -s /share/biocore/workshops/2020_mRNAseq/References/star_2.7.3a_index_GRCm38.p6 /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/References/.
 ```
 
 ---
