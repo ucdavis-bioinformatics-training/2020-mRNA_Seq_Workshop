@@ -108,16 +108,17 @@ In this section, we will collate all of the count data into one file for analysi
     ```
 
     <div class="output">msettles@gigantor:/share/workshop/mrnaseq_workshop/msettles/rnaseq_example$ head 03-Counts/rnaseq_workshop_counts.txt
-    mouse_110_WT_C	SampleAC2	SampleAC3	SampleAC4	SampleAD1	SampleAD2	SampleAD3	SampleAD4	SampleBC1	SampleBC2	SampleBC3	SampleBC4	SampleBD1	SampleBD2	SampleBD3	SampleBD4
-    ENSG00000223972.5	3	2	1	1	0	0	0	0	2	0	0	0	0	5	0	0
-    ENSG00000227232.5	21	7	15	10	7	9	15	26	6	10	6	6	14	10	4	4
-    ENSG00000278267.1	1	2	1	1	0	1	2	4	0	0	0	0	0	0	1	0
-    ENSG00000243485.5	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0
-    ENSG00000284332.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-    ENSG00000237613.2	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-    ENSG00000268020.3	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-    ENSG00000240361.2	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
-    ENSG00000186092.6	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+
+    mouse_110_WT_C	mouse_110_WT_NC	mouse_148_WT_C	mouse_148_WT_NC	mouse_158_WT_C	mouse_158_WT_NC	mouse_183_KOMIR150_C	mouse_183_KOMIR150_NC	mouse_198_KOMIR150_C	mouse_198_KOMIR150_NC	mouse_206_KOMIR150_C	mouse_206_KOMIR150_NC	mouse_2670_KOTet3_C	mouse_2670_KOTet3_NC	mouse_7530_KOTet3_C	mouse_7530_KOTet3_NC	mouse_7531_KOTet3_C	mouse_7532_WT_NC	mouse_H510_WT_C	mouse_H510_WT_NC	mouse_H514_WT_C	mouse_H514_WT_NC
+    ENSMUSG00000102693.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+    ENSMUSG00000064842.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+    ENSMUSG00000051951.5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+    ENSMUSG00000102851.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+    ENSMUSG00000103377.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+    ENSMUSG00000104017.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+    ENSMUSG00000103025.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+    ENSMUSG00000089699.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+    ENSMUSG00000103201.1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
     </div>
 
     And now you have a raw counts file that has a count for every gene, per sample. You will use this file for the next step, which is analysis in R.

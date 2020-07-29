@@ -396,7 +396,7 @@ wget https://github.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/r
 
 ### Why screen for phiX?
 
-(PhiX Control v3)[https://www.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html] is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
+[PhiX Control v3](https://www.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html) is a common control in Illumina runs, and facilities may not tell you if/when PhiX has been spiked in. Since it does not have a barcode, in theory should not be in your data.
 
 However:
 * When we know PhiX has been spiked in, we find sequence every time.
