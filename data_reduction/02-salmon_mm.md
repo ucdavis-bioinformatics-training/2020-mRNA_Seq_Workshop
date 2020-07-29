@@ -120,12 +120,12 @@ cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/
     salmon quant \
     --threads 8 \
     --index ../References/salmon_gencode.vM25.index \
-    	--libType A \
-    	--validateMappings \
-    	--geneMap ../References/gencode.vM25.annotation.gtf \
-    	--output mouse_110_WT_C.salmon \
-    -1 mouse_110_WT_C_R1.fastq.gz \
-    	-2 mouse_110_WT_C_R2.fastq.gz
+        --libType A \
+        --validateMappings \
+        --geneMap ../References/gencode.vM25.annotation.gtf \
+        --output mouse_110_WT_C.salmon \
+        -1 mouse_110_WT_C_R1.fastq.gz \
+        -2 mouse_110_WT_C_R2.fastq.gz
     ```
 
     In the command, we are telling salmon to quantify reads with libtype 'auto' ([libtype](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype)) on a gene level ('--geneMap'), the folder for all the output files will be mouse_110_WT_C.salmon, and finally, the input file pair.
