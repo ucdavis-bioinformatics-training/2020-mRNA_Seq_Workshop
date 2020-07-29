@@ -5,7 +5,7 @@ This document assumes [alignment](./alignment.md) has been completed.
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can copy over a completed copy
 
 ```bash
-cp -r /share/biocore/workshops/2020_mRNAseq_July/02-STAR_alignment /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
+cp -r /share/biocore/workshops/2020_mRNAseq_July/02-STAR_alignment /share/workshop/mrnaseq_workshop/$USER/rnaseq-example/.
 cp  /share/biocore/workshops/2020_mRNAseq_July/summary_star_alignments.txt /share/workshop/mrnaseq_workshop/$USER/rnaseq_example/.
 ```
 
@@ -13,8 +13,8 @@ In this section, we will collate all of the count data into one file for analysi
 
 
 ### <font color='red'> Start Group Exercise: </font>
-- Go through the following commands to generate the collated file for analysis in R. 
-- Answer the questions at the end of this section. 
+- Go through the following commands to generate the collated file for analysis in R.
+- Answer the questions at the end of this section.
 
 1. First lets make sure we are where we are supposed to be.
 
@@ -136,7 +136,7 @@ In this section, we will collate all of the count data into one file for analysi
 
 **Questions**:
 1. Open `rnaseq_workshop_counts.txt` in excel (or excel like application), you may have to move the header column 1 cell to the right, and review as a group. *Anything else worth discussing?*
-1. Based on `head 02-STAR_alignment/mouse_110_WT_C/mouse_110_WT_C_ReadsPerGene.out.tab` give some reasoning as to why we are choosing the column we are choosing when creating the counts table. 
+1. Based on `head 02-STAR_alignment/mouse_110_WT_C/mouse_110_WT_C_ReadsPerGene.out.tab` give some reasoning as to why we are choosing the column we are choosing when creating the counts table.
 
 
 ### <font color='red'> End Group Exercise </font>
