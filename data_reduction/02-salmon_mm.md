@@ -122,7 +122,7 @@ cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/
     --index ../References/salmon_gencode.vM25.index \
     	--libType A \
     	--validateMappings \
-    	--geneMap ../References/gencode.vM25.primary_assembly.annotation.gtf \
+    	--geneMap ../References/gencode.vM25.annotation.gtf \
     	--output mouse_110_WT_C.salmon \
     -1 mouse_110_WT_C_R1.fastq.gz \
     	-2 mouse_110_WT_C_R2.fastq.gz
@@ -161,7 +161,7 @@ cp -r /share/biocore/workshops/2020_mRNAseq_July/01-HTS_Preproc /share/workshop/
     outdir="02-Salmon_alignment"
     sampfile="samples.txt"
     REF="References/salmon_gencode.vM25.index"
-    GTF="References/gencode.vM25.primary_assembly.annotation.gtf"
+    GTF="References/gencode.vM25.annotation.gtf"
 
     SAMPLE=`head -n ${SLURM_ARRAY_TASK_ID} $sampfile | tail -1`
     R1="01-HTS_Preproc/$SAMPLE/${SAMPLE}_R1.fastq.gz"

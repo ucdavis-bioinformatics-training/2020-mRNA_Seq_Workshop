@@ -11,7 +11,6 @@
 ---
 ## Initial Setup
 
-
 *This document assumes [preproc htstream](./preproc_htstream.md) has been completed.*
 **IF** for some reason it didn't finish, is corrupted or you missed the session, you can link over a completed copy
 ```
