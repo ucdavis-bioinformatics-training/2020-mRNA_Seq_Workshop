@@ -199,7 +199,7 @@ What does stranded and unstranded mean? Which is better and why? [Stranded vs Un
 1. Then run the star commands
 
     ```bash
-    module load star/2.7.0e
+    module load star
     STAR \
     --runThreadN 8 \
        --genomeDir ../References/star.overlap100.gencode.M25 \
