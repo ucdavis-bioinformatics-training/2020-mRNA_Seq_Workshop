@@ -132,7 +132,7 @@ Create Differential Gene Expression List Object (DGEList) object
 ```r
 d0 <- DGEList(counts)
 ```
-  
+
 **1a\.** Read in Annotation
 
 ```r
@@ -242,8 +242,8 @@ table(metadata$group)
 ```
 
 ```
-## 
-##  KOMIR150.C    KOTet3.C        WT.C KOMIR150.NC   KOTet3.NC       WT.NC 
+##
+##  KOMIR150.C    KOTet3.C        WT.C KOMIR150.NC   KOTet3.NC       WT.NC
 ##           3           3           5           3           2           6
 ```
 
@@ -296,16 +296,16 @@ d0$samples
 
 **Note:** calcNormFactors doesn't _normalize_ the data, it just calculates normalization factors for use downstream.
 
-## 3. FilteHScoreg out genes
+## 3. Filtering genes
 
 We filter genes based on non-experimental factors to reduce the number of genes/tests being conducted and therefor do not have to be accounted for in our transformation or multiple testing correction. Commonly we try to remove genes that are either a) unexpressed, or b) unchanging (low-variability).
 
 Common filters include:
 1. to remove genes with a max value (X) of less then Y.
-2. to remove genes that are less than X normalized read counts (cpm) across a certain number of samples. Ex: rowSums(cpms <=1) < 3 , require at least 1 cpm in at least 3 samples to keep.
+2. to remove genes that are less than X normalized read counts (cpm) across a certain number of samples. Ex: rowSums(cpms <=1) < 2 , require at least 1 cpm in at least 2 samples to keep.
 3. A less used filter is for genes with minimum variance across all samples, so if a gene isn't changing (constant expression) its inherently not interesting therefor no need to test.
 
-Here we will filter low-expressed genes, remove any row (gene) whose max value (for the row) is less tha cutoff (3).
+Here we will filter low-expressed genes, remove any row (gene) whose max value (for the row) is less than the cutoff (2).
 
 ```r
 cutoff <- 2
@@ -470,7 +470,7 @@ tmp <- eBayes(tmp)
 
 The TopTable. Ajust by Benjamini & Hochberg (BH), or its 'alias' fdr. "[Controlling the false discovery rate: a practical and powerful approach to multiple testing](http://www.jstor.org/stable/2346101).
 
-here `n=Inf` says to produce the topTable for **all** genes. 
+here `n=Inf` says to produce the topTable for **all** genes.
 
 ```r
 top.table <- topTable(tmp, adjust.method = "BH", sort.by = "P", n = Inf)
@@ -498,7 +498,7 @@ length(which(top.table$adj.P.Val < 0.05))
 
 ## 8. Check your results for confidence.
 
-You've conducted an experiment, you've seen a phenotype. Now check which genes are most deferentially expressed (show the top 50)? Look up these top genes, their description and ensure they relate to your experiment/phenotype. 
+You've conducted an experiment, you've seen a phenotype. Now check which genes are most deferentially expressed (show the top 50)? Look up these top genes, their description and ensure they relate to your experiment/phenotype.
 
 ```r
 head(top.table, 50)
@@ -1404,20 +1404,20 @@ sessionInfo()
 ## R version 4.0.2 (2020-06-22)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Catalina 10.15.6
-## 
+##
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
-## 
+##
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
+##
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
+##
 ## other attached packages:
 ## [1] gplots_3.0.4       RColorBrewer_1.1-2 edgeR_3.30.3       limma_3.44.3      
-## 
+##
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_1.0.5         locfit_1.5-9.4     lattice_0.20-41    gtools_3.8.2      
 ##  [5] digest_0.6.25      bitops_1.0-6       grid_4.0.2         magrittr_1.5      
