@@ -485,7 +485,7 @@ vennDiagram(results)
 
 ## Download the Enrichment Analysis R Markdown document
 ```{r download1, eval=FALSE}
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/data_analysis/enrichment.Rmd", "enrichment.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/data_analysis/enrichment_mm.Rmd", "enrichment.Rmd")
 ```
 
 ```{r}
