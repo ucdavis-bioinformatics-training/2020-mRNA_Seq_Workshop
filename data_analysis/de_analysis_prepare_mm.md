@@ -67,7 +67,7 @@ library(RColorBrewer)
 In the R console run the following command
 
 ```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/data_analysis/DE_Analysis.Rmd", "DE_Analysis_mm.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/data_analysis/DE_Analysis_mm.Rmd", "DE_Analysis_mm.Rmd")
 ```
 
 ## Download the data file for the workshop document and preview/open it

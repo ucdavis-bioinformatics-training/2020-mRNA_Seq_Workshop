@@ -70,13 +70,13 @@ navigation:
   - title: Prepare R for data analysis
     url: data_analysis/de_analysis_prepare_mm
   - title: Annotation from BioMart
-    url: data_analysis/annotation
+    url: data_analysis/annotation_mm
   - title: Differential Expression Analysis
     url: data_analysis/DE_Analysis_mm
   - title: Pathway Analysis
-    url: data_analysis/enrichment
+    url: data_analysis/enrichment_mm
   - title: Comparison between STAR and Salmon
-    url: data_analysis/compare_star_salmon
+    url: data_analysis/compare_star_salmon_mm
 
 
   - heading: ETC

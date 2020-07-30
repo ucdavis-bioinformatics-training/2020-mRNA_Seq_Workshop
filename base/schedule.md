@@ -92,10 +92,18 @@ As the workshop progresses the schedule may be updated
 **10:15 am**   15 minute break   
 **10:30 am**  Intro/Adv R  
 **11:00 am**    _Hands on_      
-**11:45 am**  Recap R  
+**11:45 am**  [Prepare R for DE](data_analysis/de_analysis_prepare_mm)   
 **12:00 pm** Lunch hour  
-**1:00 pm** Experimental Design  
-**2:00 pm** DE Analysis
+**1:00 pm** [Experimental Design](https://raw.githubusercontent.com/ucdavis-bioinformatics-training/ucdavis-bioinformatics-training.presentations/master/mrna/mRNAseq-expDesign_May_2020.pdf)     
+**2:00 pm** [Retreiving Annotation](data_analysis/annotation_mm)     
+**2:20 pm**    _Hands on_      
+**2:45 pm**  15 minute break      
+**3:00 pm**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
+**3:20 am**    _Hands on_      
+**3:40 pm**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
+**4:00 am**    _Hands on_      
+**4:20 pm**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
+**4:30 am**    _Hands on_      
 **4:45 pm** Recap, Homework, and Extra  
 **5:00 pm**  Zoom session ends  
 
