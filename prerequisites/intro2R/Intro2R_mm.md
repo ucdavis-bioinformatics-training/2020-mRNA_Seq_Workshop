@@ -7,22 +7,6 @@ output:
     keep_md: TRUE
 ---
 
-
-
-```r
-library(knitr)
-
-colFmt = function(x,color){
-  outputFormat = opts_knit$get("rmarkdown.pandoc.to")
-  if(outputFormat == 'latex')
-    paste("\\textcolor{",color,"}{",x,"}",sep="")
-  else if(outputFormat == 'html')
-    paste("<font color='",color,"'>",x,"</font>",sep="")
-  else
-    x
-}
-```
-
 ---
 
 Topics covered in this introduction to R
