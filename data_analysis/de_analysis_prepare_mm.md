@@ -11,7 +11,7 @@ Learn more about [packrat](https://rstudio.github.io/packrat/)
 
 ## Install the needed R packages
 
-Set some options and make sure the packages edgeR, gplots, RColorBrewer, topGO, KEGGREST, Rgraphviz and org.Hs.eg.db are installed (if not install it), and then load
+Set some options and make sure the packages edgeR, gplots, RColorBrewer, topGO, KEGGREST, Rgraphviz and org.Mm.eg.db are installed (if not install it), and then load
 
 In the R console run the following commands
 ```r
