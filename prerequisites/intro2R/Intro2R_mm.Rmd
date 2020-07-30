@@ -1,0 +1,542 @@
+---
+title: "R for Biologist - An Introduction to R"
+author: "Bioinformatics Core"
+date: "`r format(Sys.Date())`"
+output:
+  html_document:
+    keep_md: TRUE
+---
+
+
+```{r setup}
+library(knitr)
+
+colFmt = function(x,color){
+  outputFormat = opts_knit$get("rmarkdown.pandoc.to")
+  if(outputFormat == 'latex')
+    paste("\\textcolor{",color,"}{",x,"}",sep="")
+  else if(outputFormat == 'html')
+    paste("<font color='",color,"'>",x,"</font>",sep="")
+  else
+    x
+}
+```
+
+---
+
+Topics covered in this introduction to R
+====================================================
+1. Basic concepts
+2. Basic data types in R
+3. Import and export data in R
+4. Functions in R
+5. Basic statistics in R
+6. Simple data visulization in R
+7. Install packages in R
+8. Save data in R session
+
+
+---
+
+Topic 1. Basic concepts
+====================================================
+
+There are three concepts that we should be familiar with before working in R:
+
+* Operators
+* Functions
+* Variables
+
+### Operators
+
+```{r operators}
+library(knitr)
+library(kableExtra)
+kable(data.frame(Operator=paste("<-", " =", sep=","), Description="Assignment", stringsAsFactors=F), align='c', caption="Assignment Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
+
+kable(data.frame(Operator=c("+", "-", "*", "/", "^", "%%", "%/%"), Description=c("Addition", "Subtraction", "Multiplication", "Division", "Exponent", "Modulus", "Integer Division"), stringsAsFactors=F), align='c', caption="Arithmetic Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
+
+kable(data.frame(Operator=c("<", ">", "<=", ">=", "==", "!="), Description=c("Less than", "Greater than", "Less than or equal to", "Greater than or equal to", "Equal to", "Not equal to"), stringsAsFactors=F), align='c', caption="Relational Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
+
+kable(data.frame(Operator=c("!", "&", "&&", "|", "||"), Description=c("Logical NOT", "Element-wise logical AND", "Logical AND", "Element-wise logical OR", "Logical OR"), stringsAsFactors=F), align='c', caption="Logical Operators in R") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
+```
+
+### Functions
+
+Functions are essential in all programming languages. A function takes zero or more parameters and return a result. The way to use a function in R is:
+
+function.name(parameter1=value1, ...)
+```{r functions}
+read.delim("rnaseq_workshop_counts_mm.txt", row.names = 1)
+```
+
+```{r}
+kable(head(read.delim("rnaseq_workshop_counts_mm.txt", row.names = 1)))  %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
+```
+
+### Variables
+
+A variable is a named storage. The name of a variable can have letters, numbers, dot and underscore. However, a valid variable name cannot start with a underscore or a number, or start with a dot that is followed by a number.
+
+Using an assignment operator, we can store the results of a function inside a variable.
+
+```{r assignment}
+counts <- read.delim("rnaseq_workshop_counts_mm.txt", row.names = 1)
+```
+
+##### CHALLENGE
+
+Which of the following assignments will work? Do you notice anything different about the behavior of any of these variables?
+
+* a <- 1
+* b = 2
+* .c <- 3
+* 1a <- 4
+* .1a <- 5
+* a.1 <- 6
+
+---
+
+Topic 2. Basic data types in R
+====================================================
+
+
+```{r datatypes}
+kable(data.frame(Type=c("Numeric", "Character", "Logical", "Factor"),
+                 Example=c("3, 3e-2", "\"ENSMUSG00000102693\"",
+                           "TRUE, FALSE", "any categorical variable"),
+                 stringsAsFactors=F),
+      align='c', caption="Basic Data Types") %>% kable_styling(bootstrap_options="striped", full_width=F, position="left")
+```
+
+### Simple variables: variables that have a numeric value, a character value (such as a string), or a logical value (True or False)
+
+We can check the type of data stored within a variable using the class function.
+```{r class}
+a <- 1
+class(a)
+a <- "ENSMUSG00000102693"
+class(a)
+```
+
+##### CHALLENGE
+
+Try the following assignments. What is the class of each of the variables produced? Why? What is happening when converting between types using the as.numeric, as.logical, and as.character functions?
+
+* a <- 150
+* b <- 3e-2
+* c <- "ENSMUSG00000102693"
+* d <- TRUE
+* e <- a < 1
+* f <- b < 1
+* g <- is.numeric(a)
+* h <- is.character(a)
+* i <- as.numeric(d)
+* j <- as.character(a)
+* l <- as.logical(b)
+* m <- as.numeric(f)
+* n <- as.logical(0)
+
+### Vectors: a vector is a combination of multiple values(numeric, character or logical) in the same object. A vector is created using the function c() (for concatenate).
+
+The values in the vector must all be of the same type.
+```{r vectors}
+gene_ids <- c("ENSMUSG00000102693", "ENSMUSG00000064842", "ENSMUSG00000051951")
+gene_ids
+of_interest <- c(TRUE, FALSE, FALSE)
+of_interest
+length(of_interest)
+```
+
+Elements of a vector can be named by providing names to an existing vector, or assigning names when creating a vector.
+```{r}
+names(of_interest) <- gene_ids
+of_interest
+of_interest <- c(ENSMUSG00000102693 = TRUE, ENSMUSG00000064842 = FALSE, ENSMUSG00000051951 = FALSE)
+of_interest
+```
+
+Elements of a vector can be accessed by index, or by name if it is a named vector. The element or elements to be accessed are specified using square brackets.
+```{r}
+of_interest[2]
+of_interest["ENSMUSG00000064842"]
+of_interest[c(1,3)]
+of_interest[c("ENSMUSG00000102693", "ENSMUSG00000051951")]
+```
+
+Additionally, a subset of a vector can be selected using a logical vector.
+```{r}
+gene_ids[of_interest]
+```  
+
+
+##### `r colFmt("NOTE: a vector can only hold elements of the same type.", 'red')`  
+
+### Factors: a factor represents categorical or groups in data. The function factor() can be used to create a factor variable.
+
+```{r}
+treatment <- factor(c(1,2,1,2))
+treatment
+class(treatment)
+```
+
+In R, categories are called factor levels. The function levels() can be used to access the factor levels.
+
+```{r}
+levels(treatment)
+```
+
+Factor levels can also be changed by assigning new levels to a factor.
+
+```{r}
+levels(treatment) <- c("A", "C")
+treatment
+```
+
+Change the order of levels.
+
+```{r}
+levels(treatment) <- c("C", "A")
+treatment
+```
+
+By default, the order of factor levels is taken in the order of numeric or alphabetic.
+
+```{r}
+treatment <- factor(c("C", "A", "C", "A"))
+treatment
+```
+
+The factor levels can be specified when creating the factor, if the order does not follow the default rule.
+
+```{r}
+treatment <- factor(c("C", "A", "C", "A"), levels=c("C", "A"))
+treatment
+```
+
+If you want to know the number of individuals at each levels, there are two functions.
+
+```{r}
+summary(treatment)
+```
+
+```{r}
+table(treatment)
+```
+
+### Matrices: A matrix is like a speadsheet containing multiple rows and columns. It is used to combine vectors of the same type.
+
+```{r}
+col1 <- c(1,0,0,0)
+col2 <- c(0,1,0,0)
+col3 <- c(0,0,1,0)
+
+my_matrix <- cbind(col1, col2, col3)
+my_matrix
+
+rownames(my_matrix) <- c("row1", "row2", "row3", "row4")
+my_matrix
+
+dim(my_matrix) # matrix dimensions
+nrow(my_matrix)
+ncol(my_matrix)
+
+t(my_matrix) # transpose
+```
+
+Accessing elements of a matrix is done in similar ways to accessing elements of a vector.
+
+```{r}
+my_matrix[1,3]
+my_matrix["row1", "col3"]
+```
+
+```{r}
+my_matrix[1,]
+my_matrix[,3]
+```
+
+```{r}
+my_matrix[col3 > 0,]
+```
+
+Matrices may be used in calculations. We will not be focusing on calculations or operations on matrices today, but you may want to explore the results of the code below later.
+
+```{r}
+my_matrix * 3
+log10(my_matrix)
+```
+
+Total of each row.
+```{r}
+rowSums(my_matrix)
+```
+
+Total of each column.
+```{r}
+colSums(my_matrix)
+```
+
+It is also possible to use the function apply() to apply any statistical functions to rows/columns of matrices. The advantage of using apply() is that it can take a function created by user.
+
+The simplified format of apply() is as following:
+
+apply(X, MARGIN, FUN)
+
+X: data matrix
+MARGIN: possible values are 1 (for rows) and 2 (for columns)
+FUN: the function to apply on rows/columns
+
+We can calculate the mean or the median of each row with the following:
+
+```{r}
+apply(my_matrix, 1, mean)
+apply(my_matrix, 1, median)
+```
+
+##### CHALLENGE
+
+How would you calculate the mean and median of each column, instead?
+
+### Data frames: a data frame is like a matrix but can have columns with different types (numeric, character, logical).
+
+A data frame can be created using the function data.frame(), from new or previously defined vectors.
+
+```{r}
+genes <- data.frame(ensembl = gene_ids, interest = of_interest)
+genes
+genes <- data.frame(ensembl = c("ENSMUSG00000102693", "ENSMUSG00000064842", "ENSMUSG00000051951"), interest = c(TRUE, FALSE, FALSE))
+genes
+is.data.frame(genes)
+```
+
+To obtain a subset of a data frame can be done in similar ways to vectors and matrices: by index, by row or column names, or by logical values.
+
+```{r}
+genes[1,]
+genes[, "ensembl"]
+genes[of_interest,]
+```
+
+A column of a data frame can be specified using the "$".
+```{r}
+genes$ensembl
+genes[genes$interest,]
+```
+
+Data frames are easily extended using the "$" as well.
+
+```{r}
+genes$name <- c("4933401J01Rik", "Gm26206", "Xkr4")
+genes
+```
+
+When we used the function read.delim() at the very beginning, we created a data frame.
+
+```{r}
+class(counts)
+```
+##### CHALLENGE
+
+What type of data is stored in counts? Can you access a subset of that data? Can you add a column to counts? Explore counts using the following functions:
+* rownames()
+* colnames()
+* class()
+
+---
+
+Topic 3. Import and export data in R
+====================================================
+
+R base function read.table() is a general function that can be used to read a file in table format. There are also several variants of read.table that can be used to make reading a file even easier, like read.delim, which we used above to create counts. The data will be imported as a data frame.
+
+```{r}
+# To read a local file, provide read.table with the path for to file location (same as taught in the command line session). Here we assume rnaseq_workshop_counts_mm.txt is in our current working directory
+counts2 <- read.table(file="rnaseq_workshop_counts_mm.txt", sep="\t", header=T, stringsAsFactors=F)
+
+# To read a file from the internet, provide read.table with the URL.
+counts3 <- read.table(file="https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/datasets/rnaseq_workshop_counts_mm.txt", sep="\t", header=T, stringsAsFactors=F)
+
+```
+
+Take a look at the beginning part of the data frame.
+```{r}
+head(counts2)
+
+```
+
+
+Depending on the format of the file, several variants of read.table() are available to make reading a file easier.
+
+read.csv(): for reading "comma separated value" files (.csv).
+
+read.csv2(): variant used in countries that use a comma "," as decimal point and a semicolon ";" as field separators.
+
+read.delim(): for reading "tab separated value" files (".txt"). By default, point(".") is used as decimal point.
+
+read.delim2(): for reading "tab separated value" files (".txt"). By default, comma (",") is used as decimal point.
+
+Choosing the correct function (or parameters) is important! If we use `read.csv()` to read our tab-delimited file, it becomes a mess.
+```{r}
+counts2 <- read.csv(file="rnaseq_workshop_counts_mm.txt", stringsAsFactors=F)
+
+head(counts2)
+```
+
+Since the data contained in these files is the same, we don't need to keep three copies.
+```{r}
+rm(counts2, counts3)
+```
+
+
+R base function write.table() can be used to export data to a file.
+
+```{r}
+# To write to a file called "genes.txt" in your current working directory.
+write.table(genes, file="genes.txt", sep="\t", quote=F, row.names=T, col.names=T)
+```
+
+It is also possible to export data to a csv file.
+
+write.csv()
+
+write.csv2()
+
+---
+
+Topic 4. Functions in R
+====================================================
+
+We have already used a number of functions, including read.delim, class, mean, and many others. Functions can be invoked with 0 or more arguments.
+```{r}
+# No arguments: use getwd() to find out the current working directory
+getwd()
+
+# No arguments: use ls() to list all variables in the environment
+ls()
+
+# One argument: use str() to find out information on a variable
+str(genes)
+
+# More arguments: use seq() to generate a vector of sequential numbers
+?seq # how does seq() work?
+seq(from = 2, to = 3, by = 0.1)
+seq(2, 3, 0.1) # less explicit, same result
+```  
+
+#### `r colFmt("One useful function to find out information on a variable: str().", 'red')`  
+
+---
+
+Topic 5. Basic statistics in R
+====================================================
+
+```{r}
+library(knitr)
+kable(data.frame(Description=c("Mean", "Standard deviation", "Variance", "Minimum", "Maximum", "Median", "Range of values: minimum and maximum", "Sample quantiles", "Generic function", "Interquartile range"), R_function=c("mean()", "sd()", "var()", "min()", "max()", "median()", "range()", "quantile()", "summary()", "IQR()"), stringsAsFactors=F), align='c') %>% kable_styling(bootstrap_options=c("striped", "hover", "responsive"), full_width=F, position="center")
+```
+
+Calculate the mean expression for each sample.
+
+```{r}
+apply(counts, 2, mean)
+```
+
+##### CHALLENGE
+* What is the highest number of counts for a gene in sample mouse_110_WT_C?
+* What is the range of counts for ENSMUSG00000026739?
+
+---
+
+Topic 6. Simple data visulization in R
+====================================================
+
+Scatter plot and line plot can be produced using the function plot().
+
+```{r}
+x <- c(1:50)
+y <- 1 + sqrt(x)/2
+plot(x,y)
+
+plot(x,y, type="l")
+
+# plot both the points and lines
+## first plot points
+plot(x,y)
+lines(x,y, type="l")
+## lines() can only be used to add information to a graph, while it cannot produce a graph on its own.
+
+```
+
+
+boxplot() can be used to summarize data.
+
+```{r}
+boxplot(counts, xlab="Sample ID", ylab="Counts")
+```
+
+hist() can be used to create histograms of data.
+```{r}
+hist(counts$mouse_110_WT_C)
+# use user defined break points
+hist(counts$mouse_110_WT_C, breaks=seq(0, 25000, by=50))
+# lower counts only
+hist(counts$mouse_110_WT_C, breaks=seq(0, 25000, by=5), xlim = c(0, 250))
+```
+
+```{r}
+# clear plotting device/area
+dev.off()
+```
+
+---
+
+Topic 7. Install packages in R
+====================================================
+
+Starting from Bioconductor version 3.8, the installation of packages is recommended to use BiocManager.
+
+```{r}
+#if (!requireNamespace("BiocManager"))
+#	install.packages("BiocManager")
+## install core packages
+#BiocManager::install()
+## install specific packages
+#BiocManager::install(c("ggplot2", "ShortRead"))
+```
+
+* Bioconductor has a repository and release schedule that differ from R (Bioconductor has a ‘devel’ branch to which new packages and updates are introduced, and a stable ‘release’ branch emitted once every 6 months to which bug fixes but not new features are introduced). This mismatch causes that the version detected by install.packages() is sometimes not the most recent 'release'.
+
+* A consequence of the 'devel' branch is that install.packages() sometimes points only to the 'release' repository, while users might want to have access to the leading-edge features in the 'devel' version.
+
+* An indirect consequence of Bioconductor's structured release is that packages generally have more extensive dependences with one another.
+
+
+##### `r colFmt("It is always recommended to update to the most current version of R and Bioconductor. If it is not possible and R < 3.5.0, please use the legacy approach to install Bioconductor packages", 'red')`   
+
+```{r}
+#source("http://bioconductor.org/biocLite.R")
+## install core packages
+#biocLite()
+## install specific packages
+#biocLite("RCircos")
+#biocLite(c("IdeoViz", "devtools"))
+```
+
+The R function install.packages() can be used to install packages that are not part of Bioconductor.
+
+```{r}
+#install.packages("ggplot2", repos="http://cran.us.r-project.org")
+```
+
+---
+
+Topic 8. Save data in R session
+====================================================
+
+#### To save objects in R session
+
+```{r}
+save(list=c("genes", "counts"), file="intro_20200603.RData")
+```
+
