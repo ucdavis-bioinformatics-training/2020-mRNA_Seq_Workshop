@@ -76,11 +76,11 @@ This is the the counts file generated after running [Generating Summarized Count
 
 I've also uploaded to the github repo. In the R console run the following command.
 ```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/datasets/rnaseq_workshop_counts.txt", "rnaseq_workshop_counts.txt")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/datasets/rnaseq_workshop_counts_mm.txt", "rnaseq_workshop_counts_mm.txt")
 ```
 
 ```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/datasets/ensembl_hg_100.tsv", "ensembl_hg_100.tsv")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/datasets/ensembl_mm_100.tsv", "ensembl_mm_100.tsv")
 ```
 
 ### Edit the file YAML portion
