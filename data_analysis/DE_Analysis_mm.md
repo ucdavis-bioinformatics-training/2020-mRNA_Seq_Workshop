@@ -141,7 +141,7 @@ dim(anno)
 ```
 
 ```
-## [1] 56305    10
+## [1] 144778     10
 ```
 
 ```r
@@ -149,13 +149,13 @@ head(anno)
 ```
 
 ```
-##       Gene.stable.ID Gene.stable.ID.version
-## 1 ENSMUSG00000064372   ENSMUSG00000064372.1
-## 2 ENSMUSG00000064371   ENSMUSG00000064371.1
-## 3 ENSMUSG00000064370   ENSMUSG00000064370.1
-## 4 ENSMUSG00000064369   ENSMUSG00000064369.1
-## 5 ENSMUSG00000064368   ENSMUSG00000064368.1
-## 6 ENSMUSG00000064367   ENSMUSG00000064367.1
+##       Gene.stable.ID Gene.stable.ID.version Gene.name
+## 1 ENSMUSG00000064372   ENSMUSG00000064372.1     mt-Tp
+## 2 ENSMUSG00000064371   ENSMUSG00000064371.1     mt-Tt
+## 3 ENSMUSG00000064370   ENSMUSG00000064370.1   mt-Cytb
+## 4 ENSMUSG00000064369   ENSMUSG00000064369.1     mt-Te
+## 5 ENSMUSG00000064368   ENSMUSG00000064368.1    mt-Nd6
+## 6 ENSMUSG00000064367   ENSMUSG00000064367.1    mt-Nd5
 ##                                                                  Gene.description
 ## 1         mitochondrially encoded tRNA proline [Source:MGI Symbol;Acc:MGI:102478]
 ## 2       mitochondrially encoded tRNA threonine [Source:MGI Symbol;Acc:MGI:102473]
@@ -163,20 +163,20 @@ head(anno)
 ## 4   mitochondrially encoded tRNA glutamic acid [Source:MGI Symbol;Acc:MGI:102488]
 ## 5 mitochondrially encoded NADH dehydrogenase 6 [Source:MGI Symbol;Acc:MGI:102495]
 ## 6 mitochondrially encoded NADH dehydrogenase 5 [Source:MGI Symbol;Acc:MGI:102496]
-##        Gene.type Transcript.count Gene...GC.content Chromosome.scaffold.name
-## 1        Mt_tRNA                1             44.78                       MT
-## 2        Mt_tRNA                1             34.33                       MT
-## 3 protein_coding                1             39.07                       MT
-## 4        Mt_tRNA                1             34.78                       MT
-## 5 protein_coding                1             34.10                       MT
-## 6 protein_coding                1             37.12                       MT
-##   Gene.start..bp. Gene.end..bp. Strand
-## 1           15356         15422     -1
-## 2           15289         15355      1
-## 3           14145         15288      1
-## 4           14071         14139     -1
-## 5           13552         14070     -1
-## 6           11742         13565      1
+##        Gene.type Transcript.type Chromosome.scaffold.name Gene.start..bp.
+## 1        Mt_tRNA         Mt_tRNA                       MT           15356
+## 2        Mt_tRNA         Mt_tRNA                       MT           15289
+## 3 protein_coding  protein_coding                       MT           14145
+## 4        Mt_tRNA         Mt_tRNA                       MT           14071
+## 5 protein_coding  protein_coding                       MT           13552
+## 6 protein_coding  protein_coding                       MT           11742
+##   Gene.end..bp. Strand
+## 1         15422     -1
+## 2         15355      1
+## 3         15288      1
+## 4         14139     -1
+## 5         14070     -1
+## 6         13565      1
 ```
 
 ```r
@@ -184,34 +184,34 @@ tail(anno)
 ```
 
 ```
-##           Gene.stable.ID Gene.stable.ID.version
-## 56300 ENSMUSG00000116316   ENSMUSG00000116316.1
-## 56301 ENSMUSG00000116327   ENSMUSG00000116327.1
-## 56302 ENSMUSG00000116328   ENSMUSG00000116328.1
-## 56303 ENSMUSG00000116379   ENSMUSG00000116379.1
-## 56304 ENSMUSG00000116431   ENSMUSG00000116431.1
-## 56305 ENSMUSG00000116507   ENSMUSG00000116507.1
-##                                                Gene.description      Gene.type
-## 56300 predicted gene, 48462 [Source:MGI Symbol;Acc:MGI:6097976]         lncRNA
-## 56301           schlafen 14 [Source:MGI Symbol;Acc:MGI:2684866] protein_coding
-## 56302                                                               pseudogene
-## 56303                                                               pseudogene
-## 56304            schlafen 3 [Source:MGI Symbol;Acc:MGI:1329005] protein_coding
-## 56305 predicted gene, 23444 [Source:MGI Symbol;Acc:MGI:5453221]          snRNA
-##       Transcript.count Gene...GC.content Chromosome.scaffold.name
-## 56300                1             46.07 CHR_WSB_EIJ_MMCHR11_CTG3
-## 56301                1             44.07 CHR_WSB_EIJ_MMCHR11_CTG3
-## 56302                1             39.30 CHR_WSB_EIJ_MMCHR11_CTG3
-## 56303                1             37.89 CHR_WSB_EIJ_MMCHR11_CTG3
-## 56304                3             41.41 CHR_WSB_EIJ_MMCHR11_CTG3
-## 56305                1             45.55 CHR_WSB_EIJ_MMCHR11_CTG3
-##       Gene.start..bp. Gene.end..bp. Strand
-## 56300        83088268      83092118      1
-## 56301        83233324      83245134     -1
-## 56302        83205141      83206056      1
-## 56303        83206643      83207658      1
-## 56304        83150467      83174093      1
-## 56305        83229738      83229928      1
+##            Gene.stable.ID Gene.stable.ID.version  Gene.name
+## 144773 ENSMUSG00000116328   ENSMUSG00000116328.1 LT629154.4
+## 144774 ENSMUSG00000116379   ENSMUSG00000116379.1 LT629154.5
+## 144775 ENSMUSG00000116431   ENSMUSG00000116431.1      Slfn3
+## 144776 ENSMUSG00000116431   ENSMUSG00000116431.1      Slfn3
+## 144777 ENSMUSG00000116431   ENSMUSG00000116431.1      Slfn3
+## 144778 ENSMUSG00000116507   ENSMUSG00000116507.1    Gm23444
+##                                                 Gene.description      Gene.type
+## 144773                                                               pseudogene
+## 144774                                                               pseudogene
+## 144775            schlafen 3 [Source:MGI Symbol;Acc:MGI:1329005] protein_coding
+## 144776            schlafen 3 [Source:MGI Symbol;Acc:MGI:1329005] protein_coding
+## 144777            schlafen 3 [Source:MGI Symbol;Acc:MGI:1329005] protein_coding
+## 144778 predicted gene, 23444 [Source:MGI Symbol;Acc:MGI:5453221]          snRNA
+##             Transcript.type Chromosome.scaffold.name Gene.start..bp.
+## 144773           pseudogene CHR_WSB_EIJ_MMCHR11_CTG3        83205141
+## 144774           pseudogene CHR_WSB_EIJ_MMCHR11_CTG3        83206643
+## 144775       protein_coding CHR_WSB_EIJ_MMCHR11_CTG3        83150467
+## 144776       protein_coding CHR_WSB_EIJ_MMCHR11_CTG3        83150467
+## 144777 processed_transcript CHR_WSB_EIJ_MMCHR11_CTG3        83150467
+## 144778                snRNA CHR_WSB_EIJ_MMCHR11_CTG3        83229738
+##        Gene.end..bp. Strand
+## 144773      83206056      1
+## 144774      83207658      1
+## 144775      83174093      1
+## 144776      83174093      1
+## 144777      83174093      1
+## 144778      83229928      1
 ```
 
 ```r
@@ -219,7 +219,7 @@ any(duplicated(anno$Gene.stable.ID))
 ```
 
 ```
-## [1] FALSE
+## [1] TRUE
 ```
 
 **1b\.** Derive experiment metadata from the sample names
@@ -526,7 +526,7 @@ contr
 tmp <- contrasts.fit(fit, contr)
 ```
 
-The variance characteristics of low expressed genes are different from high expressed genes, if treated the same, the effect is to over represent low expressed genes in the DE list.
+The variance characteristics of low expressed genes are different from high expressed genes, if treated the same, the effect is to over represent low expressed genes in the DE list. This is corrected for by voom. However, some genes will have increased variance that is not a result of low expression, but due to other random factors. We are going to run Empirical Bayes to adjust the variance of these genes.
 
 Empirical Bayes smoothing of standard errors (shifts standard errors that are much larger or smaller than those from other genes towards the average standard error) (see "[Linear Models and Empirical Bayes Methods for Assessing Differential Expression in Microarray Experiments](https://www.degruyter.com/doi/10.2202/1544-6115.1027)"
 
@@ -548,7 +548,7 @@ top.table <- topTable(tmp, adjust.method = "BH", sort.by = "P", n = Inf)
 
 ### Multiple Testing Correction
 
-\Simply a must! Best choices are:
+Simply a must! Best choices are:
   * [FDR](http://www.jstor.org/stable/2346101) (false discovery rate), such as Benjamini-Hochberg (1995).
   * [Qvalue](https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/1467-9868.00346) - Storey (2002)
 
@@ -749,13 +749,13 @@ head(top.table)
 ## ENSMUSG00000030203 4.751486e-14 30.40783 ENSMUSG00000030203
 ## ENSMUSG00000027508 4.751486e-14 30.18393 ENSMUSG00000027508
 ## ENSMUSG00000021990 4.751486e-14 30.10296 ENSMUSG00000021990
-##                    Gene.stable.ID.version
-## ENSMUSG00000020608   ENSMUSG00000020608.7
-## ENSMUSG00000052212   ENSMUSG00000052212.6
-## ENSMUSG00000049103  ENSMUSG00000049103.14
-## ENSMUSG00000030203  ENSMUSG00000030203.17
-## ENSMUSG00000027508  ENSMUSG00000027508.15
-## ENSMUSG00000021990  ENSMUSG00000021990.16
+##                    Gene.stable.ID.version Gene.name
+## ENSMUSG00000020608   ENSMUSG00000020608.7      Smc6
+## ENSMUSG00000052212   ENSMUSG00000052212.6     Cd177
+## ENSMUSG00000049103  ENSMUSG00000049103.14      Ccr2
+## ENSMUSG00000030203  ENSMUSG00000030203.17    Dusp16
+## ENSMUSG00000027508  ENSMUSG00000027508.15      Pag1
+## ENSMUSG00000021990  ENSMUSG00000021990.16   Spata13
 ##                                                                                                       Gene.description
 ## ENSMUSG00000020608                         structural maintenance of chromosomes 6 [Source:MGI Symbol;Acc:MGI:1914491]
 ## ENSMUSG00000052212                                                   CD177 antigen [Source:MGI Symbol;Acc:MGI:1916141]
@@ -763,62 +763,62 @@ head(top.table)
 ## ENSMUSG00000030203                                 dual specificity phosphatase 16 [Source:MGI Symbol;Acc:MGI:1917936]
 ## ENSMUSG00000027508 phosphoprotein associated with glycosphingolipid microdomains 1 [Source:MGI Symbol;Acc:MGI:2443160]
 ## ENSMUSG00000021990                                    spermatogenesis associated 13 [Source:MGI Symbol;Acc:MGI:104838]
-##                         Gene.type Transcript.count Gene...GC.content
-## ENSMUSG00000020608 protein_coding               12             38.40
-## ENSMUSG00000052212 protein_coding                2             52.26
-## ENSMUSG00000049103 protein_coding                4             38.86
-## ENSMUSG00000030203 protein_coding                7             41.74
-## ENSMUSG00000027508 protein_coding                5             44.66
-## ENSMUSG00000021990 protein_coding                9             47.38
-##                    Chromosome.scaffold.name Gene.start..bp. Gene.end..bp.
-## ENSMUSG00000020608                       12        11265886      11319785
-## ENSMUSG00000052212                        7        24743983      24760311
-## ENSMUSG00000049103                        9       124101950     124113557
-## ENSMUSG00000030203                        6       134715468     134792625
-## ENSMUSG00000027508                        3         9687479       9833679
-## ENSMUSG00000021990                       14        60634001      60764556
-##                    Strand mouse_110_WT_C mouse_110_WT_NC mouse_148_WT_C
-## ENSMUSG00000020608      1       6.645200        9.077340       7.041320
-## ENSMUSG00000052212     -1       8.633626        4.163876       8.370249
-## ENSMUSG00000049103      1      10.919303        8.831594      11.256192
-## ENSMUSG00000030203     -1       5.016457        8.985832       5.195966
-## ENSMUSG00000027508     -1       7.200107        9.030835       7.060265
-## ENSMUSG00000021990      1       6.989826        9.559164       7.352324
-##                    mouse_148_WT_NC mouse_158_WT_C mouse_158_WT_NC
-## ENSMUSG00000020608        9.419612       6.772457        9.195058
-## ENSMUSG00000052212        3.633382       8.116089        3.397580
-## ENSMUSG00000049103        8.960396      11.072238        8.731549
-## ENSMUSG00000030203        9.079834       5.461716        9.210334
-## ENSMUSG00000027508        9.119556       7.394473        9.269873
-## ENSMUSG00000021990        9.779543       7.036684        9.740111
-##                    mouse_183_KOMIR150_C mouse_183_KOMIR150_NC
-## ENSMUSG00000020608             6.809393              9.326751
-## ENSMUSG00000052212             8.732866              3.551467
-## ENSMUSG00000049103            11.045830              8.753682
-## ENSMUSG00000030203             5.239699              8.932223
-## ENSMUSG00000027508             7.201890              8.852554
-## ENSMUSG00000021990             7.425335              9.600100
-##                    mouse_198_KOMIR150_C mouse_198_KOMIR150_NC
-## ENSMUSG00000020608             6.502647              8.986687
-## ENSMUSG00000052212             8.649169              3.775704
-## ENSMUSG00000049103            10.719231              8.525368
-## ENSMUSG00000030203             4.812550              9.204500
-## ENSMUSG00000027508             7.042384              8.806215
-## ENSMUSG00000021990             6.545993              9.324742
-##                    mouse_206_KOMIR150_C mouse_206_KOMIR150_NC
-## ENSMUSG00000020608             6.442998              8.912437
-## ENSMUSG00000052212             8.754417              3.637488
-## ENSMUSG00000049103            10.796004              8.517087
-## ENSMUSG00000030203             5.237953              9.481721
-## ENSMUSG00000027508             6.945182              8.847548
-## ENSMUSG00000021990             6.591285              9.159657
-##                    mouse_2670_KOTet3_C mouse_2670_KOTet3_NC mouse_7530_KOTet3_C
-## ENSMUSG00000020608            6.594147             9.524842            6.435640
-## ENSMUSG00000052212            7.825950             4.137591            8.247921
-## ENSMUSG00000049103           11.456537             7.539692           11.195499
-## ENSMUSG00000030203            4.943796             9.897021            4.052182
-## ENSMUSG00000027508            7.733175             9.491536            7.447820
-## ENSMUSG00000021990            7.799408            10.639434            7.358043
+##                         Gene.type Transcript.type Chromosome.scaffold.name
+## ENSMUSG00000020608 protein_coding  protein_coding                       12
+## ENSMUSG00000052212 protein_coding  protein_coding                        7
+## ENSMUSG00000049103 protein_coding  protein_coding                        9
+## ENSMUSG00000030203 protein_coding  protein_coding                        6
+## ENSMUSG00000027508 protein_coding  protein_coding                        3
+## ENSMUSG00000021990 protein_coding  protein_coding                       14
+##                    Gene.start..bp. Gene.end..bp. Strand mouse_110_WT_C
+## ENSMUSG00000020608        11265886      11319785      1       6.645200
+## ENSMUSG00000052212        24743983      24760311     -1       8.633626
+## ENSMUSG00000049103       124101950     124113557      1      10.919303
+## ENSMUSG00000030203       134715468     134792625     -1       5.016457
+## ENSMUSG00000027508         9687479       9833679     -1       7.200107
+## ENSMUSG00000021990        60634001      60764556      1       6.989826
+##                    mouse_110_WT_NC mouse_148_WT_C mouse_148_WT_NC
+## ENSMUSG00000020608        9.077340       7.041320        9.419612
+## ENSMUSG00000052212        4.163876       8.370249        3.633382
+## ENSMUSG00000049103        8.831594      11.256192        8.960396
+## ENSMUSG00000030203        8.985832       5.195966        9.079834
+## ENSMUSG00000027508        9.030835       7.060265        9.119556
+## ENSMUSG00000021990        9.559164       7.352324        9.779543
+##                    mouse_158_WT_C mouse_158_WT_NC mouse_183_KOMIR150_C
+## ENSMUSG00000020608       6.772457        9.195058             6.809393
+## ENSMUSG00000052212       8.116089        3.397580             8.732866
+## ENSMUSG00000049103      11.072238        8.731549            11.045830
+## ENSMUSG00000030203       5.461716        9.210334             5.239699
+## ENSMUSG00000027508       7.394473        9.269873             7.201890
+## ENSMUSG00000021990       7.036684        9.740111             7.425335
+##                    mouse_183_KOMIR150_NC mouse_198_KOMIR150_C
+## ENSMUSG00000020608              9.326751             6.502647
+## ENSMUSG00000052212              3.551467             8.649169
+## ENSMUSG00000049103              8.753682            10.719231
+## ENSMUSG00000030203              8.932223             4.812550
+## ENSMUSG00000027508              8.852554             7.042384
+## ENSMUSG00000021990              9.600100             6.545993
+##                    mouse_198_KOMIR150_NC mouse_206_KOMIR150_C
+## ENSMUSG00000020608              8.986687             6.442998
+## ENSMUSG00000052212              3.775704             8.754417
+## ENSMUSG00000049103              8.525368            10.796004
+## ENSMUSG00000030203              9.204500             5.237953
+## ENSMUSG00000027508              8.806215             6.945182
+## ENSMUSG00000021990              9.324742             6.591285
+##                    mouse_206_KOMIR150_NC mouse_2670_KOTet3_C
+## ENSMUSG00000020608              8.912437            6.594147
+## ENSMUSG00000052212              3.637488            7.825950
+## ENSMUSG00000049103              8.517087           11.456537
+## ENSMUSG00000030203              9.481721            4.943796
+## ENSMUSG00000027508              8.847548            7.733175
+## ENSMUSG00000021990              9.159657            7.799408
+##                    mouse_2670_KOTet3_NC mouse_7530_KOTet3_C
+## ENSMUSG00000020608             9.524842            6.435640
+## ENSMUSG00000052212             4.137591            8.247921
+## ENSMUSG00000049103             7.539692           11.195499
+## ENSMUSG00000030203             9.897021            4.052182
+## ENSMUSG00000027508             9.491536            7.447820
+## ENSMUSG00000021990            10.639434            7.358043
 ##                    mouse_7530_KOTet3_NC mouse_7531_KOTet3_C mouse_7532_WT_NC
 ## ENSMUSG00000020608             9.362773            6.272220         8.847690
 ## ENSMUSG00000052212             3.307021            9.021666         4.539223
@@ -1527,10 +1527,40 @@ top.table <- topTable(fit2, coef = 1, sort.by = "P", n = 40)
 
 
 ```r
-volcanoplot(fit2, coef=1, highlight=8, names=fit$genes$NAME, main="genotype")
+volcanoplot(fit2, coef=1, highlight=8, names=rownames(fit2), main="genotype")
 ```
 
 ![](DE_Analysis_mm_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+
+```r
+head(anno[match(rownames(fit2), anno$Gene.stable.ID),
+     c("Gene.stable.ID", "Gene.name")])
+```
+
+```
+##           Gene.stable.ID Gene.name
+## 9997  ENSMUSG00000098104    Gm6085
+## 11505 ENSMUSG00000033845    Mrpl15
+## 18019 ENSMUSG00000025903    Lypla1
+## 17843 ENSMUSG00000033813     Tcea1
+## 21774 ENSMUSG00000033793   Atp6v1h
+## 31927 ENSMUSG00000025907    Rb1cc1
+```
+
+```r
+identical(anno[match(rownames(fit2), anno$Gene.stable.ID),
+     c("Gene.stable.ID")], rownames(fit2))
+```
+
+```
+## [1] TRUE
+```
+
+```r
+volcanoplot(fit2, coef=1, highlight=8, names=anno[match(rownames(fit2), anno$Gene.stable.ID), "Gene.name"], main="genotype")
+```
+
+![](DE_Analysis_mm_files/figure-html/unnamed-chunk-18-2.png)<!-- -->
 
 ## Heatmap
 
@@ -1540,6 +1570,69 @@ heatmap.2(logcpm[rownames(top.table),],col=brewer.pal(11,"RdBu"),scale="row", tr
 ```
 
 ![](DE_Analysis_mm_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+
+```r
+anno[match(rownames(top.table), anno$Gene.stable.ID),
+     c("Gene.stable.ID", "Gene.name")]
+```
+
+```
+##            Gene.stable.ID     Gene.name
+## 85199  ENSMUSG00000030703         Gdpd3
+## 24360  ENSMUSG00000044229         Nxpe4
+## 23107  ENSMUSG00000030748         Il4ra
+## 10501  ENSMUSG00000032012       Nectin1
+## 26583  ENSMUSG00000066687        Zbtb16
+## 13999  ENSMUSG00000040152         Thbs1
+## 3831   ENSMUSG00000067017    Capza1-ps1
+## 74977  ENSMUSG00000008348           Ubc
+## 142135 ENSMUSG00000096780   Tmem181b-ps
+## 34717  ENSMUSG00000028028         Alpk1
+## 49908  ENSMUSG00000039146        Ifi44l
+## 86635  ENSMUSG00000020893          Per1
+## 78484  ENSMUSG00000030365        Clec2i
+## 52047  ENSMUSG00000028037         Ifi44
+## 122547 ENSMUSG00000055435           Maf
+## 53427  ENSMUSG00000028619       Tceanc2
+## 93885  ENSMUSG00000042105        Inpp5f
+## 138678 ENSMUSG00000051495       Irf2bp2
+## 123635 ENSMUSG00000096768       Gm47283
+## 125141 ENSMUSG00000054008         Ndst1
+## 15934  ENSMUSG00000076937         Iglc2
+## 90616  ENSMUSG00000100801       Gm15459
+## 29877  ENSMUSG00000055994          Nod2
+## 135163 ENSMUSG00000033863          Klf9
+## 61641  ENSMUSG00000070372        Capza1
+## 36833  ENSMUSG00000028173           Wls
+## 103033 ENSMUSG00000003545          Fosb
+## 119002 ENSMUSG00000051439          Cd14
+## 42223  ENSMUSG00000031431       Tsc22d3
+## 24746  ENSMUSG00000034342           Cbl
+## 124363 ENSMUSG00000035212        Leprot
+## 38546  ENSMUSG00000048534          Jaml
+## 73191  ENSMUSG00000040139 9430038I01Rik
+## 26247  ENSMUSG00000042396          Rbm7
+## 91095  ENSMUSG00000024948        Map4k2
+## 80070  ENSMUSG00000020108         Ddit4
+## 101461 ENSMUSG00000030577          Cd22
+## 122523 ENSMUSG00000035385          Ccl2
+## 29953  ENSMUSG00000045382         Cxcr4
+## 90249  ENSMUSG00000015501        Hivep2
+```
+
+```r
+identical(anno[match(rownames(top.table), anno$Gene.stable.ID), "Gene.stable.ID"], rownames(top.table))
+```
+
+```
+## [1] TRUE
+```
+
+```r
+heatmap.2(logcpm[rownames(top.table),],col=brewer.pal(11,"RdBu"),scale="row", trace="none", labRow = anno[match(rownames(top.table), anno$Gene.stable.ID), "Gene.name"])
+```
+
+![](DE_Analysis_mm_files/figure-html/unnamed-chunk-19-2.png)<!-- -->
 
 ## 2 factor venn diagram
 
