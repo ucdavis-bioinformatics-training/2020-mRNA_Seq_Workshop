@@ -14,7 +14,7 @@ output:
 
 
 
-### Pairwise correlations of normalized counts on same sample using genes present in both star and sample counts
+
 
 
 
@@ -38,24 +38,28 @@ Salmon CPM values using raw data on y-axis vs Salmon using cleaned data on x-axi
 
 ### How does quantification method impact read counts? 
 
-Salmon CPM values using cleaned reads on y-axis vs STAR CPM values using cleaned reads on x-axis.
+Salmon CPM values using cleaned reads on y-axis vs STAR CPM values using cleaned reads on x-axis.  
+
+
 ![](compare_star_salmon_mm_files/figure-html/StarRaw.Salmon-1.png)<!-- -->
+
 
 Note the pattern of genes with low expression with STAR and high expression with Salmon.
 
 ------
 
 ### MDS plot, STAR raw counts:
-![](compare_star_salmon_mm_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
-### MDS plot, STAR counts:
-![](compare_star_salmon_mm_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](compare_star_salmon_mm_files/figure-html/mds1-1.png)<!-- -->
+
+### MDS plot, STAR cleaned counts:
+![](compare_star_salmon_mm_files/figure-html/mds2-1.png)<!-- -->
 
 ### MDS plot, Salmon raw counts
-![](compare_star_salmon_mm_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](compare_star_salmon_mm_files/figure-html/mds3-1.png)<!-- -->
 
-### MDS plot, Salmon counts
-![](compare_star_salmon_mm_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+### MDS plot, Salmon cleaned counts
+![](compare_star_salmon_mm_files/figure-html/mds4-1.png)<!-- -->
 
 
 
@@ -93,17 +97,20 @@ Note the pattern of genes with low expression with STAR and high expression with
 
 ### Totals genes DE at adj.P.val < 0.05
 STAR + without cleaning : 5061.
+
 STAR + with cleaning : 5400.
+
 Salmon + without cleaning: 4088.
+
 Salmon + with cleaning: 4290.
 
 ### Overlap in DEGs at adj.P.val < 0.05  
 
-![](compare_star_salmon_mm_files/figure-html/vennDiagrams1-1.png)<!-- -->
+![](compare_star_salmon_mm_files/figure-html/vennDiagram1-1.png)<!-- -->
 
 
 ### Overlap in top 100 DEGs (sorted by P value)  
-![](compare_star_salmon_mm_files/figure-html/vennDiagrams2-1.png)<!-- -->
+![](compare_star_salmon_mm_files/figure-html/vennDiagram2-1.png)<!-- -->
 
 ### Conclusions
 * STAR and Salmon show differences in quantification of low expressed genes.
