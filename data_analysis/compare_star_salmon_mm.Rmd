@@ -275,7 +275,7 @@ Salmon + with cleaning: `r length(which(DE.salmon$adj.P.Val < 0.05))`.
 x = list(STAR.raw=rownames(DE.star.raw)[DE.star.raw$adj.P.Val < 0.05],
          STAR.cleaned=rownames(DE.star)[DE.star$adj.P.Val < 0.05],
          Salmon.raw=rownames(DE.salmon.raw)[DE.salmon.raw$adj.P.Val < 0.05],
-         STAR.cleaned=rownames(DE.salmon)[DE.salmon$adj.P.Val < 0.05])
+         Salmon.cleaned=rownames(DE.salmon)[DE.salmon$adj.P.Val < 0.05])
 ggVennDiagram(x)
 ```
 
@@ -285,7 +285,7 @@ ggVennDiagram(x)
 x = list(STAR.raw=rownames(DE.star.raw)[1:100],
          STAR.cleaned=rownames(DE.star)[1:100],
          Salmon.raw=rownames(DE.salmon.raw)[1:100],
-         STAR.cleaned=rownames(DE.salmon)[1:100])
+         Salmon.cleaned=rownames(DE.salmon)[1:100])
 ggVennDiagram(x)
 ```
 
