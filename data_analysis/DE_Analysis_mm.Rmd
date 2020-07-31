@@ -86,6 +86,7 @@ Create a new variable "group" that combines genotype and cell type.
 ```{r interaction}
 metadata$group <- interaction(metadata$genotype, metadata$cell_type)
 table(metadata$group)
+table(metadata$mouse)
 ```
 
 Note: you can also enter group information manually, or read it in from an external file.  If you do this, it is $VERY, VERY, VERY$ important that you make sure the metadata is in the same order as the column names of the counts table.
@@ -156,7 +157,8 @@ write.table(logcpm,"rnaseq_workshop_normalized_counts.txt",sep="\t",quote=F)
 Specify the model to be fitted.  We do this before using voom since voom uses variances of the model residuals (observed - fitted)
 ```{r model}
 group <- metadata$group
-mm <- model.matrix(~0 + group)
+mouse <- metadata$mouse
+mm <- model.matrix(~0 + group + mouse)
 head(mm)
 ```
 
@@ -177,7 +179,7 @@ What is voom doing?
 
 More details at "[voom: precision weights unlock linear model analysis tools for RNA-seq read counts](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2014-15-2-r29)"
 
-The above plot is a "good" voom plot.  If your voom plot looks like the below (performed on the raw data), you might want to filter more:
+If your voom plot looks like the below (performed on the raw data), you might want to filter more:
 ```{r voom_bad, fig.width=6}
 tmp <- voom(d0, mm, plot = T)
 ```
@@ -255,6 +257,13 @@ Columns are
 
 ENSMUSG00000030203 has higher expression at WT NC than at WT C (logFC is netative). ENSMUSG00000026193 has higher expression at WT C than at WT NC (logFC is positive).
 
+In the paper, the authors specify that NC cells were identified by low expression of Ly6C (ENSMUSG00000079018). Is this gene differentially expressed?
+```{r}
+top.table["ENSMUSG00000079018",]
+d0$counts["ENSMUSG00000079018",]
+```
+
+Ly6C was removed from our data by the filtering step, because the maximum counts for the gene did not exceed 2.
 
 ## 9. Write top.table to a file, adding in cpms and annotation
 ```{r}
