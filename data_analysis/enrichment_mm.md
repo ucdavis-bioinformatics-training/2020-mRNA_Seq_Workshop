@@ -145,7 +145,7 @@ library(org.Mm.eg.db)
 ```
 
 ```r
-if (!any(rownames(installed.packages()) == "edgeR")){
+if (!any(rownames(installed.packages()) == "pathview")){
   if (!requireNamespace("BiocManager", quietly = TRUE))
       install.packages("BiocManager")
   BiocManager::install("pathview")
