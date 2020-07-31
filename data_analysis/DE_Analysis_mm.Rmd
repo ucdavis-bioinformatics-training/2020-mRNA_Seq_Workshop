@@ -61,7 +61,7 @@ Create Differential Gene Expression List Object (DGEList) object
 ```{r dgelist}
 d0 <- DGEList(counts)
 ```
-
+  
 **1a\.** Read in Annotation
 ```{r read_annotation}
 anno <- read.delim("ensembl_mm_100.tsv",as.is=T)
@@ -86,6 +86,7 @@ Create a new variable "group" that combines genotype and cell type.
 ```{r interaction}
 metadata$group <- interaction(metadata$genotype, metadata$cell_type)
 table(metadata$group)
+table(metadata$mouse)
 ```
 
 Note: you can also enter group information manually, or read it in from an external file.  If you do this, it is $VERY, VERY, VERY$ important that you make sure the metadata is in the same order as the column names of the counts table.
@@ -116,7 +117,7 @@ We filter genes based on non-experimental factors to reduce the number of genes/
 
 Common filters include:
 1. to remove genes with a max value (X) of less then Y.
-2. to remove genes that are less than X normalized read counts (cpm) across a certain number of samples. Ex: rowSums(cpms <=1) < 2, require at least 1 cpm in at least 2 samples to keep.
+2. to remove genes that are less than X normalized read counts (cpm) across a certain number of samples. Ex: rowSums(cpms <=1) < 3 , require at least 1 cpm in at least 3 samples to keep.
 3. A less used filter is for genes with minimum variance across all samples, so if a gene isn't changing (constant expression) its inherently not interesting therefor no need to test.
 
 Here we will filter low-expressed genes, remove any row (gene) whose max value (for the row) is less than the cutoff (2).
@@ -129,7 +130,7 @@ dim(d) # number of genes left
 
 "Low-expressed" is subjective and depends on the dataset.
 
-Visualizing your data with a Multidimensional scaling (MDS) plot
+Visualizaing your data with a Multidimensional scaling (MDS) plot.
 ```{r mds, fig.width=6}
 plotMDS(d, col = as.numeric(metadata$group), cex=1)
 ```
@@ -156,7 +157,8 @@ write.table(logcpm,"rnaseq_workshop_normalized_counts.txt",sep="\t",quote=F)
 Specify the model to be fitted.  We do this before using voom since voom uses variances of the model residuals (observed - fitted)
 ```{r model}
 group <- metadata$group
-mm <- model.matrix(~0 + group)
+mouse <- metadata$mouse
+mm <- model.matrix(~0 + group + mouse)
 head(mm)
 ```
 
@@ -177,7 +179,7 @@ What is voom doing?
 
 More details at "[voom: precision weights unlock linear model analysis tools for RNA-seq read counts](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2014-15-2-r29)"
 
-The above plot is a "good" voom plot.  If your voom plot looks like the below (performed on the raw data), you might want to filter more:
+If your voom plot looks like the below (performed on the raw data), you might want to filter more:
 ```{r voom_bad, fig.width=6}
 tmp <- voom(d0, mm, plot = T)
 ```
@@ -195,7 +197,7 @@ Comparisons between groups (log fold-changes) are obtained as _contrasts_ of the
 
 ## 6. Specify which groups to compare using contrasts:
 
-Comparison between cell types C and NC for genotype WT.
+Comparison between cell types for genotype WT.
 ```{r contrast}
 contr <- makeContrasts(groupWT.C - groupWT.NC, levels = colnames(coef(fit)))
 contr
@@ -219,7 +221,7 @@ tmp <- eBayes(tmp)
 
 The TopTable. Ajust by Benjamini & Hochberg (BH), or its 'alias' fdr. "[Controlling the false discovery rate: a practical and powerful approach to multiple testing](http://www.jstor.org/stable/2346101).
 
-here `n=Inf` says to produce the topTable for **all** genes.
+here `n=Inf` says to produce the topTable for **all** genes. 
 ```{r toptable}
 top.table <- topTable(tmp, adjust.method = "BH", sort.by = "P", n = Inf)
 ```
@@ -241,7 +243,7 @@ length(which(top.table$adj.P.Val < 0.05))
 
 ## 8. Check your results for confidence.
 
-You've conducted an experiment, you've seen a phenotype. Now check which genes are most deferentially expressed (show the top 50)? Look up these top genes, their description and ensure they relate to your experiment/phenotype.
+You've conducted an experiment, you've seen a phenotype. Now check which genes are most deferentially expressed (show the top 50)? Look up these top genes, their description and ensure they relate to your experiment/phenotype. 
 ```{r de_genes_top50}
 head(top.table, 50)
 ```
@@ -253,22 +255,28 @@ Columns are
 * adj.P.Val: Benjamini-Hochberg false discovery rate adjusted p-value
 * B: log-odds that gene is DE (arguably less useful than the other columns)
 
-ENSMUSG00000030203 has higher expression at WT NC than at WT C (logFC is netative). ENSMUSG00000026193 has higher expression at WT C than at WT NC (logFC is positive).
+ENSMUSG00000030203 has higher expression at WT NC than at WT C (logFC is netative).  ENSMUSG00000026193 has higher expression at WT C than at WT NC (logFC is positive).
 
+In the paper, the authors specify that NC cells were identified by low expression of Ly6C (ENSMUSG00000079018). Is this gene differentially expressed?
+```{r}
+top.table["ENSMUSG00000079018",]
+d0$counts["ENSMUSG00000079018",]
+```
+
+Ly6C was removed from our data by the filtering step, because the maximum counts for the gene did not exceed 2.
 
 ## 9. Write top.table to a file, adding in cpms and annotation
 ```{r}
 top.table$Gene <- rownames(top.table)
 top.table <- top.table[,c("Gene", names(top.table)[1:6])]
-
-top.table <- data.frame(top.table,anno[match(top.table$Gene, anno$Gene.stable.ID),], logcpm[match(top.table$Gene, rownames(logcpm)),])
+top.table <- data.frame(top.table,anno[match(top.table$Gene,anno$Gene.stable.ID),],logcpm[match(top.table$Gene,rownames(logcpm)),])
 
 head(top.table)
 write.table(top.table, file = "WT.C_v_WT.NC.txt", row.names = F, sep = "\t", quote = F)
 ```
 # Linear models and contrasts
 
-Let's say we want to compare genotypes WT and KOMIR150 for cell type C.  The only thing we have to change is the call to makeContrasts:
+Let's say we want to compare genotypes for cell type C.  The only thing we have to change is the call to makeContrasts:
 ```{r}
 contr <- makeContrasts(groupWT.C - groupKOMIR150.C, levels = colnames(coef(fit)))
 tmp <- contrasts.fit(fit, contr)
@@ -278,7 +286,6 @@ head(top.table, 20)
 length(which(top.table$adj.P.Val < 0.05)) # number of DE genes
 top.table$Gene <- rownames(top.table)
 top.table <- top.table[,c("Gene", names(top.table)[1:6])]
-
 top.table <- data.frame(top.table,anno[match(top.table$Gene,anno$Gene.stable.ID),],logcpm[match(top.table$Gene,rownames(logcpm)),])
 
 write.table(top.table, file = "WT.C_v_KOMIR150.C.txt", row.names = F, sep = "\t", quote = F)
@@ -290,7 +297,8 @@ Create new model matrix:
 ```{r two_factor}
 genotype <- factor(metadata$genotype, levels = c("WT", "KOMIR150", "KOTet3"))
 cell_type <- factor(metadata$cell_type, levels = c("C", "NC"))
-mm <- model.matrix(~genotype*cell_type)
+mouse <- factor(metadata$mouse, levels = c("110", "148", "158", "183", "198", "206", "2670", "7530", "7531", "7532", "H510", "H514"))
+mm <- model.matrix(~genotype*cell_type + mouse)
 ```
 
 We are specifying that model includes effects for genotype, cell type, and the genotype-cell type interaction (which allows the differences between genotypes to differ across cell types).
@@ -302,6 +310,7 @@ colnames(mm)
 y <- voom(d, mm, plot = F)
 fit <- lmFit(y, mm)
 head(coef(fit))
+colnames(coef(fit))
 ```
 * The coefficient genotypeKOMIR150 represents the difference in mean expression between KOMIR150 and the reference genotype (WT), _for cell type C_ (the reference level for cell type)
 * The coefficient cell_typeNC represents the difference in mean expression between cell type NC and cell type C, _for genotype WT_
@@ -320,10 +329,11 @@ We get the same results as with the model where each coefficient corresponded to
 The interaction effects genotypeKOMIR150:cell_typeNC are easier to estimate and test in this setup.
 ```{r}
 head(coef(fit))
+colnames(coef(fit))
 ```
 
 ```{r}
-tmp <- contrasts.fit(fit, coef = 4) # Test genotypeKOMIR150:cell_typeNC
+tmp <- contrasts.fit(fit, coef = 16) # Test genotypeKOMIR150:cell_typeNC
 tmp <- eBayes(tmp)
 top.table <- topTable(tmp, sort.by = "P", n = Inf)
 head(top.table, 20)
@@ -337,21 +347,6 @@ A gene for which this interaction effect is significant is one for which the eff
 ### More complicated models
 Specifying a different model is simply a matter of changing the calls to model.matrix (and possibly to contrasts.fit).
 
-Let's say we are interested in the effect of variation between mice. To adjust for mouse ID in the analysis, add mouse to the end of the call to model matrix.  Everything else about the code stays the same:
-```{r}
-mouse <- metadata$mouse
-mm <- model.matrix(~0 + group + mouse)
-y <- voom(d, mm, plot = F)
-fit <- lmFit(y, mm)
-contr <- makeContrasts(groupKOMIR150.NC - groupWT.NC,
-                       levels = colnames(coef(fit)))
-tmp <- contrasts.fit(fit, contr)
-tmp <- eBayes(tmp)
-top.table <- topTable(tmp, sort.by = "P", n = Inf)
-head(top.table, 20)
-length(which(top.table$adj.P.Val < 0.05))
-```
-
 What if we want to adjust for a continuous variable like some health score?
 ```{r}
 # Generate example health data
@@ -362,7 +357,7 @@ HScore
 
 Model adjusting for HScore score:
 ```{r}
-mm <- model.matrix(~0 + group + HScore)
+mm <- model.matrix(~0 + group + mouse + HScore)
 y <- voom(d, mm, plot = F)
 fit <- lmFit(y, mm)
 contr <- makeContrasts(groupKOMIR150.NC - groupWT.NC,
@@ -454,7 +449,7 @@ The limma users' guide has great details on model specification.
 # Simple plotting
 
 ```{r}
-mm <- model.matrix(~genotype*cell_type)
+mm <- model.matrix(~genotype*cell_type + mouse)
 colnames(mm) <- make.names(colnames(mm))
 y <- voom(d, mm, plot = F)
 fit <- lmFit(y, mm)
@@ -485,7 +480,7 @@ vennDiagram(results)
 
 ## Download the Enrichment Analysis R Markdown document
 ```{r download1, eval=FALSE}
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/data_analysis/enrichment_mm.Rmd", "enrichment.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/data_analysis/enrichment.Rmd", "enrichment.Rmd")
 ```
 
 ```{r}
