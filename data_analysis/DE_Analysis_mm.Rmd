@@ -208,7 +208,7 @@ contr
 tmp <- contrasts.fit(fit, contr)
 ```
 
-The variance characteristics of low expressed genes are different from high expressed genes, if treated the same, the effect is to over represent low expressed genes in the DE list.
+The variance characteristics of low expressed genes are different from high expressed genes, if treated the same, the effect is to over represent low expressed genes in the DE list. This is corrected for by voom. However, some genes will have increased variance that is not a result of low expression, but due to other random factors. We are going to run Empirical Bayes to adjust the variance of these genes.
 
 Empirical Bayes smoothing of standard errors (shifts standard errors that are much larger or smaller than those from other genes towards the average standard error) (see "[Linear Models and Empirical Bayes Methods for Assessing Differential Expression in Microarray Experiments](https://www.degruyter.com/doi/10.2202/1544-6115.1027)"
 
@@ -228,7 +228,7 @@ top.table <- topTable(tmp, adjust.method = "BH", sort.by = "P", n = Inf)
 
 ### Multiple Testing Correction
 
-\Simply a must! Best choices are:
+Simply a must! Best choices are:
   * [FDR](http://www.jstor.org/stable/2346101) (false discovery rate), such as Benjamini-Hochberg (1995).
   * [Qvalue](https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/1467-9868.00346) - Storey (2002)
 
@@ -461,14 +461,28 @@ top.table <- topTable(fit2, coef = 1, sort.by = "P", n = 40)
 
 ## Volcano plot
 
-```{r fig.width=4, fig.height=4}
-volcanoplot(fit2, coef=1, highlight=8, names=fit$genes$NAME, main="genotype")
+```{r fig.width=4, fig.height=8}
+volcanoplot(fit2, coef=1, highlight=8, names=rownames(fit2), main="genotype")
+
+head(anno[match(rownames(fit2), anno$Gene.stable.ID),
+     c("Gene.stable.ID", "Gene.name")])
+identical(anno[match(rownames(fit2), anno$Gene.stable.ID),
+     c("Gene.stable.ID")], rownames(fit2))
+
+volcanoplot(fit2, coef=1, highlight=8, names=anno[match(rownames(fit2), anno$Gene.stable.ID), "Gene.name"], main="genotype")
+
 ```
 
 ## Heatmap
 ```{r fig.height=8}
 #using a red and blue color scheme without traces and scaling each row
 heatmap.2(logcpm[rownames(top.table),],col=brewer.pal(11,"RdBu"),scale="row", trace="none")
+
+anno[match(rownames(top.table), anno$Gene.stable.ID),
+     c("Gene.stable.ID", "Gene.name")]
+identical(anno[match(rownames(top.table), anno$Gene.stable.ID), "Gene.stable.ID"], rownames(top.table))
+
+heatmap.2(logcpm[rownames(top.table),],col=brewer.pal(11,"RdBu"),scale="row", trace="none", labRow = anno[match(rownames(top.table), anno$Gene.stable.ID), "Gene.name"])
 ```
 
 ## 2 factor venn diagram
