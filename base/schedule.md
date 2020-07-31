@@ -99,11 +99,11 @@ As the workshop progresses the schedule may be updated
 **2:20 pm**    _Hands on_      
 **2:45 pm**  15 minute break      
 **3:00 pm**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
-**3:20 am**    _Hands on_      
+**3:20 pm**    _Hands on_      
 **3:40 pm**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
-**4:00 am**    _Hands on_      
+**4:00 pm**    _Hands on_      
 **4:20 pm**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
-**4:30 am**    _Hands on_      
+**4:30 pm**    _Hands on_      
 **4:45 pm** Recap, Homework, and Extra  
 **5:00 pm**  Zoom session ends  
 
@@ -111,7 +111,20 @@ As the workshop progresses the schedule may be updated
 
 **8:50 am**  Zoom session starts  
 **9:00 am** Recap and questions  
-**10:45 am**   15 minute break  
+**9:30 am**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
+**10:00 am**    _Hands on_      
+**10:30 am**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
+**11:00 am**    _Hands on_      
+**11:15 am**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
+**11:40 am**    _Hands on_      
 **12:00 pm** Lunch hour    
+**1:00 pm**    [Differential Expression Analysis](data_analysis/DE_Analysis_mm)    
+**1:30 pm**    _Hands on_      
+**2:00 pm**    [Functional Enrichment Analysis](data_analysis/enrichment_mm)    
+**2:30 pm**    _Hands on_      
+**3:00 pm**  15 minute break      
+**3:15 pm**    [Functional Enrichment Analysis](data_analysis/enrichment_mm)    
+**3:45 pm**    _Hands on_      
+**4:15 pm**    [Star vs Salmon](data_analysis/compare_star_salmon_mm)    
 **4:45 pm** Closing  
 **5:00 pm**  Zoom session ends  
