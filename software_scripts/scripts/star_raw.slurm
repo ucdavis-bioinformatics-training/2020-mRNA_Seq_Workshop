@@ -24,8 +24,8 @@ outpath='02-STAR_raw_alignment'
 [[ -d ${outpath}/${sample} ]] || mkdir ${outpath}/${sample}
 
 echo "SAMPLE: ${sample}"
-R1="00-RawData/$SAMPLE/${SAMPLE}.R1.fastq.gz"
-R2="00-RawData/$SAMPLE/${SAMPLE}.R2.fastq.gz"
+R1="00-RawData/$sample/${sample}.R1.fastq.gz"
+R2="00-RawData/$sample/${sample}.R2.fastq.gz"
 
 module load star
 
