@@ -465,7 +465,7 @@ top.table <- topTable(fit2, coef = 1, sort.by = "P", n = 40)
 volcanoplot(fit2, coef=1, highlight=8, names=rownames(fit2), main="genotype")
 
 head(anno[match(rownames(fit2), anno$Gene.stable.ID),
-     c("Gene.stable.ID", "Gene.name")])
+     c("Gene.stable.ID", "Gene.name") ])
 identical(anno[match(rownames(fit2), anno$Gene.stable.ID),
      c("Gene.stable.ID")], rownames(fit2))
 

@@ -1534,7 +1534,7 @@ volcanoplot(fit2, coef=1, highlight=8, names=rownames(fit2), main="genotype")
 
 ```r
 head(anno[match(rownames(fit2), anno$Gene.stable.ID),
-     c("Gene.stable.ID", "Gene.name")])
+     c("Gene.stable.ID", "Gene.name") ])
 ```
 
 ```
@@ -1647,7 +1647,7 @@ vennDiagram(results)
 ## Download the Enrichment Analysis R Markdown document
 
 ```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/data_analysis/enrichment.Rmd", "enrichment.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2020-mRNA_Seq_Workshop/master/data_analysis/enrichment_mm.Rmd", "enrichment_mm.Rmd")
 ```
 
 
@@ -1656,28 +1656,33 @@ sessionInfo()
 ```
 
 ```
-## R version 4.0.2 (2020-06-22)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.6
+## R version 3.6.1 (2019-07-05)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 19.10
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.8.0
+## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.8.0
 ## 
 ## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] gplots_3.0.4       RColorBrewer_1.1-2 edgeR_3.30.3       limma_3.44.3      
+## [1] gplots_3.0.3       RColorBrewer_1.1-2 edgeR_3.28.1       limma_3.42.2      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.5         locfit_1.5-9.4     lattice_0.20-41    gtools_3.8.2      
-##  [5] digest_0.6.25      bitops_1.0-6       grid_4.0.2         magrittr_1.5      
-##  [9] evaluate_0.14      KernSmooth_2.23-17 rlang_0.4.7        stringi_1.4.6     
-## [13] gdata_2.18.0       rmarkdown_2.3      tools_4.0.2        stringr_1.4.0     
-## [17] xfun_0.16          yaml_2.2.1         compiler_4.0.2     caTools_1.18.0    
+##  [1] Rcpp_1.0.4.6       locfit_1.5-9.4     lattice_0.20-41    gtools_3.8.2      
+##  [5] digest_0.6.25      bitops_1.0-6       grid_3.6.1         magrittr_1.5      
+##  [9] evaluate_0.14      KernSmooth_2.23-17 rlang_0.4.6        stringi_1.4.6     
+## [13] gdata_2.18.0       rmarkdown_2.3      tools_3.6.1        stringr_1.4.0     
+## [17] xfun_0.15          yaml_2.2.1         compiler_3.6.1     caTools_1.18.0    
 ## [21] htmltools_0.5.0    knitr_1.29
 ```
